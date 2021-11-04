@@ -7,6 +7,7 @@ const mongoose = require("mongoose")
 const httpServer = require("http").createServer(app);
 const path = require("path")
 
+
 const io = require("socket.io")(httpServer, {
     cors: {
          origin: "http://localhost:3000",
@@ -14,6 +15,10 @@ const io = require("socket.io")(httpServer, {
         methods: ["GET", "POST"]
     }
 })
+
+const adminRoutes = require("./routes/admin-routes")
+
+const HttpError = require("./models/HttpError")
 
 
 
@@ -49,7 +54,7 @@ app.use((req, res, next) => {
 });
 
 
-
+app.use("/api/admin", adminRoutes)
 
 app.use((req, res, next) => {
     res.sendFile(path.resolve(__dirname , 'public', 'index.html'))

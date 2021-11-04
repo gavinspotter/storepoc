@@ -55,15 +55,9 @@ const signup = async (req, res, next) => {
 
     const createdAdmin = new Admin({
         username,
-        email,
+        
         password: hashedPassword,
-        dictionarys: [],
-        following: [],
-        accolades: [],
-        followingCurrent: [],
-        followersCurrent: [],
-        posts: [],
-        stripeCustomerId: stripeCustomerId.id
+        
 
     })
 
