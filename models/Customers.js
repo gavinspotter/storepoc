@@ -13,23 +13,25 @@ const customerSchema = new Schema({
 
     firstName: { type: String, required: true },
     lastName: {type: String, required: true},
-    email: { type: String, required: true},
+    email: { type: String, required: true, unique: true},
+    password: { type: String, required: true },
     stripeCustomerId: {type: String},
     bulkSeeings: [ ],
     consumerPurchases: [],
     deliveryDetails: {
-        firstName: {type: String, required: true},
-        lastName: {type: String, required: true},
-        street: {type: String, required: true},
-        city: {type: String, required: true},
-        state: {type: String, required: true},
-        zipCode: {type: String, required: true},
-        country: {type: String, required: true},
-        email: {type: String, required: true}
+        firstName: {type: String},
+        lastName: {type: String},
+        street: {type: String},
+        city: {type: String},
+        state: {type: String},
+        zipCode: {type: String},
+        country: {type: String},
+        email: {type: String}
 
     },
-    messages: { type: mongoose.Types.ObjectId, required: true, ref: "Messages" },
-    admin: { type: mongoose.Types.ObjectId, required: true, ref: "Admin" }
+    
+    messages: { type: mongoose.Types.ObjectId, ref: "Messages" },
+    //admin: { type: mongoose.Types.ObjectId, required: true, ref: "Admin" }
     
 
 

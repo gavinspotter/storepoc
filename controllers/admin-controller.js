@@ -204,8 +204,8 @@ const createMessages = async (req, res, next) => {
 
 }
 
-const editMessage = async (req, next, next) => {
-    
+const editMessage = async (req, res, next) => {
+
 }
 
 
@@ -237,4 +237,10 @@ exports.getConsumerItems = getConsumerItems
 exports.updateConsumerItem = updateConsumerItem 
 
 exports.deleteConsumerItem = deleteConsumerItem
+
+exports.createMessages = createMessages 
+
+exports.getMessages = getMessages 
+
+exports.editMessage = editMessage 
 

@@ -18,6 +18,8 @@ const io = require("socket.io")(httpServer, {
 
 const adminRoutes = require("./routes/admin-routes")
 
+const customerRoutes = require("./routes/consumer-routes")
+
 const HttpError = require("./models/HttpError")
 
 
@@ -55,6 +57,8 @@ app.use((req, res, next) => {
 
 
 app.use("/api/admin", adminRoutes)
+
+app.use("/api/costumer", customerRoutes )
 
 app.use((req, res, next) => {
     res.sendFile(path.resolve(__dirname , 'public', 'index.html'))
