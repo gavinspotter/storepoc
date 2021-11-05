@@ -5,6 +5,9 @@ const Admin = require("../models/Admin")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
+const Bulk = require("../models/BulkWholeSale")
+const ConsumerGoods = require("../models/ConsumerGoods")
+
 
 
 
@@ -161,7 +164,77 @@ const login = async (req, res, next) => {
     })
 }
 
+const createBulkItem = async (req, res, next) => {
+
+}
+
+const getBulkItems = async (req, res, next) => {
+
+}
+
+const updateBulkItem = async (req, res, next) => {
+
+}
+
+const deleteBulkItem = async (req, res, next) => {
+
+}
+
+const createConsumerItem = async (req, res, next) => {
+
+}
+
+const getConsumerItems = async (req, res, next) => {
+
+}
+
+const updateConsumerItem = async (req, res, next) => {
+
+}
+
+const deleteConsumerItem = async (req, res, next) => {
+
+}
+
+const getMessages = async (req, res, next) => {
+
+}
+
+const createMessages = async (req, res, next) => {
+
+}
+
+const editMessage = async (req, next, next) => {
+    
+}
+
+
+
+
+
+
+
+
+
 
 exports.signup = signup
 
 exports.login = login
+
+exports.createBulkItem = createBulkItem
+
+exports.getBulkItems = getBulkItems 
+
+exports.updateBulkItem = updateBulkItem
+
+exports.deleteBulkItem = deleteBulkItem
+
+
+exports.createConsumerItem = createConsumerItem
+
+exports.getConsumerItems = getConsumerItems
+
+exports.updateConsumerItem = updateConsumerItem 
+
+exports.deleteConsumerItem = deleteConsumerItem
+
