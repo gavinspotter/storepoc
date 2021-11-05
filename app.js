@@ -58,7 +58,7 @@ app.use((req, res, next) => {
 
 app.use("/api/admin", adminRoutes)
 
-app.use("/api/costumer", customerRoutes )
+app.use("/api/customer", customerRoutes )
 
 app.use((req, res, next) => {
     res.sendFile(path.resolve(__dirname , 'public', 'index.html'))
