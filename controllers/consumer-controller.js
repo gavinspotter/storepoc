@@ -87,12 +87,12 @@ const signup = async (req, res, next) => {
 
 
 const login = async (req, res, next) => {
-    const { username, password } = req.body
+    const { email, password } = req.body
 
     let existingUser
 
     try {
-        existingUser = await Admin.findOne({ username: username })
+        existingUser = await Customer.findOne({ email: email })
     } catch (err) {
         const error = new HttpError(
             "login failed",
@@ -133,13 +133,13 @@ const login = async (req, res, next) => {
 
     try {
         token = jwt.sign(
-            { userId: existingUser.id, username: existingUser.username },
+            { customerId: existingUser.id, email: existingUser.email },
             'supersecret_dont_share',
-            { expiresIn: '1h' }
+            { expiresIn: '24h' }
         );
     } catch (err) {
         const error = new HttpError(
-            'Logging in failed, please try again later.',
+            'login failed, please try again later.',
             500
         );
         return next(error);
@@ -147,9 +147,7 @@ const login = async (req, res, next) => {
 
 
     res.json({
-        userId: existingUser.id,
-        username: existingUser.username,
-        token: token
+        customerId: existingUser.id, email: existingUser.email, token: token 
     })
 }
 
