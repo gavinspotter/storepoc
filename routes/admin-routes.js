@@ -12,6 +12,8 @@ router.post("/signup", adminController.signup)
 
 router.post("/login", adminController.login)
 
+
+
 router.use(checkAuth);
 
 module.exports = router
