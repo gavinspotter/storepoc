@@ -31,7 +31,7 @@ const customerSchema = new Schema({
     },
     
     messages: { type: mongoose.Types.ObjectId, ref: "Messages" },
-    //admin: { type: mongoose.Types.ObjectId, required: true, ref: "Admin" }
+    admin: { type: mongoose.Types.ObjectId, required: true, ref: "Admin" }
     
 
 

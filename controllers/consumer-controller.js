@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken")
 
 const Customer = require("../models/Customers")
 
+const Admin = require("../models/Admin")
+
 
 
 const signup = async (req, res, next) => {
@@ -39,6 +41,15 @@ const signup = async (req, res, next) => {
         return next(error);
     }
 
+    let findAdmin 
+
+    try {
+        findAdmin = await Admin.find({username: "michaelross"})
+    } catch (err) {
+        const error = new HttpError("couldn't add you to our directory")
+        return next(error)
+    }
+
    
 
 
@@ -49,6 +60,7 @@ const signup = async (req, res, next) => {
         email,
         
         password: hashedPassword,
+        admin: findAdmin[0]._id
         
 
     })
