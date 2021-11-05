@@ -9,9 +9,9 @@ const bulkSchema = new Schema({
 
     name: {type: String, required: true},
     description: {type: String, required: true},
-    price: {type: String, required: true},
+    price: {type: Number, required: true},
     bucketPhotoId: {type: String, required: true},
-    sold: {type: String},
+    sold: {type: Boolean},
     admin: { type: mongoose.Types.ObjectId, required: true, ref: "Admin" }
     
 

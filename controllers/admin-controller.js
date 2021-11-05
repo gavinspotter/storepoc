@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 
 const Bulk = require("../models/BulkWholeSale")
 const ConsumerGoods = require("../models/ConsumerGoods")
-
+const Messages = require("../models/Messages")
 
 
 
@@ -165,6 +165,60 @@ const login = async (req, res, next) => {
 }
 
 const createBulkItem = async (req, res, next) => {
+
+    const { name, description, price, bucketPhotoId} = req.body
+
+    let findUser 
+
+    try {
+        findUser = await Admin.findById(req.userData.userId)
+    } catch (err) {
+        const error = new HttpError("something went wrong you're not logged in")
+        return next(error)
+    }
+
+    if(!findUser){
+        const error = new HttpError("you're not logged in")
+        return next(error)
+    }
+
+
+    const createdBulk = new Bulk({
+        name,
+        description,
+        price,
+        bucketPhotoId: "hi",
+
+        admin: req.userData.userId
+    })
+
+    try {
+        await createdBulk.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save that")
+        return next(error)
+    }
+
+    try {
+        findUser.bulkWholeSale.push(createdBulk)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    try {
+        findUser.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save your entry")
+        return next(error)
+    }
+
+    res.json({findUser, createdBulk})
+
+    
+
+
+
 
 }
 

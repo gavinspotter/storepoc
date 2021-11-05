@@ -14,6 +14,12 @@ router.post("/login", adminController.login)
 
 
 
+
 router.use(checkAuth);
+
+router.post("/createBulkItem", adminController.createBulkItem)
+
+
+
 
 module.exports = router
