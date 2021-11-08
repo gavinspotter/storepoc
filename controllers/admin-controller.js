@@ -5,6 +5,11 @@ const Admin = require("../models/Admin")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
+const aws = require('aws-sdk'); //"^2.2.41"
+
+const multer = require('multer'); // "^1.3.0"
+const multerS3 = require('multer-s3'); //"^2.7.0"
+
 const Bulk = require("../models/BulkWholeSale")
 const ConsumerGoods = require("../models/ConsumerGoods")
 const Messages = require("../models/Messages")
@@ -181,6 +186,9 @@ const createBulkItem = async (req, res, next) => {
         const error = new HttpError("you're not logged in")
         return next(error)
     }
+
+
+    
 
 
     const createdBulk = new Bulk({
