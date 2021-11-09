@@ -6,6 +6,7 @@ const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 const httpServer = require("http").createServer(app);
 const path = require("path")
+const aws = require('aws-sdk')
 
 
 const io = require("socket.io")(httpServer, {
@@ -21,6 +22,13 @@ const adminRoutes = require("./routes/admin-routes")
 const customerRoutes = require("./routes/consumer-routes")
 
 const HttpError = require("./models/HttpError")
+
+// aws.config.update({
+//     secretAccessKey: process.env.AWS_SECRET_KEY,
+//     accessKeyId: process.env.AWS_KEY,
+//     region: 'us-east-1'
+// });
+
 
 
 

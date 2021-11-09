@@ -9,15 +9,14 @@ const aws = require('aws-sdk'); //"^2.2.41"
 
 const multer = require('multer'); // "^1.3.0"
 const multerS3 = require('multer-s3'); //"^2.7.0"
-
+const { v4: uuidv4 } = require('uuid')
 const Bulk = require("../models/BulkWholeSale")
 const ConsumerGoods = require("../models/ConsumerGoods")
 const Messages = require("../models/Messages")
 
 
 
-
-
+const fs = require('fs');
 
 
 
@@ -169,6 +168,8 @@ const login = async (req, res, next) => {
     })
 }
 
+
+
 const createBulkItem = async (req, res, next) => {
 
     const { name, description, price, bucketPhotoId} = req.body
@@ -187,18 +188,55 @@ const createBulkItem = async (req, res, next) => {
         return next(error)
     }
 
+    const s3 = new aws.S3(
+        {
+            accessKeyId: process.env.AWS_KEY,
+            secretAccessKey: process.env.AWS_SECRET_KEY
+             
+   
+        }
+    );
+
+    console.log(process.env.AWS_KEY)
+    console.log(process.env.AWS_SECRET_KEY)
+    console.log(process.env.DB_NAME)
+    console.log(process.env.gav)
 
     
 
+    const fileContent = fs.readFileSync(__dirname + "/prj_portfolio.png")
+
+        const params = {
+            Bucket: "michaelrossbucket",
+            Key: 'hi.png', // File name you want to save as in S3
+            Body: fileContent
+        };
+        s3.upload(params, function(err, data) {
+            if (err) {
+                throw err;
+            }
+            console.log(`File uploaded successfully. `);
+        });
+
+  
+    
+   
+
+
+    
 
     const createdBulk = new Bulk({
         name,
         description,
         price,
-        bucketPhotoId: "hi",
+        bucketPhotoId:"hi" ,
 
         admin: req.userData.userId
     })
+
+   
+
+
 
     try {
         await createdBulk.save()
@@ -223,10 +261,12 @@ const createBulkItem = async (req, res, next) => {
 
     res.json({findUser, createdBulk})
 
+
+    
     
 
 
-
+    
 
 }
 
