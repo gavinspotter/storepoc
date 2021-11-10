@@ -239,14 +239,7 @@ const purchaseConsumerGood = async (req, res, next) => {
     }
 
 
-    let charge = await stripe.charges.create({
-        amount: findItem.price,
-        currency: 'usd',
-        
-        source: token.id,
-        description: 'My First Test Charge (created for API docs)',
-
-    });
+    let charge 
 
     try {
         charge = await stripe.charges.create({
