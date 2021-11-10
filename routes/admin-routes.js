@@ -27,11 +27,15 @@ router.use(checkAuth);
 
 router.get("/getMessages", adminController.getMessages)
 
-router.post("/createMessage", adminController.createMessages)
+
+router.post("/postMessage", adminController.createAMessage)
+
 
 router.post("/createConsumerItem", adminController.createConsumerItem)
 
 router.post("/createBulkItem", adminController.createBulkItem)
+
+
 
 router.patch("/editMessage", adminController.editMessage)
 

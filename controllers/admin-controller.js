@@ -19,6 +19,7 @@ const config = require('../config.json')
 
 
 const fs = require('fs');
+const { find } = require("../models/Admin");
 
 
 
@@ -600,18 +601,88 @@ const deleteConsumerItem = async (req, res, next) => {
 
 }
 
-const createMessages = async (req, res, next) => {
 
-}
 
 const getMessages = async (req, res, next) => {
 
+    let findAdmin 
 
+    try {
+        findAdmin = await Admin.findById(req.userData.userId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
 
+    }
+
+    if(!findAdmin){
+        const error = new HttpError("you're not logged in, michael")
+        return next(error)
+    }
+
+    let findMessages
+
+    try {
+        findMessages = await Messages.find({_id: findAdmin.messages})
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)        
+    }
+
+    res.json({findMessages})
+    
+
+    
 
 }
 
 const createAMessage = async (req, res, next) => {
+
+    const {message, messageBoardId} = req.body
+
+    let findAdmin 
+
+    try {
+        findAdmin = await Admin.findById(req.userData.userId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+
+    }
+
+    if(!findAdmin){
+        const error = new HttpError("you're not logged in, michael")
+        return next(error)
+    }
+
+
+    const newMessage = {
+        message,
+        date: Date.now(),
+        sender: req.userData.userId
+    }
+
+    let findMessageBoard
+
+    try {
+        findMessageBoard = await Messages.findById(messageBoardId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    try {
+        findMessageBoard.messages.push(newMessage)
+        await findMessageBoard.save()
+    } catch (err) {
+        const error = new HttpError("something went wrong adding that message")
+        return next(error)
+    }
+
+    res.json({findMessageBoard})
+
+
+
 
 }
 
@@ -651,7 +722,6 @@ exports.updateConsumerItem = updateConsumerItem
 
 exports.deleteConsumerItem = deleteConsumerItem
 
-exports.createMessages = createMessages 
 
 
 
