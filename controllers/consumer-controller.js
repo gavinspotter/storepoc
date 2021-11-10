@@ -169,9 +169,9 @@ const login = async (req, res, next) => {
 
 
 
-const favoriteBulk = async (req, res, next) => {
+// const favoriteBulk = async (req, res, next) => {
 
-}
+// }
 
 const purchaseConsumerGood = async (req, res, next) => {
 
@@ -179,16 +179,84 @@ const purchaseConsumerGood = async (req, res, next) => {
 
 const editDeliveryDetails = async (req, res, next) => {
 
+    const { firstName, lastName, street, city, state, zipCode, country, email } = req.body
+
+
+    let findUser 
+
+    try {
+        findUser = await Customer.findById(req.customerData.customerId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!findUser){
+        const error = new HttpError("you're not logged in or your login token has expired")
+        return next(error)
+    }
+
+    findUser.deliveryDetails.firstName = firstName
+    findUser.deliveryDetails.lastName = lastName
+    findUser.deliveryDetails.street = street
+    findUser.deliveryDetails.city = city
+    findUser.deliveryDetails.state = state
+    findUser.deliveryDetails.zipCode = zipCode
+    findUser.deliveryDetails.country = country 
+    findUser.deliveryDetails.email = email
+
+    try {
+        await findUser.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save that, sorry")
+        return next(error)
+    }
+
+    res.json({findUser})
+
+
+
+
 }
 
-const editEmail = async (req, res, next) => {
+// const editEmail = async (req, res, next) => {
 
-}
+// }
 
 
 
 const getMessages = async (req, res, next) => {
 
+    let findUser 
+
+    try {
+        findUser = await Customer.findById(req.customerData.customerId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!findUser){
+        const error = new HttpError("you're not logged in or your login token has expired")
+        return next(error)
+    }
+
+    if(findUser._id.toString() !== req.customerData.customerId){
+        const error = new HttpError("you don't have permission to access that")
+        return next(error)
+    }
+
+    let findMessageBoard 
+
+    try {
+        findMessageBoard = await Messages.findById(findUser.messages)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+
+    res.json({findMessageBoard})
 
 
 
@@ -196,6 +264,7 @@ const getMessages = async (req, res, next) => {
 
 const createAMessage = async (req, res, next) => {
 
+    
 
 }
 
@@ -288,22 +357,22 @@ const createMessages = async (req, res, next) => {
 
 }
 
-const editMessage = async (req, res, next) => {
+// const editMessage = async (req, res, next) => {
     
-}
+// }
 
 
 exports.signup = signup
 
 exports.login = login
 
-exports.favoriteBulk = favoriteBulk
+// exports.favoriteBulk = favoriteBulk
 
 exports.purchaseConsumerGood = purchaseConsumerGood
 
 exports.editDeliveryDetails = editDeliveryDetails
 
-exports.editEmail = editEmail
+// exports.editEmail = editEmail
 
 exports.getMessages = getMessages
 
@@ -311,4 +380,4 @@ exports.createMessages = createMessages
 
 exports.createAMessage = createAMessage
 
-exports.editMessage = editMessage
+// exports.editMessage = editMessage

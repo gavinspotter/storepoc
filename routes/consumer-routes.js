@@ -16,6 +16,17 @@ router.post("/login", customerController.login)
 router.use(checkAuth);
 
 
+
+router.patch("/updateDetails", customerController.editDeliveryDetails )
+
+
+router.get("/getMessages", customerController.getMessages)
+
+
+
+router.post("/postMessage", customerController.createAMessage)
+
 router.post("/createMessageBoard", customerController.createMessages)
+
 
 module.exports = router
