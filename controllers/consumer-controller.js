@@ -188,6 +188,85 @@ const login = async (req, res, next) => {
 
 const purchaseConsumerGood = async (req, res, next) => {
 
+    const { itemId, email, firstName, lastName, street, city, state, zipCode, country, number, exp_month, exp_year, cvc } = req.body
+
+
+    let findItem 
+
+    try {
+        findItem = await ConsumerGoods.findById(itemId)
+    } catch (err) {
+        const error = new HttpError("something has gone wrong, sorry")
+        return next(error)
+    }
+
+    if(findItem.sold === true){
+        const error = new HttpError("this item is already sold")
+        return next(error)
+    }
+
+    if(!email || !firstName || !lastName || !street || !city || !state|| !zipCode){
+        const error = new HttpError("we're missing some information, we need your first and last name, street, city, state, zip code, and email")
+        return next(error)
+    }
+
+    findItem.sold = true
+    findItem.deliveryDetails.firstName = firstName
+    findItem.deliveryDetails.lastName = lastName 
+    findItem.deliveryDetails.street = street 
+    findItem.deliveryDetails.city = city 
+    findItem.deliveryDetails.state = state;
+    findItem.deliveryDetails.zipCode = zipCode;
+    findItem.deliveryDetails.country = country;
+    findItem.deliveryDetails.email = email 
+
+    let token
+
+
+
+    try {
+        token = await stripe.tokens.create({
+            card: {
+                number: number ,
+                exp_month: exp_month,
+                exp_year: exp_year,
+                cvc: cvc,
+            },
+        });
+    } catch (err) {
+        const error = new HttpError("had trouble processing your card")
+        return next(error)
+    }
+
+
+    let charge = await stripe.charges.create({
+        amount: findItem.price,
+        currency: 'usd',
+        
+        source: token.id,
+        description: 'My First Test Charge (created for API docs)',
+
+    });
+
+    try {
+        charge = await stripe.charges.create({
+            amount: findItem.price,
+            currency: 'usd',
+            
+            source: token.id,
+            description: 'My First Test Charge (created for API docs)',
+    
+        });
+        await findItem.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save that")
+        return next(error)
+    }
+
+    res.json({ findItem, charge })
+
+
+
 }
 
 const purchaseConsumerGoodOnAccount = async (req, res, next) => {
