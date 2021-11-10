@@ -39,9 +39,9 @@ router.patch("/updateConsumerItem", adminController.updateConsumerItem)
 
 router.patch("/updateBulk", adminController.updateBulkItem)
 
-router.delete("/deleteConsumerItem", adminController.deleteConsumerItem)
-
 router.delete("/deleteBulk/:bulkId", adminController.deleteBulkItem)
+
+router.delete("/deleteConsumerItem/:itemId", adminController.deleteConsumerItem)
 
 
 

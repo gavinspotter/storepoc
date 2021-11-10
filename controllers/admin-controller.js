@@ -541,6 +541,63 @@ const updateConsumerItem = async (req, res, next) => {
 
 const deleteConsumerItem = async (req, res, next) => {
 
+
+    const itemId = req.params.itemId
+
+    let findAdmin
+
+    try {
+        findAdmin = await Admin.findById(req.userData.userId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!findAdmin){
+        const error = new HttpError("you're not logged in")
+        return next(error)
+    }
+
+
+    let item 
+
+    try {
+        item = await ConsumerGoods.findById(itemId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!item){
+
+        const error = new HttpError("thats not an item")
+        return next(error)
+    }
+
+    if(item.admin.toString() !== req.userData.userId){
+        const error = new HttpError("you don't have permission to do that")
+        return next(error)
+    }
+
+    try {
+        await item.remove()
+        findAdmin.consumerGoods.pull(item)
+
+    } catch (err) {
+        const error = new HttpError("couldn't delete that item")
+        return next(error)
+    }
+
+    try {
+        await findAdmin.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save that")
+        return next(error)
+    }
+
+    res.json({findAdmin})
+
+
 }
 
 const getMessages = async (req, res, next) => {
