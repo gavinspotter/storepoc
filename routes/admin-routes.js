@@ -37,7 +37,7 @@ router.post("/createBulkItem", adminController.createBulkItem)
 
 
 
-router.patch("/editMessage", adminController.editMessage)
+// router.patch("/editMessage", adminController.editMessage)
 
 router.patch("/updateConsumerItem", adminController.updateConsumerItem)
 
