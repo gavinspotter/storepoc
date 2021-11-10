@@ -11,7 +11,7 @@ const adminSchema = new Schema({
     password: { type: String, required: true },
     messages: [{ type: mongoose.Types.ObjectId, required: true, ref: "Messages" }],
     bulkWholeSale: [{ type: mongoose.Types.ObjectId, required: true, ref: "Bulks" }],
-    ConsumerGoods: [{ type: mongoose.Types.ObjectId, required: true, ref: "ConsumerGoods" }],
+    consumerGoods: [{ type: mongoose.Types.ObjectId, required: true, ref: "ConsumerGoods" }],
     customers: [{ type: mongoose.Types.ObjectId, required: true, ref: "Customers" }],
 
 

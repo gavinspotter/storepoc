@@ -11,14 +11,14 @@ const consumerGoodsSchema = new Schema({
     description: {type: String, required: true},
     price: {type: String, required: true},
     deliveryDetails: {
-        firstName: {type: String, required: true},
-        lastName: {type: String, required: true},
-        street: {type: String, required: true},
-        city: {type: String, required: true},
-        state: {type: String, required: true},
-        zipCode: {type: String, required: true},
-        country: {type: String, required: true},
-        email: {type: String, required: true}
+        firstName: {type: String},
+        lastName: {type: String},
+        street: {type: String},
+        city: {type: String},
+        state: {type: String},
+        zipCode: {type: String},
+        country: {type: String},
+        email: {type: String}
 
     },
     sold: {type: Boolean},

@@ -14,6 +14,8 @@ const Bulk = require("../models/BulkWholeSale")
 const ConsumerGoods = require("../models/ConsumerGoods")
 const Messages = require("../models/Messages")
 
+const config = require('../config.json')
+
 
 
 const fs = require('fs');
@@ -188,35 +190,30 @@ const createBulkItem = async (req, res, next) => {
         return next(error)
     }
 
-    const s3 = new aws.S3(
-        {
-            accessKeyId: process.env.AWS_KEY,
-            secretAccessKey: process.env.AWS_SECRET_KEY
+    // const s3 = new aws.S3(
+    //     {
+    //         accessKeyId: config.AWS_KEY,
+    //         secretAccessKey: config.AWS_SECRET_KEY
              
    
-        }
-    );
-
-    console.log(process.env.AWS_KEY)
-    console.log(process.env.AWS_SECRET_KEY)
-    console.log(process.env.DB_NAME)
-    console.log(process.env.gav)
+    //     }
+    // );
 
     
 
-    const fileContent = fs.readFileSync(__dirname + "/prj_portfolio.png")
+    // const fileContent = fs.readFileSync(__dirname + "/prj_portfolio.png")
 
-        const params = {
-            Bucket: "michaelrossbucket",
-            Key: 'hi.png', // File name you want to save as in S3
-            Body: fileContent
-        };
-        s3.upload(params, function(err, data) {
-            if (err) {
-                throw err;
-            }
-            console.log(`File uploaded successfully. `);
-        });
+    //     const params = {
+    //         Bucket: "michaelrossbucket",
+    //         Key: 'hi.png', // File name you want to save as in S3
+    //         Body: fileContent
+    //     };
+    //     s3.upload(params, function(err, data) {
+    //         if (err) {
+    //             throw err;
+    //         }
+    //         console.log(`File uploaded successfully. `);
+    //     });
 
   
     
@@ -272,17 +269,194 @@ const createBulkItem = async (req, res, next) => {
 
 const getBulkItems = async (req, res, next) => {
 
+    let findBulk
+
+    try {
+        findBulk = await Bulk.find()
+    } catch (err) {
+        const error = new HttpError("couldn't load the bulk items")
+        return next(error)
+    }
+
+    res.json({findBulk})
+
+
 }
 
 const updateBulkItem = async (req, res, next) => {
+
+
+    const { bulkId, name, description, price} = req.body
+
+
+    let findAdmin 
+
+    try {
+        findAdmin = await Admin.findById(req.userData.userId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+
+    }
+
+    if(!findAdmin){
+        const error = new HttpError("you're not logged in, michael")
+        return next(error)
+    }
+
+    let findBulk
+
+    try {
+        findBulk = await Bulk.findById(bulkId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!findBulk){
+        const error = new HttpError("that's not a bulk item")
+        return next(error)
+    }
+
+    if (findBulk.admin.toString() !== req.userData.userId) {
+        const error = new HttpError(
+          "you're not the creator of this bulk"
+          
+        )
+        return next(error)
+      }
+
+    
+      findBulk.name = name;
+      findBulk.price = price;
+      findBulk.description = description;
+
+
+      try {
+          await findBulk.save()
+      } catch (err) {
+          const error = new HttpError("something went wrong saving that")
+          return next(error)
+      }
+
+      res.json({findBulk})
+
+    
+
+
+
 
 }
 
 const deleteBulkItem = async (req, res, next) => {
 
+    const bulkId = req.params.bulkId
+
+    let findAdmin
+
+    try {
+        findAdmin = await Admin.findById(req.userData.userId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!findAdmin){
+        const error = new HttpError("you're not logged in")
+        return next(error)
+    }
+
+    let bulk
+
+    try {
+        bulk = await Bulk.findById(bulkId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!bulk){
+        const error = new HttpError("thats not a product")
+        return next(error)
+    }
+
+
+    if(bulk.admin.toString() !== req.userData.userId){
+        const error = new HttpError("you don't have permission to do that")
+        return next(error)
+    }
+
+    try {
+        await bulk.remove()
+        findAdmin.bulkWholeSale.pull(bulk)
+
+    } catch (err) {
+        const error = new HttpError("couldn't delete that bulk item")
+        return next(error)
+    }
+
+    try {
+        await findAdmin.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save that")
+        return next(error)
+    }
+
+    res.json({findAdmin})
+
 }
 
 const createConsumerItem = async (req, res, next) => {
+
+
+    const {name, description,price, notes} = req.body
+
+    let findUser 
+
+    try {
+        findUser = await Admin.findById(req.userData.userId)
+    } catch (err) {
+        const error = new HttpError("something went wrong you're not logged in")
+        return next(error)
+    }
+
+    if(!findUser){
+        const error = new HttpError("you're not logged in")
+        return next(error)
+    }
+
+    const createdItem = new ConsumerGoods({
+        name,
+        description,
+        price,
+        bucketPhotoId:"hi" ,
+
+        admin: req.userData.userId
+    })
+
+    try {
+        await createdItem.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save that")
+        return next(error)
+    }
+
+    try {
+        findUser.consumerGoods.push(createdItem)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    try {
+        findUser.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save your entry")
+        return next(error)
+    }
+
+    res.json({findUser, createdItem})
+
 
 }
 
