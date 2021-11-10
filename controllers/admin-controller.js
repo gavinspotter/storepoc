@@ -480,6 +480,63 @@ const getConsumerItems = async (req, res, next) => {
 
 const updateConsumerItem = async (req, res, next) => {
 
+    const { itemId, name, description, price} = req.body
+
+    let findAdmin 
+
+    try {
+        findAdmin = await Admin.findById(req.userData.userId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+
+    }
+
+    if(!findAdmin){
+        const error = new HttpError("you're not logged in, michael")
+        return next(error)
+    }
+
+    let findItem
+
+    try {
+        findItem = await ConsumerGoods.findById(itemId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+
+    if(!findItem){
+        const error = new HttpError("that's not a consumer item")
+        return next(error)
+    }
+
+    if (findItem.admin.toString() !== req.userData.userId) {
+        const error = new HttpError(
+          "you're not the creator of this bulk"
+          
+        )
+        return next(error)
+      }
+
+      findItem.name = name;
+
+      findItem.price = price;
+
+      findItem.description = description;
+
+      try {
+          await findItem.save()
+      } catch (err) {
+          const error = new HttpError("couldn't save that")
+          return next(error)
+      }
+
+      res.json({findItem})
+
+
+
 }
 
 const deleteConsumerItem = async (req, res, next) => {
