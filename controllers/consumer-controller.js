@@ -196,6 +196,11 @@ const editDeliveryDetails = async (req, res, next) => {
         return next(error)
     }
 
+    if(findUser._id.toString() !== req.customerData.customerId){
+        const error = new HttpError("you don't have permission to access that")
+        return next(error)
+    }
+
     findUser.deliveryDetails.firstName = firstName
     findUser.deliveryDetails.lastName = lastName
     findUser.deliveryDetails.street = street
@@ -264,7 +269,63 @@ const getMessages = async (req, res, next) => {
 
 const createAMessage = async (req, res, next) => {
 
-    
+    const { message} = req.body
+
+    let findUser 
+
+    try {
+        findUser = await Customer.findById(req.customerData.customerId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!findUser){
+        const error = new HttpError("you're not logged in or your login token has expired")
+        return next(error)
+    }
+
+    if(findUser._id.toString() !== req.customerData.customerId){
+        const error = new HttpError("you don't have permission to access that")
+        return next(error)
+    }
+
+    let findMessageBoard 
+
+    try {
+        findMessageBoard = await Messages.findById(findUser.messages)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+
+    const newMessage = {
+        message,
+        date: Date(),
+        sender: req.customerData.customerId
+    }
+
+    try {
+        findMessageBoard.messages.push(newMessage)
+        await findMessageBoard.save()
+    } catch (err) {
+        const error = new HttpError("something went wrong sending that, sorry")
+        return next(error)
+    }
+
+
+    res.json({findMessageBoard})
+
+
+
+
+
+
+
+
+
+
 
 }
 
