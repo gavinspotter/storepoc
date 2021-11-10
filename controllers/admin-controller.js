@@ -600,13 +600,22 @@ const deleteConsumerItem = async (req, res, next) => {
 
 }
 
-const getMessages = async (req, res, next) => {
-
-}
-
 const createMessages = async (req, res, next) => {
 
 }
+
+const getMessages = async (req, res, next) => {
+
+
+
+
+}
+
+const createAMessage = async (req, res, next) => {
+
+}
+
+
 
 const editMessage = async (req, res, next) => {
 
@@ -644,7 +653,11 @@ exports.deleteConsumerItem = deleteConsumerItem
 
 exports.createMessages = createMessages 
 
-exports.getMessages = getMessages 
+
+
+exports.getMessages = getMessages
+
+exports.createAMessage = createAMessage
 
 exports.editMessage = editMessage 
 

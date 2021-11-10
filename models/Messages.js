@@ -15,8 +15,8 @@ const messageSchema = new Schema({
 
     messages: [messagesSchema],
     admin: { type: mongoose.Types.ObjectId, required: true, ref: "Admin" },
-    consumer: { type: mongoose.Types.ObjectId, required: true, ref: "Consumers" }
-
+    consumer: { type: mongoose.Types.ObjectId, required: true, ref: "Consumers" },
+    hidden: {type: Boolean}
 
 
 

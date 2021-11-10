@@ -7,6 +7,7 @@ const Customer = require("../models/Customers")
 
 const Admin = require("../models/Admin")
 
+const Messages = require("../models/Messages")
 
 
 const signup = async (req, res, next) => {
@@ -49,6 +50,7 @@ const signup = async (req, res, next) => {
         const error = new HttpError("couldn't add you to our directory")
         return next(error)
     }
+
 
    
 
@@ -187,9 +189,81 @@ const editEmail = async (req, res, next) => {
 
 const getMessages = async (req, res, next) => {
 
+
+
+
 }
 
 const createMessages = async (req, res, next) => {
+
+    let findConsumer 
+
+    try {
+        findConsumer = await Customer.findById(req.customerData.customerId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+
+    let findAdmin 
+
+    try {
+        findAdmin = Admin.find({username: "michaelross"})
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!findAdmin){
+        const error = new HttpError("couldn't find the owner")
+        return next(error)
+    }
+    
+
+
+
+
+    const createdMessageBoard = new Messages({
+
+        admin: findAdmin[0]._id,
+        consumer: findConsumer._id,
+        hidden: true,
+        messages: []
+
+
+
+
+    })
+
+
+    try {
+        createdMessageBoard.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save that request")
+        return next(error)
+    }
+
+    findConsumer.messages = createdMessageBoard._id
+
+    try {
+       await findConsumer.save()
+    } catch (err) {
+        const error = new HttpError("couldn't perform this task")
+        return next(error)
+    }
+
+    try {
+        findAdmin.messages.push(createdMessageBoard)
+        await findAdmin.save()
+    } catch (err) {
+        const error = new HttpError("couldn't perform that task")
+        return next(error)
+    }
+
+    res.json({findAdmin, findConsumer, createdMessageBoard})
+
+
 
 }
 
