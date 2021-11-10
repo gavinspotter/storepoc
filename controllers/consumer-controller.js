@@ -222,7 +222,7 @@ const purchaseConsumerGoodOnAccount = async (req, res, next) => {
         const error = new HttpError("something has gone wrong, sorry")
         return next(error)
     }
-    console.log(findItem)
+    
 
     const customer = await stripe.customers.retrieve(
         findUser.stripeCustomerId
@@ -233,6 +233,10 @@ const purchaseConsumerGoodOnAccount = async (req, res, next) => {
         return next(error)
     }
 
+    if(findItem.sold === true){
+        const error = new HttpError("this item is already sold")
+        return next(error)
+    }
 
     findItem.sold = true
     findItem.customer = findUser._id
