@@ -16,8 +16,7 @@ const adminSchema = new Schema({
 
 
     
-    stripeBusinessId: { type: String }
-
+    
 
 
 })

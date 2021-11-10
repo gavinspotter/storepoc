@@ -1,4 +1,5 @@
 const HttpError = require("../models/HttpError")
+const config = require('../config.json')
 
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
@@ -8,7 +9,8 @@ const Customer = require("../models/Customers")
 const Admin = require("../models/Admin")
 
 const Messages = require("../models/Messages")
-
+const ConsumerGoods = require("../models/ConsumerGoods")
+const stripe = require("stripe")(config.secretKey)
 
 const signup = async (req, res, next) => {
     const { email, firstName, lastName , password } = req.body
@@ -52,6 +54,16 @@ const signup = async (req, res, next) => {
     }
 
 
+    let stripeCustomerId
+
+    try {
+        stripeCustomerId = await stripe.customers.create({
+            description: "Welcome!"
+        })
+    } catch (err) {
+        const error = new HttpError("something went wrong, sorry")
+        return next(error)
+    }
    
 
 
@@ -60,6 +72,7 @@ const signup = async (req, res, next) => {
         firstName,
         lastName,
         email,
+        stripeCustomerId: stripeCustomerId.id,
         
         password: hashedPassword,
         admin: findAdmin[0]._id
@@ -177,9 +190,94 @@ const purchaseConsumerGood = async (req, res, next) => {
 
 }
 
+const purchaseConsumerGoodOnAccount = async (req, res, next) => {
+
+
+    const { itemId } = req.body
+
+    let findUser 
+
+    try {
+        findUser = await Customer.findById(req.customerData.customerId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!findUser){
+        const error = new HttpError("you're not logged in or your login token has expired")
+        return next(error)
+    }
+
+    if(findUser._id.toString() !== req.customerData.customerId){
+        const error = new HttpError("you don't have permission to access that")
+        return next(error)
+    }
+
+    let findItem 
+
+    try {
+        findItem = await ConsumerGoods.findById(itemId)
+    } catch (err) {
+        const error = new HttpError("something has gone wrong, sorry")
+        return next(error)
+    }
+    console.log(findItem)
+
+    const customer = await stripe.customers.retrieve(
+        findUser.stripeCustomerId
+    );
+
+    if(!customer.default_source){
+        const error = new HttpError("you haven't added a card yet")
+        return next(error)
+    }
+
+
+    findItem.sold = true
+    findItem.customer = findUser._id
+
+    try {
+        await findItem.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save that")
+        return next(error)
+    }
+
+
+
+    try {
+        findUser.consumerPurchases.push(findItem._id)
+        await findUser.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save that")
+        return next(error)
+    }
+
+
+
+    
+
+
+
+
+    const charge = await stripe.charges.create({
+        amount: findItem.price,
+        currency: 'usd',
+        customer: customer.id,
+        source: customer.default_source,
+        description: 'My First Test Charge (created for API docs)',
+
+    });
+
+    res.json({ findItem, findUser, charge })
+
+
+}
+
 const editDeliveryDetails = async (req, res, next) => {
 
-    const { firstName, lastName, street, city, state, zipCode, country, email } = req.body
+    const { firstName, lastName, street, city, state, zipCode, country, email, number, exp_month, exp_year, cvc } = req.body
 
 
     let findUser 
@@ -201,6 +299,36 @@ const editDeliveryDetails = async (req, res, next) => {
         return next(error)
     }
 
+    let token
+
+
+
+    try {
+        token = await stripe.tokens.create({
+            card: {
+                number: number ,
+                exp_month: exp_month,
+                exp_year: exp_year,
+                cvc: cvc,
+            },
+        });
+    } catch (err) {
+        const error = new HttpError("had trouble processing your card")
+        return next(error)
+    }
+
+
+    const customer = await stripe.customers.update(
+        findUser.stripeCustomerId,
+        {
+            source: token.id,
+
+        }
+
+    );
+
+
+
     findUser.deliveryDetails.firstName = firstName
     findUser.deliveryDetails.lastName = lastName
     findUser.deliveryDetails.street = street
@@ -217,7 +345,7 @@ const editDeliveryDetails = async (req, res, next) => {
         return next(error)
     }
 
-    res.json({findUser})
+    res.json({findUser, customer})
 
 
 
@@ -432,6 +560,8 @@ exports.login = login
 exports.purchaseConsumerGood = purchaseConsumerGood
 
 exports.editDeliveryDetails = editDeliveryDetails
+
+exports.purchaseConsumerGoodOnAccount = purchaseConsumerGoodOnAccount
 
 // exports.editEmail = editEmail
 

@@ -17,7 +17,7 @@ const customerSchema = new Schema({
     password: { type: String, required: true },
     stripeCustomerId: {type: String},
     bulkSeeings: [ ],
-    consumerPurchases: [],
+    consumerPurchases: [ { type: mongoose.Types.ObjectId, required: true, ref: "ConsumerGoods" }],
     deliveryDetails: {
         firstName: {type: String},
         lastName: {type: String},

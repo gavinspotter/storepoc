@@ -19,6 +19,7 @@ router.use(checkAuth);
 
 router.patch("/updateDetails", customerController.editDeliveryDetails )
 
+router.post("/buyItemOnAccount", customerController.purchaseConsumerGoodOnAccount)
 
 router.get("/getMessages", customerController.getMessages)
 

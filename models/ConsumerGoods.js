@@ -25,7 +25,8 @@ const consumerGoodsSchema = new Schema({
     delivered: {type: Boolean},
     notes: {type: String},
     bucketPhotoId: {type: String, required: true},
-    admin:  { type: mongoose.Types.ObjectId, required: true, ref: "Admin" }
+    admin:  { type: mongoose.Types.ObjectId, required: true, ref: "Admin" },
+    customer: { type: mongoose.Types.ObjectId, ref: "Customers" }
 
 
 })

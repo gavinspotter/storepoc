@@ -431,7 +431,7 @@ const createConsumerItem = async (req, res, next) => {
         description,
         price,
         bucketPhotoId:"hi" ,
-
+    
         admin: req.userData.userId
     })
 
