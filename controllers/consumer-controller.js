@@ -194,6 +194,11 @@ const getMessages = async (req, res, next) => {
 
 }
 
+const createAMessage = async (req, res, next) => {
+
+
+}
+
 const createMessages = async (req, res, next) => {
 
     let findConsumer 
@@ -205,11 +210,21 @@ const createMessages = async (req, res, next) => {
         return next(error)
     }
 
+    if(!findConsumer){
+        const error = new HttpError("you're not logged in")
+        return next(error)
+    }
+
+    if(findConsumer.messages){
+        const error = new HttpError("you already have a chat")
+        return next(error)
+    }
+
 
     let findAdmin 
 
     try {
-        findAdmin = Admin.find({username: "michaelross"})
+        findAdmin = await Admin.find({username: "michaelross"})
     } catch (err) {
         const error = new HttpError("something went wrong")
         return next(error)
@@ -219,6 +234,10 @@ const createMessages = async (req, res, next) => {
         const error = new HttpError("couldn't find the owner")
         return next(error)
     }
+
+
+
+   
     
 
 
@@ -238,7 +257,7 @@ const createMessages = async (req, res, next) => {
 
 
     try {
-        createdMessageBoard.save()
+        await createdMessageBoard.save()
     } catch (err) {
         const error = new HttpError("couldn't save that request")
         return next(error)
@@ -253,10 +272,12 @@ const createMessages = async (req, res, next) => {
         return next(error)
     }
 
+    
     try {
-        findAdmin.messages.push(createdMessageBoard)
-        await findAdmin.save()
+        findAdmin[0].messages.push(createdMessageBoard)
+        await findAdmin[0].save()
     } catch (err) {
+        console.log(err)
         const error = new HttpError("couldn't perform that task")
         return next(error)
     }
@@ -287,5 +308,7 @@ exports.editEmail = editEmail
 exports.getMessages = getMessages
 
 exports.createMessages = createMessages
+
+exports.createAMessage = createAMessage
 
 exports.editMessage = editMessage

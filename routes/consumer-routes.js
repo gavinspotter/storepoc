@@ -15,4 +15,7 @@ router.post("/login", customerController.login)
 
 router.use(checkAuth);
 
+
+router.post("/createMessageBoard", customerController.createMessages)
+
 module.exports = router
