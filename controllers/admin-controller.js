@@ -462,6 +462,20 @@ const createConsumerItem = async (req, res, next) => {
 
 const getConsumerItems = async (req, res, next) => {
 
+
+    let findConsumerItems
+
+    try {
+        findConsumerItems = await ConsumerGoods.find()
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    res.json({findConsumerItems})
+
+
+
 }
 
 const updateConsumerItem = async (req, res, next) => {
