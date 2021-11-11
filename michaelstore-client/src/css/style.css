@@ -14,6 +14,30 @@ body {
   /* font-size: 16px; */
   line-height: 1.7; }
 
+.welcome {
+  width: 100%;
+  height: 90vh;
+  position: relative;
+  background: #f7f3f3; }
+  .welcome--intro {
+    position: relative;
+    left: 17%;
+    top: 35%;
+    width: 40rem;
+    color: #616161; }
+  .welcome--welcome {
+    position: absolute;
+    right: 17%;
+    top: 20%;
+    width: 38rem;
+    height: 30rem;
+    background: white;
+    border-radius: 5rem; }
+    .welcome--welcome--text {
+      position: relative;
+      bottom: 0%;
+      left: 20%; }
+
 .loading-spinner__overlay {
   height: 100%;
   width: 100%;
@@ -68,3 +92,34 @@ body {
   transform: translateY(-10rem);
   opacity: 0;
   transition: all 200ms; }
+
+.navbar {
+  width: 100%;
+  height: 5rem;
+  background-color: #225dfd;
+  font-size: 3rem;
+  position: relative; }
+  .navbar--left a {
+    color: white;
+    text-decoration: none;
+    position: absolute;
+    left: 3%; }
+  .navbar--right a {
+    color: white;
+    text-decoration: none;
+    display: inline-block; }
+  .navbar--right-bulk {
+    display: inline-block;
+    position: absolute;
+    right: 20%;
+    top: 0; }
+  .navbar--right-retail {
+    display: inline-block;
+    position: absolute;
+    right: 11.5%;
+    top: 0; }
+  .navbar--right-login {
+    display: inline-block;
+    position: absolute;
+    right: 3%;
+    top: 0; }

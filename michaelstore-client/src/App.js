@@ -18,6 +18,7 @@ import ChatList from './consumer/customerChat/ChatList';
 import Details from './consumer/customerDetails/Details';
 import AddItemContainer from './admin/addAnItem/AddItemContainer';
 import MessagesList from './admin/chat/MessagesList';
+import HomePage from './shared/home/HomePage';
 
 
 
@@ -38,6 +39,14 @@ const App = () => {
       <Route path="/messages" element={<MessageBoardsList/>} />
       <Route path="/messages/:md" element={<MessagesList/>}/>
       <Route path="/addItem" element={<AddItemContainer/>} />
+      
+      <Route path="/" element={<AboutUs/>} />
+      <Route path="/consumerGoods" element={<ConsumerGoodsList/>} />
+      <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
+      <Route path="/bulkItems" element={<BulkList/>} />
+      <Route path="/bulkItems/:biId" element={<BulkLook/>}/>
+      <Route path="/welcome" element={<WelcomeContainer/>}/>
+      <Route path="*" element={<AboutUs/>}/>
     </Routes>
  )
 
@@ -48,6 +57,14 @@ const App = () => {
 
       <Route path="/yourMessages" element={<ChatList/>} />
       <Route path="/details" element={<Details/>} />
+
+      <Route path="/" element={<AboutUs/>} />
+      <Route path="/consumerGoods" element={<ConsumerGoodsList/>} />
+      <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
+      <Route path="/bulkItems" element={<BulkList/>} />
+      <Route path="/bulkItems/:biId" element={<BulkLook/>}/>
+      <Route path="/welcome" element={<WelcomeContainer/>}/>
+      <Route path="*" element={<AboutUs/>}/>
     </Routes>
     )
   }else{
@@ -71,8 +88,10 @@ const App = () => {
     >
       
       <Router>
+        <HomePage>
       
         {route}
+        </HomePage>
       </Router>
       </AuthContext.Provider>
   )
