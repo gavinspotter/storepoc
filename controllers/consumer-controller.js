@@ -174,7 +174,7 @@ const login = async (req, res, next) => {
 
 
     res.json({
-        customerId: existingUser.id, email: existingUser.email, token: token 
+        customerId: existingUser.id, email: existingUser.email, customerToken: token 
     })
 }
 

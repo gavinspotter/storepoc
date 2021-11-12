@@ -20,10 +20,64 @@
     height: 30rem;
     background: white;
     border-radius: 5rem;
+    & div {
+      display: inline-block;
+      color: rgb(0, 162, 255);
+    }
     &--text {
       position: relative;
-      bottom: 0%;
-      left: 20%;
+      top: 93%;
+      left: 40%;
+      display: inline-block;
+    }
+  }
+}
+
+@media (max-width: 1190px) {
+  .welcome {
+    width: 100%;
+    height: 90vh;
+    position: relative;
+    background: rgb(247, 243, 243);
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+    &--intro {
+      position: static;
+      margin-left: auto;
+      margin-right: auto;
+
+      top: 0;
+      right: 0;
+      display: block;
+      text-align: center;
+
+      color: rgb(97, 97, 97);
+    }
+
+    &--welcome {
+      position: static;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 5rem;
+
+      top: 0;
+      right: 0;
+      display: block;
+      text-align: center;
+
+      & div {
+        display: block;
+      }
+      &--text {
+        position: relative;
+        top: 87%;
+        left: 0;
+        display: block;
+        & div {
+          color: rgb(0, 162, 255);
+          display: block;
+        }
+      }
     }
   }
 }

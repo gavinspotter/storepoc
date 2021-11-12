@@ -1,8 +1,8 @@
 .navbar {
   width: 100%;
-  height: 5rem;
+  height: 3rem;
   background-color: rgb(34, 93, 253);
-  font-size: 3rem;
+  font-size: 2rem;
   position: relative;
 
   &--left {
@@ -15,28 +15,37 @@
   }
 
   &--right {
+    position: absolute;
+    right: 6%;
     & a {
       color: white;
       text-decoration: none;
-      display: inline-block;
+      padding-right: 1rem;
+      padding-left: 1rem;
+      font-weight: 50;
     }
     &-bulk {
       display: inline-block;
-      position: absolute;
-      right: 20%;
-      top: 0;
+      border-right: solid white 0.1rem;
+      border-left: solid white 0.1rem;
+
+      //   position: absolute;
+      //   right: 20%;
+      //   top: 0;
     }
     &-retail {
+      border-right: solid white 0.1rem;
       display: inline-block;
-      position: absolute;
-      right: 11.5%;
-      top: 0;
+      //   position: absolute;
+      //   right: 11.5%;
+      //   top: 0;
     }
     &-login {
+      border-right: solid white 0.1rem;
       display: inline-block;
-      position: absolute;
-      right: 3%;
-      top: 0;
+      //   position: absolute;
+      //   right: 3%;
+      //   top: 0;
     }
   }
 }

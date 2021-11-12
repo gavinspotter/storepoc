@@ -19,6 +19,7 @@ import Details from './consumer/customerDetails/Details';
 import AddItemContainer from './admin/addAnItem/AddItemContainer';
 import MessagesList from './admin/chat/MessagesList';
 import HomePage from './shared/home/HomePage';
+import LoginContainer from './admin/adminLogin/LoginContainer';
 
 
 
@@ -45,7 +46,7 @@ const App = () => {
       <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
       <Route path="/bulkItems" element={<BulkList/>} />
       <Route path="/bulkItems/:biId" element={<BulkLook/>}/>
-      <Route path="/welcome" element={<WelcomeContainer/>}/>
+
       <Route path="*" element={<AboutUs/>}/>
     </Routes>
  )
@@ -63,13 +64,14 @@ const App = () => {
       <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
       <Route path="/bulkItems" element={<BulkList/>} />
       <Route path="/bulkItems/:biId" element={<BulkLook/>}/>
-      <Route path="/welcome" element={<WelcomeContainer/>}/>
+      
       <Route path="*" element={<AboutUs/>}/>
     </Routes>
     )
   }else{
     route = (<Routes>
       <Route path="/" element={<AboutUs/>} />
+      <Route path="/michaelross" element={<LoginContainer/>}/>
       
       <Route path="/consumerGoods" element={<ConsumerGoodsList/>} />
       <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
