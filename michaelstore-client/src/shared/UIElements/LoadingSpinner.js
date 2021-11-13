@@ -1,5 +1,5 @@
 import React from "react"
-import loading from "../../../img/opaque_spinner.gif"
+import loading from "../../img/opaque_spinner.gif"
 
 
 

@@ -8,6 +8,8 @@ const httpServer = require("http").createServer(app);
 const path = require("path")
 const aws = require('aws-sdk')
 
+const formData = require('express-form-data');
+
 
 const io = require("socket.io")(httpServer, {
     cors: {
@@ -31,6 +33,7 @@ const HttpError = require("./models/HttpError")
 
 
 
+app.use(formData.parse());
 
 
 

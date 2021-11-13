@@ -410,7 +410,7 @@ const deleteBulkItem = async (req, res, next) => {
 const createConsumerItem = async (req, res, next) => {
 
 
-    const {name, description,price, notes} = req.body
+    const {name, description,price, notes, bucketPhotoId} = req.body
 
     let findUser 
 
@@ -426,11 +426,39 @@ const createConsumerItem = async (req, res, next) => {
         return next(error)
     }
 
+    const s3 = new aws.S3(
+            {
+                accessKeyId: config.AWS_KEY,
+                secretAccessKey: config.AWS_SECRET_KEY
+                 
+       
+            }
+        );
+
+        const uniqueId = uuidv4()
+        
+    console.log(bucketPhotoId)
+    console.log(req.files)
+    
+        const fileContent = fs.readFileSync(req.files.bucketPhotoId.path)
+    
+            const params = {
+                Bucket: "michaelrossbucket",
+                Key: `${uniqueId}-${req.files.bucketPhotoId.name}`, // File name you want to save as in S3
+                Body: fileContent
+            };
+            s3.upload(params, function(err, data) {
+                if (err) {
+                    throw err;
+                }
+                console.log(`File uploaded successfully. `);
+            });
+
     const createdItem = new ConsumerGoods({
         name,
         description,
         price,
-        bucketPhotoId:"hi" ,
+        bucketPhotoId: `${uniqueId}-${req.files.bucketPhotoId.name}` ,
     
         admin: req.userData.userId
     })
@@ -438,6 +466,7 @@ const createConsumerItem = async (req, res, next) => {
     try {
         await createdItem.save()
     } catch (err) {
+        console.log(err)
         const error = new HttpError("couldn't save that")
         return next(error)
     }

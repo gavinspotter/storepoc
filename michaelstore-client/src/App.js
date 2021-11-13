@@ -42,7 +42,7 @@ const App = () => {
       <Route path="/addItem" element={<AddItemContainer/>} />
       
       <Route path="/" element={<AboutUs/>} />
-      <Route path="/consumerGoods" element={<ConsumerGoodsList/>} />
+      <Route path="/consumerGoods" element={<ConsumerGoodsContainer/>} />
       <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
       <Route path="/bulkItems" element={<BulkList/>} />
       <Route path="/bulkItems/:biId" element={<BulkLook/>}/>

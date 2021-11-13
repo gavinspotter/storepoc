@@ -81,3 +81,31 @@
     }
   }
 }
+
+.consumerGoods {
+  text-align: center;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  padding-right: 8rem;
+  padding-left: 8rem;
+
+  // padding-left: 18rem;
+  // padding-right: 18rem;
+
+  &-block {
+    width: 100%;
+    background: rgb(247, 243, 243);
+  }
+
+  &--card {
+    width: 27.5rem;
+    height: 30rem;
+
+    display: inline-block;
+
+    &-img {
+      height: 20rem;
+      width: 20rem;
+    }
+  }
+}

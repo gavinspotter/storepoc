@@ -79,6 +79,23 @@ body {
           color: #00a2ff;
           display: block; } }
 
+.consumerGoods {
+  text-align: center;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  padding-right: 8rem;
+  padding-left: 8rem; }
+  .consumerGoods-block {
+    width: 100%;
+    background: #f7f3f3; }
+  .consumerGoods--card {
+    width: 27.5rem;
+    height: 30rem;
+    display: inline-block; }
+    .consumerGoods--card-img {
+      height: 20rem;
+      width: 20rem; }
+
 .loading-spinner__overlay {
   height: 100%;
   width: 100%;
@@ -137,9 +154,10 @@ body {
 .navbar {
   width: 100%;
   height: 3rem;
-  background-color: #225dfd;
+  background-color: #032da1;
   font-size: 2rem;
-  position: relative; }
+  position: relative;
+  box-shadow: 0 0.3rem 0.3rem grey; }
   .navbar--left a {
     color: white;
     text-decoration: none;
@@ -155,12 +173,15 @@ body {
       padding-left: 1rem;
       font-weight: 50; }
     .navbar--right-bulk {
+      height: 3rem;
       display: inline-block;
       border-right: solid white 0.1rem;
       border-left: solid white 0.1rem; }
     .navbar--right-retail {
+      height: 3rem;
       border-right: solid white 0.1rem;
       display: inline-block; }
     .navbar--right-login {
+      height: 3rem;
       border-right: solid white 0.1rem;
       display: inline-block; }
