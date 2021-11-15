@@ -103,9 +103,78 @@
 
     display: inline-block;
 
+    &-text {
+    }
+
     &-img {
       height: 20rem;
       width: 20rem;
     }
   }
+}
+
+.addItem {
+  background: rgb(247, 243, 243);
+  width: 100%;
+  height: 100vh;
+  margin-top: 0;
+  overflow: auto;
+  // position: absolute;
+  // top: 0;
+  // z-index: -1;
+
+  &-block {
+    margin-top: 10rem;
+  }
+
+  // margin-left: auto;
+  // margin-right: auto;
+
+  &-box {
+    margin-left: auto;
+    margin-right: auto;
+
+    background: white;
+    border-radius: 5rem;
+    width: 80rem;
+    height: 40rem;
+  }
+
+  &-inputs {
+    position: relative;
+    top: 9rem;
+    left: 5rem;
+  }
+}
+
+.michaelLogin {
+  width: 100%;
+  height: 100vh;
+  background: rgb(247, 243, 243);
+  overflow: auto;
+
+  &-background {
+    margin-right: auto;
+    margin-left: auto;
+
+    text-align: center;
+    margin-top: 12.5rem;
+    background: white;
+    width: 30rem;
+    height: 20rem;
+    border-radius: 5rem;
+    box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem gray;
+  }
+
+  &-input {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    &-top {
+      padding-top: 4rem;
+    }
+  }
+  // position: absolute;
+  // top: 30%;
+  // left: 50%;
 }

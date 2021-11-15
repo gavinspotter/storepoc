@@ -47,10 +47,10 @@ const ConsumerGoodsItem = (props) => {
             
             <img className="consumerGoods--card-img" src={`https://s3.us-east-1.amazonaws.com/michaelrossbucket/${props.bucketPhotoId}`} alt={props.description}/>
 
-            <div>
+            <div className="consumerGoods--card-text">
                 <p>{props.name}</p>
                 <p>{props.description}</p>
-                <p>{props.price}</p>
+                <p>${props.price}</p>
             </div>
         </div>
     )

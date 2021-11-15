@@ -7,6 +7,8 @@ import {useHttpClient} from "../../shared/hooks/http-hook"
 import {AuthContext} from "../../shared/context/auth-context"
 import ErrorModal from "../../shared/UIElements/ErrorModal"
 
+import "../../css/style.css"
+
 const LoginContainer = () => {
 
     const auth = useContext(AuthContext)
@@ -42,19 +44,27 @@ const LoginContainer = () => {
 
 
     return (
-        <div>
+        <div className="michaelLogin">
+        <div className="michaelLogin-background">
         <ErrorModal 
         error={error} onClear={clearError}
         />
 
         <form onSubmit={handleSubmit(loginSubmit)}>
-            <input {...register("username")}/>
 
-            <input {...register("password")}/>
+            <div className="michaelLogin-input-top">
+            <label className="michaelLogin-input">😁</label>
+            <label className="michaelLogin-input">username</label>
+            <input className="michaelLogin-input" {...register("username")}/>
+            <label className="michaelLogin-input">password</label>
+            <input className="michaelLogin-input" {...register("password")} type="password"/>
             <button>login</button>
+
+            </div>
             
         </form>
         
+    </div>
     </div>
     )
 }

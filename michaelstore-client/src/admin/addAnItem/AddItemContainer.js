@@ -13,6 +13,8 @@ import ErrorModal from '../../shared/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/UIElements/LoadingSpinner'
 
 
+import "../../css/style.css"
+
 
 const AddItemContainer = () => {
 
@@ -81,22 +83,40 @@ const AddItemContainer = () => {
 
 
     return (
-        <div>
+        <div className="addItem">
+            <div className="addItem-block">
             <ErrorModal
             error={error} onClear={clearError}
             />
             {isLoading &&
             <LoadingSpinner asOverlay/>}
-
+            
+            <div className="addItem-box">
             <form onSubmit={handleSubmit(submitConsumerItem)}>
+                <div className="addItem-inputs">
+                
                 <input  {...register("image")} type="file" accept=".jpg,.png,.jpeg"/>
+                <br/>
+                <label>picture</label>
+                <br/>
+                <label>product</label>
+                <br/>
                 <input  {...register("name")}/>
-                <input {...register("description")}/>
+                <br/>
+                <label>description</label>
+                <br/>
+                <textarea {...register("description")}/>
+                <br/>
+                <label>price</label>
+                <br/>
                 <input {...register("price")} type="number"/>
+                <br/>
                 <button>submit</button>
+                </div>
             </form>
-            <button onClick={auth.logout}>logout</button>
-
+            
+            </div>
+            </div>
             
         </div>
     )

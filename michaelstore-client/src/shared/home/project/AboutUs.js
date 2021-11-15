@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import { AuthContext } from '../../context/auth-context'
+
+import '../../../css/style.css'
 
 const AboutUs = () => {
+
+
+    const auth = useContext(AuthContext)
+
+
     return (
-        <div>
-            hi
+        <div className="logout">
+            <label onClick={auth.logout}>logout</label>
         </div>
     )
 }

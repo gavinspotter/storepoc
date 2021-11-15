@@ -17,7 +17,18 @@ const NavBar = () => {
     return (
         <div className="navbar">
             <div className="navbar--left">
-                <NavLink to="/">about us</NavLink>
+            {   (!auth.isLoggedIn && !auth.customerIsLoggedIn)  &&
+                <NavLink to="/">about us</NavLink>}
+
+{
+                    auth.isLoggedIn &&
+                    <div>
+                    <NavLink className="nav--left-aboutUs" to="/">about us</NavLink>
+                    
+                    
+                    </div>
+               
+                }
             </div>
             <div className="navbar--right">
                 <NavLink className="navbar--right-bulk" to="/bulkItems">bulk</NavLink>
@@ -39,6 +50,12 @@ const NavBar = () => {
                     auth.isLoggedIn &&
                     <NavLink className="navbar--right-login" to="/messages">inbox</NavLink>
                 }
+                {/* {
+                    auth.isLoggedIn &&
+                    
+                <div className="logout" onClick={auth.logout}>x</div>
+                } */}
+
             </div>
         </div>
     )

@@ -7,6 +7,9 @@
   box-shadow: 0 0.3rem 0.3rem grey;
 
   &--left {
+    &-aboutUs {
+      display: inline-block;
+    }
     & a {
       color: white;
       text-decoration: none;
@@ -52,4 +55,18 @@
       //   top: 0;
     }
   }
+}
+
+.logout {
+  height: 3rem;
+  border-right: solid white 0.1rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+  color: black;
+
+  padding-right: 1rem;
+  padding-left: 1rem;
+  font-weight: 50;
 }
