@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 
 
 import { useHttpClient } from '../../../hooks/http-hook'
 import ConsumerGoodsList from './ConsumerGoodsList'
+
+import { GlobalContext } from '../../../context/global-context'
 
 import "../../../../css/style.css"
 
 const ConsumerGoodsContainer = () => {
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient()
+
+    const globalC = useContext(GlobalContext)
 
 
     const [consumerGoodsList, setConsumerGoodsList] = useState()
@@ -35,7 +39,7 @@ const ConsumerGoodsContainer = () => {
 
         
 
-    },[sendRequest])
+    },[sendRequest, globalC.context])
 
 
 

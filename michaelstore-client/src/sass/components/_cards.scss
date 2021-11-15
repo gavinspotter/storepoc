@@ -100,15 +100,26 @@
   &--card {
     width: 27.5rem;
     height: 30rem;
+    margin: 4rem;
 
     display: inline-block;
+    background: white;
+    border-radius: 2rem;
+    box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem gray;
 
     &-text {
+      text-align: left;
+      position: relative;
+      left: 4rem;
+    }
+    &-adminText {
     }
 
     &-img {
+      margin-top: 2rem;
       height: 20rem;
       width: 20rem;
+      border-radius: 1rem;
     }
   }
 }
