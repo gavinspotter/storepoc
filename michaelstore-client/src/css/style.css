@@ -100,6 +100,15 @@ body {
       text-align: left;
       position: relative;
       left: 4rem; }
+    .consumerGoods--card-adminText-button {
+      color: white;
+      background: linear-gradient(to right bottom, rgba(255, 0, 0, 0.8), rgba(63, 41, 190, 0.8));
+      border-radius: 2rem;
+      width: 4rem;
+      display: inline-block;
+      position: relative;
+      left: 8rem;
+      top: -2rem; }
     .consumerGoods--card-img {
       margin-top: 2rem;
       height: 20rem;

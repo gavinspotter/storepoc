@@ -113,6 +113,20 @@
       left: 4rem;
     }
     &-adminText {
+      &-button {
+        color: white;
+        background: linear-gradient(
+          to right bottom,
+          rgba(rgb(255, 0, 0), 0.8),
+          rgba(#3f29be, 0.8)
+        );
+        border-radius: 2rem;
+        width: 4rem;
+        display: inline-block;
+        position: relative;
+        left: 8rem;
+        top: -2rem;
+      }
     }
 
     &-img {

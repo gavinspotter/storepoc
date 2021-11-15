@@ -121,7 +121,7 @@ const ConsumerGoodsItem = (props) => {
 
             <div>
                 
-                <div onClick={deleteModalTrig} >delete</div>
+                <div className="consumerGoods--card-adminText-button" onClick={deleteModalTrig} >delete</div>
                 {deleteMod &&
                 <div>
                 <div>are you sure you would like to delete this?</div>
