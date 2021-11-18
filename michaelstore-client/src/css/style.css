@@ -93,13 +93,16 @@ body {
     width: 27.5rem;
     height: 30rem;
     margin: 4rem;
+    vertical-align: top;
+    position: relative;
     display: inline-block;
     background: white;
     border-radius: 2rem;
     box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem gray; }
     .consumerGoods--card-text {
       text-align: left;
-      position: relative;
+      position: absolute;
+      bottom: 2rem;
       left: 4rem; }
     .consumerGoods--card-adminText-button {
       color: white;
@@ -107,13 +110,13 @@ body {
       border-radius: 2rem;
       width: 4rem;
       display: inline-block;
-      position: relative;
-      left: 8rem;
-      top: -2rem; }
+      position: absolute;
+      right: 4rem;
+      bottom: 2rem; }
     .consumerGoods--card-img {
       margin-top: 2rem;
-      height: 20rem;
-      width: 20rem;
+      max-height: 20rem;
+      max-width: 20rem;
       border-radius: 1rem; }
 
 .addItem {
@@ -164,8 +167,8 @@ body {
       padding-top: 4rem; }
 
 .image-upload__preview {
-  width: 30rem;
-  height: 30rem;
+  max-width: 30rem;
+  max-height: 30rem;
   border: 1px solid #ccc;
   display: inline-block;
   position: relative;
