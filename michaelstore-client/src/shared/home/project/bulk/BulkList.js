@@ -1,9 +1,30 @@
 import React from 'react'
 
-const BulkList = () => {
+import "../../../../css/style.css"
+import BulkItem from './BulkItem'
+
+
+
+
+const BulkList = (props) => {
     return (
-        <div>
-            
+        <div className="consumerGoods">
+
+        {props.items &&
+        props.items.map(x => 
+            <BulkItem
+            key={x._id}
+            _id={x._id}
+            name={x.name}
+            description={x.description}
+            price={x.price}
+            bucketPhotoId={x.bucketPhotoId}
+            />
+            )
+        }            
+
+
+
         </div>
     )
 }

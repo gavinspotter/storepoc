@@ -191,30 +191,32 @@ const createBulkItem = async (req, res, next) => {
         return next(error)
     }
 
-    // const s3 = new aws.S3(
-    //     {
-    //         accessKeyId: config.AWS_KEY,
-    //         secretAccessKey: config.AWS_SECRET_KEY
+    const s3 = new aws.S3(
+        {
+            accessKeyId: config.AWS_KEY,
+            secretAccessKey: config.AWS_SECRET_KEY
              
    
-    //     }
-    // );
+        }
+    );
 
+    const uniqueId = uuidv4()
     
 
-    // const fileContent = fs.readFileSync(__dirname + "/prj_portfolio.png")
 
-    //     const params = {
-    //         Bucket: "michaelrossbucket",
-    //         Key: 'hi.png', // File name you want to save as in S3
-    //         Body: fileContent
-    //     };
-    //     s3.upload(params, function(err, data) {
-    //         if (err) {
-    //             throw err;
-    //         }
-    //         console.log(`File uploaded successfully. `);
-    //     });
+    const fileContent = fs.readFileSync(req.files.bucketPhotoId.path)
+
+        const params = {
+            Bucket: "michaelrossbucket",
+            Key: `${uniqueId}-${req.files.bucketPhotoId.name}`, // File name you want to save as in S3
+            Body: fileContent
+        };
+        s3.upload(params, function(err, data) {
+            if (err) {
+                throw err;
+            }
+            console.log(`File uploaded successfully. `);
+        });
 
   
     
@@ -227,7 +229,7 @@ const createBulkItem = async (req, res, next) => {
         name,
         description,
         price,
-        bucketPhotoId:"hi" ,
+        bucketPhotoId:`${uniqueId}-${req.files.bucketPhotoId.name}` ,
 
         admin: req.userData.userId
     })
@@ -437,8 +439,7 @@ const createConsumerItem = async (req, res, next) => {
 
         const uniqueId = uuidv4()
         
-    console.log(bucketPhotoId)
-    console.log(req.files)
+    
     
         const fileContent = fs.readFileSync(req.files.bucketPhotoId.path)
     

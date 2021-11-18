@@ -44,7 +44,7 @@ const App = () => {
       <Route path="/" element={<AboutUs/>} />
       <Route path="/consumerGoods" element={<ConsumerGoodsContainer/>} />
       <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
-      <Route path="/bulkItems" element={<BulkList/>} />
+      <Route path="/bulkItems" element={<BulkContainer/>} />
       <Route path="/bulkItems/:biId" element={<BulkLook/>}/>
 
       <Route path="*" element={<AboutUs/>}/>
@@ -62,7 +62,7 @@ const App = () => {
       <Route path="/" element={<AboutUs/>} />
       <Route path="/consumerGoods" element={<ConsumerGoodsList/>} />
       <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
-      <Route path="/bulkItems" element={<BulkList/>} />
+      <Route path="/bulkItems" element={<BulkContainer/>} />
       <Route path="/bulkItems/:biId" element={<BulkLook/>}/>
       
       <Route path="*" element={<AboutUs/>}/>
@@ -75,7 +75,7 @@ const App = () => {
       
       <Route path="/consumerGoods" element={<ConsumerGoodsList/>} />
       <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
-      <Route path="/bulkItems" element={<BulkList/>} />
+      <Route path="/bulkItems" element={<BulkContainer/>} />
       <Route path="/bulkItems/:biId" element={<BulkLook/>}/>
       <Route path="/welcome" element={<WelcomeContainer/>}/>
       <Route path="*" element={<AboutUs/>}/>

@@ -22,6 +22,10 @@ const AddItemContainer = () => {
     const [previewUrl, setPreviewUrl] = useState();
     const [isValid, setIsValid] = useState(false)
 
+
+    const [typeToggle, setTypeToggle] = useState(true)
+
+
     const filePickerRef = useRef()
 
     useEffect(() => {
@@ -117,6 +121,62 @@ const AddItemContainer = () => {
 
     }
 
+    const submitBulkItem = async (data) => {
+
+    
+        
+        try {
+
+        
+    
+   
+            //const fileContent = fs.readFileSync(data.image[0])
+            const formData = new FormData();
+            formData.append("bucketPhotoId", data.bulkImage[0])
+            formData.append("name", data.bulkName)
+            formData.append("description", data.bulkDescription)
+            formData.append("price", data.bulkPrice)
+
+           
+
+
+            await sendRequest(
+                `http://localhost:5000/api/admin/createBulkItem`,
+                "POST",
+                // JSON.stringify({
+                //     name: data.name,
+                //     description: data.description,
+                //     price: data.price,
+                //     bucketPhotoId: data.image[0]
+                    
+                // }),
+
+                 formData,
+
+                
+                {
+                    //"Content-Type": "application/json",
+                    Authorization: 'Bearer ' + auth.token 
+                }
+            )
+            
+        } catch (err) {
+            console.log(err)
+        }
+
+
+    }
+
+
+    const toggleFunc = () => {
+        if(typeToggle === true){
+            setTypeToggle(false)
+            
+        }else{
+            setTypeToggle(true)
+            
+        }
+    }
 
 
 
@@ -128,9 +188,15 @@ const AddItemContainer = () => {
             />
             {isLoading &&
             <LoadingSpinner asOverlay/>}
+
             
-            <div className="addItem-box">
-         
+            
+            {typeToggle &&<div className="addItem-box">
+            <div className="textsize" onClick={toggleFunc}>🔁</div>
+            <div className="addItem-title" >    
+            
+            <h2 >consumer good</h2>
+            </div>
             <form className="addItem-form" onSubmit={handleSubmit(submitConsumerItem)}>
                 <div className="addItem-inputs">
                 
@@ -140,7 +206,7 @@ const AddItemContainer = () => {
                 
                 </div>
                 <br/>
-                <label>picture</label>
+                
                 <br/>
                 <label>product</label>
                 <br/>
@@ -162,7 +228,50 @@ const AddItemContainer = () => {
            
 
             
-            </div>
+            </div>}
+
+            {!typeToggle &&
+
+<div className="addItem-box">
+<div className="textsize" onClick={toggleFunc}>🔁</div>
+    <div className="addItem-title">
+
+         <h2>bulk</h2>
+         </div>
+<form className="addItem-form" onSubmit={handleSubmit(submitBulkItem)}>
+    <div className="addItem-inputs">
+    
+    <input   {...register("bulkImage")} type="file" accept=".jpg,.png,.jpeg" onChange={pickedHandler}/>
+    {/* <button type="button" onClick={pickImageHandler}> pick image</button> */}
+    <div>
+    
+    </div>
+    <br/>
+    
+    <br/>
+    <label>product</label>
+    <br/>
+    <input  {...register("bulkName")}/>
+    <br/>
+    <label>description</label>
+    <br/>
+    <textarea {...register("bulkDescription")}/>
+    <br/>
+    <label>price</label>
+    <br/>
+    <input {...register("bulkPrice")} type="number"/>
+    <br/>
+    <button>submit</button>
+    </div>
+    {previewUrl && <img className="image-upload__preview" src={previewUrl} alt="preview"/> }
+
+</form>
+
+
+
+</div>
+
+            }
             </div>
             
         </div>
