@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useRef, useEffect, useState, useContext } from 'react'
 
 
 import {useHttpClient} from "../../shared/hooks/http-hook"
@@ -17,6 +17,44 @@ import "../../css/style.css"
 
 
 const AddItemContainer = () => {
+
+    const [file, setFile] = useState();
+    const [previewUrl, setPreviewUrl] = useState();
+    const [isValid, setIsValid] = useState(false)
+
+    const filePickerRef = useRef()
+
+    useEffect(() => {
+        if(!file) {
+            return
+        }
+        const fileReader = new FileReader()
+        fileReader.onload = () => {
+            setPreviewUrl(fileReader.result)
+        }
+        fileReader.readAsDataURL(file)
+    }, [file])
+
+    const pickedHandler = event => {
+        let pickedfile
+        let fileIsValid = isValid
+        if(event.target.files || event.target.files.length === 1) {
+            pickedfile = event.target.files[0];
+            setFile(pickedfile);
+            setIsValid(true)
+            fileIsValid = true
+        } else {
+            setIsValid(false)
+            fileIsValid = false
+        }
+        
+    }
+
+    const pickImageHandler = () => {
+        filePickerRef.current.click()
+    }
+
+    
 
 
     const auth = useContext(AuthContext)
@@ -92,10 +130,15 @@ const AddItemContainer = () => {
             <LoadingSpinner asOverlay/>}
             
             <div className="addItem-box">
-            <form onSubmit={handleSubmit(submitConsumerItem)}>
+         
+            <form className="addItem-form" onSubmit={handleSubmit(submitConsumerItem)}>
                 <div className="addItem-inputs">
                 
-                <input  {...register("image")} type="file" accept=".jpg,.png,.jpeg"/>
+                <input   {...register("image")} type="file" accept=".jpg,.png,.jpeg" onChange={pickedHandler}/>
+                {/* <button type="button" onClick={pickImageHandler}> pick image</button> */}
+                <div>
+                
+                </div>
                 <br/>
                 <label>picture</label>
                 <br/>
@@ -113,7 +156,11 @@ const AddItemContainer = () => {
                 <br/>
                 <button>submit</button>
                 </div>
+                {previewUrl && <img className="image-upload__preview" src={previewUrl} alt="preview"/> }
+          
             </form>
+           
+
             
             </div>
             </div>

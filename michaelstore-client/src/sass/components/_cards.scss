@@ -98,6 +98,7 @@
   }
 
   &--card {
+    cursor: pointer;
     width: 27.5rem;
     height: 30rem;
     margin: 4rem;
@@ -161,14 +162,20 @@
 
     background: white;
     border-radius: 5rem;
-    width: 80rem;
-    height: 40rem;
+    width: 80vw;
+    height: 60vh;
   }
 
   &-inputs {
+    display: inline-block;
     position: relative;
-    top: 9rem;
-    left: 5rem;
+    top: 20%;
+    left: 5%;
+  }
+  &-form {
+    width: 80vw;
+    height: 60vh;
+    vertical-align: top;
   }
 }
 
@@ -202,4 +209,16 @@
   // position: absolute;
   // top: 30%;
   // left: 50%;
+}
+
+.image-upload__preview {
+  width: 30rem;
+  height: 30rem;
+  border: 1px solid #ccc;
+  display: inline-block;
+  position: relative;
+  left: 15%;
+  top: 10%;
+  vertical-align: top;
+  margin-bottom: 1rem;
 }

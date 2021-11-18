@@ -54,8 +54,15 @@ const ConsumerGoodsItem = (props) => {
 
     const [deleteMod, setDeleteMod] = useState(false)
 
+    const [dString, setDString] = useState(false)
 
-    const [context, setContext] = useState(null);
+    
+
+    useEffect(() => {
+        if(props.description.length >= 45){
+            setDString(true)
+        }
+    },[props.description])
 
     const deleteAnItem = async () => {
 
@@ -114,7 +121,14 @@ const ConsumerGoodsItem = (props) => {
 
             <div className="consumerGoods--card-text">
                 <p>{props.name}</p>
-                <p>{props.description}</p>
+                {!dString &&
+                props.description.substring(0, 45)
+                
+                }
+                { dString &&
+                
+
+                <p>{props.description.substring(0, 45)} ...</p>}
                 <p>${props.price}</p>
 
             </div>
