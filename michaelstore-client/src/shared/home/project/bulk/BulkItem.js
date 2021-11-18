@@ -37,7 +37,7 @@ const BulkItem = (props) => {
 
         try {
                await sendRequest(
-                   `http://localhost:5000/api/admin/deleteConsumerItem/${props._id}`,
+                   `http://localhost:5000/api/admin/deleteBulk/${props._id}`,
                    "DELETE",
                    null,
                    {

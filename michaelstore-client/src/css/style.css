@@ -87,7 +87,8 @@ body {
   padding-left: 8rem; }
   .consumerGoods-block {
     width: 100%;
-    height: 98vh;
+    min-height: 98vh;
+    max-height: 100%;
     background: #f7f3f3; }
   .consumerGoods--card {
     cursor: pointer;
@@ -130,6 +131,7 @@ body {
   .addItem-block {
     margin-top: 10rem; }
   .addItem-box {
+    box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem gray;
     margin-left: auto;
     margin-right: auto;
     background: white;

@@ -14,6 +14,7 @@ import LoadingSpinner from '../../shared/UIElements/LoadingSpinner'
 
 
 import "../../css/style.css"
+import { set } from 'mongoose'
 
 
 const AddItemContainer = () => {
@@ -63,8 +64,16 @@ const AddItemContainer = () => {
 
     const auth = useContext(AuthContext)
 
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, reset,formState: { isSubmitSuccessful }  } = useForm({name: "", price: 0, description: "", bulkName:"", bulkDescription:"", bulkPrice:0, image:null, bulkImage:null })
 
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset({name: "", price: 0, description: "", bulkName:"", bulkDescription:"", bulkPrice:0 });
+          }
+          setPreviewUrl(null)
+    },
+    [reset, isSubmitSuccessful])
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient()
 
@@ -220,7 +229,7 @@ const AddItemContainer = () => {
                 <br/>
                 <input {...register("price")} type="number"/>
                 <br/>
-                <button>submit</button>
+                <button >submit</button>
                 </div>
                 {previewUrl && <img className="image-upload__preview" src={previewUrl} alt="preview"/> }
           
@@ -261,7 +270,7 @@ const AddItemContainer = () => {
     <br/>
     <input {...register("bulkPrice")} type="number"/>
     <br/>
-    <button>submit</button>
+    <button onClick={() => reset()}>submit</button>
     </div>
     {previewUrl && <img className="image-upload__preview" src={previewUrl} alt="preview"/> }
 
