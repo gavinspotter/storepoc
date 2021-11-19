@@ -14,7 +14,7 @@ const Bulk = require("../models/BulkWholeSale")
 const ConsumerGoods = require("../models/ConsumerGoods")
 const Messages = require("../models/Messages")
 
-const config = require('../config.json')
+
 
 
 

@@ -1,5 +1,5 @@
 const HttpError = require("../models/HttpError")
-const config = require('../config.json')
+
 
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
