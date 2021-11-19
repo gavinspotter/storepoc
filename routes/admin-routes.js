@@ -27,6 +27,7 @@ router.use(checkAuth);
 
 router.get("/getMessages", adminController.getMessages)
 
+//router.get("/getMessageBoards")
 
 router.post("/postMessage", adminController.createAMessage)
 

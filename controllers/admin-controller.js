@@ -716,6 +716,21 @@ const createAMessage = async (req, res, next) => {
 
 }
 
+// const getMessageBoards = async (req, res, next) => {
+
+
+//     let findAdmin 
+
+//     try {
+//         findAdmin = await Admin
+//     } catch (err) {
+        
+//     }
+
+
+
+// }
+
 
 
 // const editMessage = async (req, res, next) => {

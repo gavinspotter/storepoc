@@ -20,6 +20,7 @@ import AddItemContainer from './admin/addAnItem/AddItemContainer';
 import MessagesList from './admin/chat/MessagesList';
 import HomePage from './shared/home/HomePage';
 import LoginContainer from './admin/adminLogin/LoginContainer';
+import MessagesCountainer from './admin/chat/MessagesCountainer';
 
 
 
@@ -37,7 +38,7 @@ const App = () => {
   if(token){
  route = (
     <Routes>
-      <Route path="/messages" element={<MessageBoardsList/>} />
+      <Route path="/messages" element={<MessagesCountainer/>} />
       <Route path="/messages/:md" element={<MessagesList/>}/>
       <Route path="/addItem" element={<AddItemContainer/>} />
       
