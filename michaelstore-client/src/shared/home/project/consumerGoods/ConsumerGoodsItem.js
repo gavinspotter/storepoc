@@ -68,7 +68,7 @@ const ConsumerGoodsItem = (props) => {
 
                  try {
                         await sendRequest(
-                            `http://localhost:5000/api/admin/deleteConsumerItem/${props._id}`,
+                            `${process.env.REACT_APP_BACKEND_URL}/admin/deleteConsumerItem/${props._id}`,
                             "DELETE",
                             null,
                             {

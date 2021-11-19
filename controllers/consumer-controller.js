@@ -10,7 +10,7 @@ const Admin = require("../models/Admin")
 
 const Messages = require("../models/Messages")
 const ConsumerGoods = require("../models/ConsumerGoods")
-const stripe = require("stripe")(config.secretKey)
+const stripe = require("stripe")(process.env.secretKey)
 
 const signup = async (req, res, next) => {
     const { email, firstName, lastName , password } = req.body

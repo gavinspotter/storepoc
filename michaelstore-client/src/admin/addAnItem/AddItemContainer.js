@@ -104,7 +104,7 @@ const AddItemContainer = () => {
 
 
             await sendRequest(
-                `http://localhost:5000/api/admin/createConsumerItem`,
+                `${process.env.REACT_APP_BACKEND_URL}/admin/createConsumerItem`,
                 "POST",
                 // JSON.stringify({
                 //     name: data.name,
@@ -150,7 +150,7 @@ const AddItemContainer = () => {
 
 
             await sendRequest(
-                `http://localhost:5000/api/admin/createBulkItem`,
+                `${process.env.REACT_APP_BACKEND_URL}/admin/createBulkItem`,
                 "POST",
                 // JSON.stringify({
                 //     name: data.name,

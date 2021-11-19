@@ -193,8 +193,8 @@ const createBulkItem = async (req, res, next) => {
 
     const s3 = new aws.S3(
         {
-            accessKeyId: config.AWS_KEY,
-            secretAccessKey: config.AWS_SECRET_KEY
+            accessKeyId: process.env.AWS_KEY,
+            secretAccessKey: process.env.AWS_SECRET_KEY
              
    
         }
@@ -430,8 +430,8 @@ const createConsumerItem = async (req, res, next) => {
 
     const s3 = new aws.S3(
             {
-                accessKeyId: config.AWS_KEY,
-                secretAccessKey: config.AWS_SECRET_KEY
+                accessKeyId: process.env.AWS_KEY,
+                secretAccessKey: process.env.AWS_SECRET_KEY
                  
        
             }

@@ -20,7 +20,7 @@ const Login = () => {
 
         try {
             const responseData = await sendRequest(
-                `http://localhost:5000/api/customer/login`,
+                `${process.env.REACT_APP_BACKEND_URL}/customer/login`,
                 "POST",
                 JSON.stringify({
                     email: data.email,

@@ -22,7 +22,7 @@ const LoginContainer = () => {
 
         try {
             const responseData = await sendRequest(
-                `http://localhost:5000/api/admin/login`,
+                `${process.env.REACT_APP_BACKEND_URL}/admin/login`,
                 "POST",
                 JSON.stringify({
                     username: data.username,

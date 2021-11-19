@@ -23,7 +23,7 @@ const ConsumerGoodsContainer = () => {
         const fetchcg = async () => {
             try {
                 const responseData = await sendRequest(
-                    `http://localhost:5000/api/admin/getConsumerItems`,
+                    `${process.env.REACT_APP_BACKEND_URL}/admin/getConsumerItems`,
                 
                     
                 )

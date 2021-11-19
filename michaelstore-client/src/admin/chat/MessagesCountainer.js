@@ -26,7 +26,7 @@ const MessagesCountainer = () => {
         const fetchMessageBoards = async () => {
             try {
                 const responseData = await sendRequest(
-                    `http://localhost:5000/api/admin/getMessages`,
+                    `${process.env.REACT_APP_BACKEND_URL}/admin/getMessages`,
                     "GET",
                     null,
                     {
