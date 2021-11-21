@@ -53,6 +53,11 @@ const signup = async (req, res, next) => {
         return next(error)
     }
 
+    
+
+
+    
+
 
     let stripeCustomerId
 
@@ -64,6 +69,10 @@ const signup = async (req, res, next) => {
         const error = new HttpError("something went wrong, sorry")
         return next(error)
     }
+
+    
+
+
    
 
 
@@ -73,12 +82,38 @@ const signup = async (req, res, next) => {
         lastName,
         email,
         stripeCustomerId: stripeCustomerId.id,
-        
+        messages: {},
         password: hashedPassword,
         admin: findAdmin[0]._id
         
 
     })
+
+    
+
+    
+
+    const createdMessageBoard = new Messages({
+
+        admin: findAdmin[0]._id,
+        consumer: createdCustomer._id,
+        hidden: true,
+        messages: []
+
+
+    })
+
+
+
+    try {
+        await createdMessageBoard.save()
+    } catch (err) {
+        const error = new HttpError("couldn't save that request")
+        return next(error)
+    }
+
+    createdCustomer.messages = createdMessageBoard._id
+
 
     try {
         await createdCustomer.save()
@@ -89,6 +124,15 @@ const signup = async (req, res, next) => {
             "couldnt save this action",
             500
         )
+        return next(error)
+    }
+
+    try {
+        findAdmin[0].messages.push(createdMessageBoard)
+        await findAdmin[0].save()
+    } catch (err) {
+        console.log(err)
+        const error = new HttpError("couldn't perform that task")
         return next(error)
     }
 
@@ -506,7 +550,7 @@ const createAMessage = async (req, res, next) => {
 
     const newMessage = {
         message,
-        date: Date(),
+        date: new Date(),
         sender: req.customerData.customerId
     }
 

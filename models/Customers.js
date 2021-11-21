@@ -15,7 +15,7 @@ const customerSchema = new Schema({
     lastName: {type: String, required: true},
     email: { type: String, required: true, unique: true},
     password: { type: String, required: true },
-    stripeCustomerId: {type: String},
+    stripeCustomerId: {type: String, required: true},
     bulkSeeings: [ ],
     consumerPurchases: [ { type: mongoose.Types.ObjectId, required: true, ref: "ConsumerGoods" }],
     deliveryDetails: {
@@ -30,7 +30,7 @@ const customerSchema = new Schema({
 
     },
     
-    messages: { type: mongoose.Types.ObjectId, ref: "Messages" },
+    messages: { type: mongoose.Types.ObjectId, required: true, ref: "Messages" },
     admin: { type: mongoose.Types.ObjectId, required: true, ref: "Admin" }
     
 

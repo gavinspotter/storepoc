@@ -21,6 +21,7 @@ import MessagesList from './admin/chat/MessagesList';
 import HomePage from './shared/home/HomePage';
 import LoginContainer from './admin/adminLogin/LoginContainer';
 import MessagesCountainer from './admin/chat/MessagesCountainer';
+import CustomerChatBox from './consumer/customerChat/CustomerChatBox';
 
 
 
@@ -57,7 +58,7 @@ const App = () => {
     <Routes>
  
 
-      <Route path="/yourMessages" element={<ChatList/>} />
+      <Route path="/yourMessages" element={<CustomerChatBox/>} />
       <Route path="/details" element={<Details/>} />
 
       <Route path="/" element={<AboutUs/>} />
