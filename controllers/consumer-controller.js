@@ -554,7 +554,9 @@ const createAMessage = async (req, res, next) => {
         sender: req.customerData.customerId
     }
 
+
     try {
+        findMessageBoard.hidden = false
         findMessageBoard.messages.push(newMessage)
         await findMessageBoard.save()
     } catch (err) {

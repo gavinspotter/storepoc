@@ -22,6 +22,7 @@ import HomePage from './shared/home/HomePage';
 import LoginContainer from './admin/adminLogin/LoginContainer';
 import MessagesCountainer from './admin/chat/MessagesCountainer';
 import CustomerChatBox from './consumer/customerChat/CustomerChatBox';
+import DetailsContainer from './consumer/customerDetails/DetailsContainer';
 
 
 
@@ -43,6 +44,7 @@ const App = () => {
       <Route path="/messages/:md" element={<MessagesList/>}/>
       <Route path="/addItem" element={<AddItemContainer/>} />
       
+      
       <Route path="/" element={<AboutUs/>} />
       <Route path="/consumerGoods" element={<ConsumerGoodsContainer/>} />
       <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
@@ -59,10 +61,10 @@ const App = () => {
  
 
       <Route path="/yourMessages" element={<CustomerChatBox/>} />
-      <Route path="/details" element={<Details/>} />
+      <Route path="/details" element={<DetailsContainer/>} />
 
       <Route path="/" element={<AboutUs/>} />
-      <Route path="/consumerGoods" element={<ConsumerGoodsList/>} />
+      <Route path="/consumerGoods" element={<ConsumerGoodsContainer/>} />
       <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
       <Route path="/bulkItems" element={<BulkContainer/>} />
       <Route path="/bulkItems/:biId" element={<BulkLook/>}/>
@@ -75,7 +77,7 @@ const App = () => {
       <Route path="/" element={<AboutUs/>} />
       <Route path="/michaelross" element={<LoginContainer/>}/>
       
-      <Route path="/consumerGoods" element={<ConsumerGoodsList/>} />
+      <Route path="/consumerGoods" element={<ConsumerGoodsContainer/>} />
       <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook/>}/>
       <Route path="/bulkItems" element={<BulkContainer/>} />
       <Route path="/bulkItems/:biId" element={<BulkLook/>}/>

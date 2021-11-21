@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from 'react'
 
 
 import { useHttpClient } from '../../shared/hooks/http-hook'
+import { useForm } from "react-hook-form"
+
 
 import { AuthContext } from '../../shared/context/auth-context'
 import ChatList from './ChatList'
@@ -11,6 +13,17 @@ const CustomerChatBox = () => {
     const auth = useContext(AuthContext)
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient()
+    
+    const { register, handleSubmit, reset,formState: { isSubmitSuccessful }  } = useForm({message: ''})
+
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+          reset({message:""})
+        }
+          
+    },
+    [reset, isSubmitSuccessful])
 
     const [messages, setMessages] = useState()
 
@@ -32,6 +45,7 @@ const CustomerChatBox = () => {
                 )
 
                 setMessages(responseData.findMessageBoard.messages)
+                window.scrollTo(0, 99999)
             } catch (err) {
                 
             }
@@ -50,10 +64,8 @@ const CustomerChatBox = () => {
     return (
         <div>
 
-            {
-                !messages &&
-                <div>hi</div>
-            }
+
+            
 
             
             { messages &&
@@ -61,6 +73,12 @@ const CustomerChatBox = () => {
                 <ChatList
             messages={messages}
             />}
+
+            <form>
+                <textarea>
+
+                </textarea>
+            </form>
         </div>
     )
 }
