@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 
 import { AuthContext } from '../../shared/context/auth-context'
 import ChatList from './ChatList'
+import ErrorModal from '../../shared/UIElements/ErrorModal'
 
 const CustomerChatBox = () => {
 
@@ -16,6 +17,7 @@ const CustomerChatBox = () => {
     
     const { register, handleSubmit, reset,formState: { isSubmitSuccessful }  } = useForm({message: ''})
 
+    
 
     useEffect(() => {
         if (isSubmitSuccessful) {
@@ -73,7 +75,7 @@ const CustomerChatBox = () => {
                 }),
                 {
                     "Content-Type": "application/json",
-                    Authorization: 'Bearer ' + auth.token 
+                    Authorization: 'Bearer ' + auth.customerToken
 
                 }
             )
@@ -81,11 +83,37 @@ const CustomerChatBox = () => {
             
         }
 
+        const fetchMessages = async () => {
+            try {
+                const responseData = await sendRequest(
+                    `${process.env.REACT_APP_BACKEND_URL}/customer/getMessages`,
+                    "GET",
+                    null,
+                    {
+                        //"Content-Type": "application/json",
+                        Authorization: 'Bearer ' + auth.customerToken 
+                    }
+
+                )
+
+                setMessages(responseData.findMessageBoard.messages)
+                console.log(responseData.findMessageBoard.messages)
+                //window.scrollTo(0, 99999)
+            } catch (err) {
+                
+            }
+        }
+
+        fetchMessages();
+
     }
 
 
     return (
         <div className="customerMessage">
+            <ErrorModal
+            error={error} onClear={clearError}
+            />
             { messages &&
                 
                 <ChatList 
@@ -110,7 +138,7 @@ const CustomerChatBox = () => {
               
                 <button className="customerMessage-form-button">submit</button>
                 <div className="customerMessage-form-textArea">
-                <textarea className="customerMessage-form-textArea-input"/>
+                <textarea {...register("messages")} className="customerMessage-form-textArea-input"/>
                 </div>
                 
                 </div>
