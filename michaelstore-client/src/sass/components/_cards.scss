@@ -236,3 +236,27 @@
   vertical-align: top;
   margin-bottom: 1rem;
 }
+
+.customerMessage {
+  position: relative;
+  width: 100%;
+  min-height: 98vh;
+  max-height: 100%;
+
+  &-items {
+    position: relative;
+    width: 30%;
+    min-height: 98vh;
+    max-height: 100%;
+    border-right: rgb(209, 209, 209) solid 0.1rem;
+  }
+
+  &-form {
+    position: absolute;
+    bottom: 4rem;
+    right: 20%;
+    &-textArea {
+      width: 40%;
+    }
+  }
+}

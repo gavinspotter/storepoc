@@ -124,7 +124,7 @@ const AddItemContainer = () => {
             )
             
         } catch (err) {
-            console.log(err)
+            
         }
 
 

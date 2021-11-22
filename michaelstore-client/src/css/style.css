@@ -186,6 +186,24 @@ body {
   vertical-align: top;
   margin-bottom: 1rem; }
 
+.customerMessage {
+  position: relative;
+  width: 100%;
+  min-height: 98vh;
+  max-height: 100%; }
+  .customerMessage-items {
+    position: relative;
+    width: 30%;
+    min-height: 98vh;
+    max-height: 100%;
+    border-right: #d1d1d1 solid 0.1rem; }
+  .customerMessage-form {
+    position: absolute;
+    bottom: 4rem;
+    right: 20%; }
+    .customerMessage-form-textArea {
+      width: 40%; }
+
 .loading-spinner__overlay {
   height: 100%;
   width: 100%;

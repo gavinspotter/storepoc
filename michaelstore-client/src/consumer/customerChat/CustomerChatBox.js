@@ -59,10 +59,35 @@ const CustomerChatBox = () => {
 
     }, [sendRequest, auth.token])
 
+    const submitAMessage = async (data) => {
+
+        try {
+            sendRequest(
+                `${process.env.REACT_APP_BACKEND_URL}/customer/postMessage`,
+                "POST",
+                JSON.stringify({
+                    message: data.messages,
+                     
+                    
+                }),
+                {
+                    "Content-Type": "application/json",
+                    Authorization: 'Bearer ' + auth.token 
+
+                }
+            )
+        } catch (err) {
+            
+        }
+
+    }
 
 
     return (
-        <div>
+        <div className="customerMessage">
+            <div className="customerMessage-items">
+
+            </div>
 
 
             
@@ -74,10 +99,10 @@ const CustomerChatBox = () => {
             messages={messages}
             />}
 
-            <form>
-                <textarea>
+            <form className="customerMessage-form"  onSubmit={handleSubmit(submitAMessage)}>
+                <textarea/>
+                <button></button>
 
-                </textarea>
             </form>
         </div>
     )
