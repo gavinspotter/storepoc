@@ -57,7 +57,7 @@ const CustomerChatBox = () => {
 
         
 
-    }, [sendRequest, auth.token])
+    }, [sendRequest, auth.customerToken])
 
     const submitAMessage = async (data) => {
 
@@ -103,8 +103,15 @@ const CustomerChatBox = () => {
             
 
             <form className="customerMessage-form"  onSubmit={handleSubmit(submitAMessage)}>
-                <textarea className="customerMessage-form-textArea"/>
-                <button></button>
+
+                <div className="customerMessage-form-form">
+              
+                <button className="customerMessage-form-button">submit</button>
+                <div className="customerMessage-form-textArea">
+                <textarea className="customerMessage-form-textArea-input"/>
+                </div>
+                
+                </div>
 
             </form>
             </div>
