@@ -246,14 +246,17 @@
   &-messages {
     position: absolute;
     left: 27.5%;
-    height: 75%;
-    width: 72.5%;
+    min-height: 75%;
+    min-width: 72.5%;
     overflow-y: auto;
 
     &-messages {
       position: absolute;
       left: 3%;
       bottom: 3%;
+      overflow-y: auto;
+      height: 100%;
+      width: 100%;
     }
   }
 
