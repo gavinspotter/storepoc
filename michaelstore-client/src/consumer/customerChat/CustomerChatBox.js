@@ -45,7 +45,8 @@ const CustomerChatBox = () => {
                 )
 
                 setMessages(responseData.findMessageBoard.messages)
-                window.scrollTo(0, 99999)
+                console.log(responseData.findMessageBoard.messages)
+                //window.scrollTo(0, 99999)
             } catch (err) {
                 
             }
@@ -85,6 +86,11 @@ const CustomerChatBox = () => {
 
     return (
         <div className="customerMessage">
+            { messages &&
+                
+                <ChatList 
+            messages={messages}
+            />}
             <div className="customerMessage-items">
 
             </div>
@@ -93,11 +99,7 @@ const CustomerChatBox = () => {
             
 
             
-            { messages &&
-                
-                <ChatList
-            messages={messages}
-            />}
+            
 
             <div className="customerMessage-form-border">
             

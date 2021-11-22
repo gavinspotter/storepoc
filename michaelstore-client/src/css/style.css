@@ -191,6 +191,9 @@ body {
   width: 100%;
   min-height: 98vh;
   max-height: 100%; }
+  .customerMessage-messages {
+    position: absolute;
+    left: 27.5%; }
   .customerMessage-items {
     position: relative;
     width: 27.5%;
@@ -229,14 +232,15 @@ body {
         width: 96%;
         background: none;
         resize: none;
-        outline: none; }
+        outline: none;
+        font-family: "Lato", sans-serif; }
     .customerMessage-form-button {
       display: inline-block;
       margin-right: 1%;
       width: 15%;
       height: 60%;
       vertical-align: top;
-      color: #f0f0f0;
+      color: white;
       background: linear-gradient(to right bottom, rgba(85, 197, 122, 0.8), rgba(0, 217, 255, 0.8));
       font-size: 2rem;
       border: none;

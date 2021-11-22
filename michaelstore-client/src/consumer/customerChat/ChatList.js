@@ -1,8 +1,18 @@
 import React from 'react'
+import ChatItem from './ChatItem'
 
-const ChatList = () => {
+const ChatList = (props) => {
     return (
-        <div>
+        <div className="customerMessage-messages">
+            {
+                props.messages.map(x => 
+                    <ChatItem
+                    key={x._id}
+                    sender={x.sender}
+                    message={x.message}
+                    />
+                    ).reverse()
+            }
             
         </div>
     )

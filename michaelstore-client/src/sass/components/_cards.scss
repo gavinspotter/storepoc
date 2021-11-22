@@ -243,6 +243,11 @@
   min-height: 98vh;
   max-height: 100%;
 
+  &-messages {
+    position: absolute;
+    left: 27.5%;
+  }
+
   &-items {
     position: relative;
     width: 27.5%;
@@ -295,6 +300,7 @@
         background: none;
         resize: none;
         outline: none;
+        font-family: "Lato", sans-serif;
       }
     }
     &-button {
@@ -303,7 +309,7 @@
       width: 15%;
       height: 60%;
       vertical-align: top;
-      color: rgb(240, 240, 240);
+      color: rgb(255, 255, 255);
       background: linear-gradient(
         to right bottom,
         rgba(#55c57a, 0.8),

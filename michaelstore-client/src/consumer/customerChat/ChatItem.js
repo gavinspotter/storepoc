@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
-const ChatItem = () => {
+import { AuthContext } from '../../shared/context/auth-context'
+
+const ChatItem = (props) => {
+
+
+    const auth= useContext(AuthContext)
+
+    console.log(props.sender)
+    console.log(auth.customerId)
+    
+
+
     return (
         <div>
-            
+            { auth.customerId === props.sender &&
+                <div>me</div>}
+            { !auth.customerId === props.sender &&
+                
+                <div>buyz</div>}
+            <div>{props.message}</div>
         </div>
     )
 }
