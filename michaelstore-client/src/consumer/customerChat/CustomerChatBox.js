@@ -39,7 +39,7 @@ const CustomerChatBox = () => {
                     null,
                     {
                         //"Content-Type": "application/json",
-                        Authorization: 'Bearer ' + auth.token 
+                        Authorization: 'Bearer ' + auth.customerToken 
                     }
 
                 )
@@ -99,11 +99,15 @@ const CustomerChatBox = () => {
             messages={messages}
             />}
 
+            <div className="customerMessage-form-border">
+            
+
             <form className="customerMessage-form"  onSubmit={handleSubmit(submitAMessage)}>
-                <textarea/>
+                <textarea className="customerMessage-form-textArea"/>
                 <button></button>
 
             </form>
+            </div>
         </div>
     )
 }

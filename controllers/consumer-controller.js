@@ -554,6 +554,7 @@ const createAMessage = async (req, res, next) => {
         sender: req.customerData.customerId
     }
 
+    
 
     try {
         findMessageBoard.hidden = false
