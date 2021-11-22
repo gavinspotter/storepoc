@@ -13,7 +13,7 @@ const ChatItem = (props) => {
 
 
     return (
-        <div>
+        <div >
             { auth.customerId === props.sender &&
                 <div>me</div>}
             { !auth.customerId === props.sender &&

@@ -193,7 +193,14 @@ body {
   max-height: 100%; }
   .customerMessage-messages {
     position: absolute;
-    left: 27.5%; }
+    left: 27.5%;
+    height: 75%;
+    width: 72.5%;
+    overflow-y: auto; }
+    .customerMessage-messages-messages {
+      position: absolute;
+      left: 3%;
+      bottom: 3%; }
   .customerMessage-items {
     position: relative;
     width: 27.5%;

@@ -3,7 +3,9 @@ import ChatItem from './ChatItem'
 
 const ChatList = (props) => {
     return (
+    
         <div className="customerMessage-messages">
+            <div className="customerMessage-messages-messages">
             {
                 props.messages.map(x => 
                     <ChatItem
@@ -11,10 +13,12 @@ const ChatList = (props) => {
                     sender={x.sender}
                     message={x.message}
                     />
-                    ).reverse()
+                    )
             }
+            </div>
             
         </div>
+       
     )
 }
 
