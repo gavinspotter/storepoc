@@ -26,8 +26,7 @@ const ChatList = (props) => {
             }
 
            
-            <div ref={props.scroll}></div>
-
+            
             </div>
             
         </div>

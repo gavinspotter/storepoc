@@ -145,7 +145,7 @@ const CustomerChatBox = () => {
                 
                 <ChatList 
             messages={messages}
-            scroll={titleRef}
+            
 
             
 
