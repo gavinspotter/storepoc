@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 
 
 import { AuthContext } from '../../shared/context/auth-context'
-import ChatList from './ChatList'
+
 import ErrorModal from '../../shared/UIElements/ErrorModal'
 import ChatItem from './ChatItem'
 
@@ -52,7 +52,6 @@ const CustomerChatBox = () => {
     
 
 
-    const [trigScroll, setTrigScroll] = useState(false)
     
 
 

@@ -14,7 +14,7 @@ import MessageBoardsList from './admin/chat/MessageBoardsList';
 import ConsumerGoodsList from './shared/home/project/consumerGoods/ConsumerGoodsList';
 import BulkList from './shared/home/project/bulk/BulkList';
 import WelcomeContainer from './consumer/customerLogin/WelcomeContainer';
-import ChatList from './consumer/customerChat/ChatList';
+
 import Details from './consumer/customerDetails/Details';
 import AddItemContainer from './admin/addAnItem/AddItemContainer';
 import MessagesList from './admin/chat/MessagesList';
