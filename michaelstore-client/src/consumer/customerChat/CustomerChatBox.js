@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { AuthContext } from '../../shared/context/auth-context'
 import ChatList from './ChatList'
 import ErrorModal from '../../shared/UIElements/ErrorModal'
+import ChatItem from './ChatItem'
 
 const CustomerChatBox = () => {
 
@@ -32,6 +33,28 @@ const CustomerChatBox = () => {
     const [mTrigger, setmTrigger] = useState()
 
 
+    const titleRef = useRef()
+
+    const handleBackClick = () => {
+
+        console.log("check")
+        titleRef.current.scrollIntoView({behavior: "smooth"})
+        
+     }
+
+
+    const setTimeScroll = () => {
+        setTimeout(handleBackClick, 1000)
+    }
+     
+    
+
+    
+
+
+    const [trigScroll, setTrigScroll] = useState(false)
+    
+
 
     useEffect(() => {
 
@@ -49,24 +72,35 @@ const CustomerChatBox = () => {
                 )
 
                 setMessages(responseData.findMessageBoard.messages)
-                console.log(responseData.findMessageBoard.messages)
+          
                 //window.scrollTo(0, 99999)
             } catch (err) {
                 
             }
         }
 
+
+
+        
+
         fetchMessages();
 
         setmTrigger(false)
 
+        
 
+       
+
+       
+        
 
         
 
     }, [sendRequest, mTrigger, auth.customerToken])
 
-    const titleRef = useRef()
+    
+   
+    
 
     const submitAMessage = async (data) => {
 
@@ -90,6 +124,11 @@ const CustomerChatBox = () => {
         }
 
         setmTrigger(true)
+        
+
+        
+
+        
 
 
         // const fetchMessages = async () => {
@@ -114,9 +153,7 @@ const CustomerChatBox = () => {
 
         // fetchMessages();
 
-        // function handleBackClick() {
-        //     titleRef.current.scrollIntoView({ behavior: 'smooth' })
-        // }
+        // 
 
         // handleBackClick()
 
@@ -143,15 +180,67 @@ const CustomerChatBox = () => {
             />
             { messages &&
                 
-                <ChatList 
-            messages={messages}
+                <div className="customerMessage-messages">
+            
+                <div  className="customerMessage-messages-messages">
+                
+                
+                
+                
+                
+                {<div ref={titleRef}></div>}
+    
+    
+                {
+
+                    
+                    messages.map(x => 
+    
+                       
+                        
+                        <ChatItem
+                        key={x._id}
+                        sender={x.sender}
+                        message={x.message}
+                        />
+    
+    
+    
+                        
+                        ).reverse()
+
+                        
+                
+    
+    
+                        
+                }
+
+    
+                
+                
+    
+                
+                
+    
+                
+    
+               
+                
+                </div>
+                
+                
+            </div>
+           
+            
+            
             
 
             
 
             
 
-            />}
+            }
             <div className="customerMessage-items">
 
             </div>
@@ -169,7 +258,7 @@ const CustomerChatBox = () => {
 
                 <div className="customerMessage-form-form">
               
-                <button className="customerMessage-form-button">submit</button>
+                <button onClick={setTimeScroll} className="customerMessage-form-button">submit</button>
                 <div className="customerMessage-form-textArea">
                 <textarea {...register("messages")} className="customerMessage-form-textArea-input"/>
                 </div>

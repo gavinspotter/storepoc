@@ -330,6 +330,9 @@ body {
 .ilblock {
   display: inline-block; }
 
+.flexOff {
+  display: none; }
+
 .navbar {
   width: 100%;
   height: 3rem;
