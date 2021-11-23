@@ -203,7 +203,17 @@ body {
       bottom: 3%;
       overflow-y: auto;
       height: 100%;
-      width: 100%; }
+      width: 97%;
+      display: flex;
+      flex-direction: column-reverse; }
+  .customerMessage-aMessage {
+    padding: 3rem;
+    margin: 2rem;
+    background: #ececec;
+    width: -webkit-fit-content;
+    height: -webkit-fit-content;
+    width: -moz-fit-content;
+    height: -moz-fit-content; }
   .customerMessage-items {
     position: relative;
     width: 27.5%;
@@ -316,6 +326,9 @@ body {
   position: absolute;
   top: 40%;
   right: 10%; }
+
+.ilblock {
+  display: inline-block; }
 
 .navbar {
   width: 100%;

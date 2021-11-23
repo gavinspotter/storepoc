@@ -9,17 +9,19 @@ const ChatItem = (props) => {
 
     console.log(props.sender)
     console.log(auth.customerId)
+
+    
     
 
 
     return (
-        <div >
+        <div className="customerMessage-aMessage" >
             { auth.customerId === props.sender &&
-                <div>me</div>}
+                <div className="ilblock">me:&nbsp; </div>}
             { !auth.customerId === props.sender &&
                 
-                <div>buyz</div>}
-            <div>{props.message}</div>
+                <div className="ilblock">buyz:&nbsp; </div>}
+            <div className="ilblock"> {props.message}</div>
         </div>
     )
 }

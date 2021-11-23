@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useRef, useContext, useEffect, useState} from 'react'
 
 
 import { useHttpClient } from '../../shared/hooks/http-hook'
@@ -29,6 +29,8 @@ const CustomerChatBox = () => {
 
     const [messages, setMessages] = useState()
 
+    const [mTrigger, setmTrigger] = useState()
+
 
 
     useEffect(() => {
@@ -56,11 +58,15 @@ const CustomerChatBox = () => {
 
         fetchMessages();
 
+        setmTrigger(false)
+
 
 
         
 
-    }, [sendRequest, auth.customerToken])
+    }, [sendRequest, mTrigger, auth.customerToken])
+
+    const titleRef = useRef()
 
     const submitAMessage = async (data) => {
 
@@ -83,30 +89,51 @@ const CustomerChatBox = () => {
             
         }
 
-        const fetchMessages = async () => {
-            try {
-                const responseData = await sendRequest(
-                    `${process.env.REACT_APP_BACKEND_URL}/customer/getMessages`,
-                    "GET",
-                    null,
-                    {
-                        //"Content-Type": "application/json",
-                        Authorization: 'Bearer ' + auth.customerToken 
-                    }
+        setmTrigger(true)
 
-                )
 
-                setMessages(responseData.findMessageBoard.messages)
-                console.log(responseData.findMessageBoard.messages)
-                //window.scrollTo(0, 99999)
-            } catch (err) {
+        // const fetchMessages = async () => {
+        //     try {
+        //         const responseData = await sendRequest(
+        //             `${process.env.REACT_APP_BACKEND_URL}/customer/getMessages`,
+        //             "GET",
+        //             null,
+        //             {
+        //                 //"Content-Type": "application/json",
+        //                 Authorization: 'Bearer ' + auth.customerToken 
+        //             }
+
+        //         )
+
+        //         setMessages(responseData.findMessageBoard.messages)
+               
+        //     } catch (err) {
                 
-            }
-        }
+        //     }
+        // }
 
-        fetchMessages();
+        // fetchMessages();
+
+        // function handleBackClick() {
+        //     titleRef.current.scrollIntoView({ behavior: 'smooth' })
+        // }
+
+        // handleBackClick()
+
+        
+
+        
 
     }
+
+   
+
+
+
+  
+
+ 
+
 
 
     return (
@@ -118,6 +145,12 @@ const CustomerChatBox = () => {
                 
                 <ChatList 
             messages={messages}
+            scroll={titleRef}
+
+            
+
+            
+
             />}
             <div className="customerMessage-items">
 

@@ -1,7 +1,16 @@
 import React from 'react'
 import ChatItem from './ChatItem'
 
+
+import "../../css/style.css"
+
 const ChatList = (props) => {
+
+   
+
+    
+
+
     return (
     
         <div className="customerMessage-messages">
@@ -13,8 +22,12 @@ const ChatList = (props) => {
                     sender={x.sender}
                     message={x.message}
                     />
-                    )
+                    ).reverse()
             }
+
+           
+            <div ref={props.scroll}></div>
+
             </div>
             
         </div>

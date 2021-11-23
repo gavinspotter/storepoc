@@ -256,8 +256,22 @@
       bottom: 3%;
       overflow-y: auto;
       height: 100%;
-      width: 100%;
+      width: 97%;
+
+      display: flex;
+      flex-direction: column-reverse;
     }
+  }
+
+  &-aMessage {
+    padding: 3rem;
+    margin: 2rem;
+    background: rgb(236, 236, 236);
+
+    width: -webkit-fit-content;
+    height: -webkit-fit-content;
+    width: -moz-fit-content;
+    height: -moz-fit-content;
   }
 
   &-items {
