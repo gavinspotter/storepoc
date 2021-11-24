@@ -333,7 +333,7 @@ const purchaseConsumerGoodOnAccount = async (req, res, next) => {
     !findUser.deliveryDetails.state ||
     !findUser.deliveryDetails.zipCode ||
     !findUser.deliveryDetails.country ||
-    !findUser.deliveryDetails.email
+    !findUser.email
   ) {
     const error = new HttpError(
       "you dont have all of your required credential's filled out, check the details tab."
@@ -348,7 +348,7 @@ const purchaseConsumerGoodOnAccount = async (req, res, next) => {
   findItem.deliveryDetails.state = findUser.deliveryDetails.state;
   findItem.deliveryDetails.zipCode = findUser.deliveryDetails.zipCode;
   findItem.deliveryDetails.country = findUser.deliveryDetails.country;
-  findItem.deliveryDetails.email = findUser.deliveryDetails.email;
+  findItem.deliveryDetails.email = findUser.email;
   findItem.sold = true;
   findItem.customer = findUser._id;
 
@@ -636,7 +636,7 @@ const getCustomer = async (req, res, next) => {
   res.json({ findUser, customer });
 };
 
-const updateCard = async () => {
+const updateCard = async (req, res, next) => {
   const { number, exp_month, exp_year, cvc } = req.body;
 
   let findUser;

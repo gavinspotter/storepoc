@@ -1,3 +1,4 @@
+import { set } from "mongoose";
 import React, { useContext, useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
@@ -19,6 +20,12 @@ const DetailsContainer = () => {
 
   const [stripeData, setStripeData] = useState();
 
+  const [confTrigger, setConfTrigger] = useState();
+
+  const [detailsConfirmation, setDetailsConfirmation] = useState(false);
+
+  const [cardConfirmation, setCardConfirmation] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       const responseData = await sendRequest(
@@ -33,10 +40,30 @@ const DetailsContainer = () => {
       setCustomerData(responseData.findUser);
       setStripeData(responseData.customer);
       console.log(responseData);
+
+      if (
+        responseData.findUser.deliveryDetails.firstName &&
+        responseData.findUser.deliveryDetails.lastName &&
+        responseData.findUser.deliveryDetails.street &&
+        responseData.findUser.deliveryDetails.city &&
+        responseData.findUser.deliveryDetails.state &&
+        responseData.findUser.deliveryDetails.country &&
+        responseData.findUser.deliveryDetails.zipCode
+      ) {
+        setDetailsConfirmation(true);
+      } else {
+        setDetailsConfirmation(false);
+      }
+
+      if (responseData.customer.default_source) {
+        setCardConfirmation(true);
+      } else {
+        setCardConfirmation(false);
+      }
     };
 
     fetchData();
-  }, [sendRequest, auth.customerToken]);
+  }, [sendRequest, confTrigger, auth.customerToken]);
 
   const detailsSubmit = async (data) => {
     try {
@@ -58,12 +85,13 @@ const DetailsContainer = () => {
         }
       );
     } catch (err) {}
+    setConfTrigger(Math.random() * 1000000);
   };
 
   const cardSubmit = async (data) => {
     try {
       await sendRequest(
-        `http://localhost:5000/api/customer/updateDetails`,
+        `http://localhost:5000/api/customer/updateCard`,
         "PATCH",
         JSON.stringify({
           number: data.number,
@@ -77,26 +105,7 @@ const DetailsContainer = () => {
         }
       );
     } catch (err) {}
-  };
-
-  const [editDelivery, setEditDelivery] = useState(false);
-
-  const toggleEditDelivery = () => {
-    if (editDelivery === true) {
-      setEditDelivery(false);
-    } else {
-      setEditDelivery(true);
-    }
-  };
-
-  const [toggleFirstName, setFirstName] = useState();
-
-  const toggleFirstNameFunc = () => {
-    if (toggleFirstName === true) {
-      setFirstName(false);
-    } else {
-      setFirstName(true);
-    }
+    setConfTrigger(Math.random() * 1000000);
   };
 
   const [toggleCard, setToggleCard] = useState(false);
@@ -134,8 +143,9 @@ const DetailsContainer = () => {
           )}
           {toggleCard && (
             <div className="details-toggle" onClick={toggleCardFunc}>
-              {" "}
-              edit details{" "}
+              <button className="details-toggle-button-blue">
+                edit details{" "}
+              </button>
             </div>
           )}
           <div>
@@ -143,6 +153,16 @@ const DetailsContainer = () => {
               {!toggleCard && customerData && (
                 <form onSubmit={handleSubmit(detailsSubmit)}>
                   <h3>delivery details</h3>
+                  {customerData.deliveryDetails.firstName &&
+                    customerData.deliveryDetails.lastName &&
+                    customerData.deliveryDetails.street &&
+                    customerData.deliveryDetails.city &&
+                    customerData.deliveryDetails.state &&
+                    customerData.deliveryDetails.country &&
+                    customerData.deliveryDetails.zipCode &&
+                    detailsConfirmation && (
+                      <div>we have your information ✅</div>
+                    )}
 
                   {
                     <div>
@@ -174,6 +194,13 @@ const DetailsContainer = () => {
                       <input
                         defaultValue={customerData.deliveryDetails.street}
                         {...register("street")}
+                      />
+
+                      <div>city:</div>
+
+                      <input
+                        defaultValue={customerData.deliveryDetails.city}
+                        {...register("city")}
                       />
 
                       {/* <div>Street:</div>
@@ -222,9 +249,7 @@ const DetailsContainer = () => {
                       {...register("country")}
                     /> */}
 
-                      <button className="details-submitButton-button">
-                        submit
-                      </button>
+                      <button className="details-submitButton">submit</button>
                     </div>
                   }
                 </form>
@@ -235,8 +260,12 @@ const DetailsContainer = () => {
               <div>
                 <div className="details-paymentInfo">
                   <h3>card details</h3>
+                  {stripeData &&
+                    stripeData.default_source &&
+                    cardConfirmation && <div>we have your information ✅</div>}
+
                   {stripeData && (
-                    <div>
+                    <form onSubmit={handleSubmit(cardSubmit)}>
                       <div>
                         <div className="ilblock">
                           <div className="details-payment-info-cn">
@@ -249,10 +278,12 @@ const DetailsContainer = () => {
                           />
                         </div>
 
-                        <div className="ilblock details-paymentInfo-cvc-block">
-                          <div {...register("cvc")}>cvc:</div>
+                        <div className="details-paymentInfo-cvc-block">
+                          <div className="ilblock" {...register("cvc")}>
+                            cvc:
+                          </div>
 
-                          <input className="details-paymentInfo-cvc" />
+                          <input className="details-paymentInfo-cvc inlblock" />
                         </div>
                       </div>
                       <div>
@@ -266,8 +297,11 @@ const DetailsContainer = () => {
 
                           <input className="details-paymentInfo-exp" />
                         </div>
+                        <button className="details-paymentInfo-button">
+                          submit
+                        </button>
                       </div>
-                    </div>
+                    </form>
                   )}
                 </div>
               </div>
