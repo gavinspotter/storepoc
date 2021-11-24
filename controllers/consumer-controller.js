@@ -9,6 +9,7 @@ const Admin = require("../models/Admin");
 
 const Messages = require("../models/Messages");
 const ConsumerGoods = require("../models/ConsumerGoods");
+const { update } = require("../models/Admin");
 
 const stripe = require("stripe")(process.env.secretKey);
 
@@ -120,13 +121,11 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res
-    .status(201)
-    .json({
-      customerId: createdCustomer.id,
-      email: createdCustomer.email,
-      token: token,
-    });
+  res.status(201).json({
+    customerId: createdCustomer.id,
+    email: createdCustomer.email,
+    token: token,
+  });
 };
 
 const login = async (req, res, next) => {
@@ -380,25 +379,8 @@ const purchaseConsumerGoodOnAccount = async (req, res, next) => {
 };
 
 const editDeliveryDetails = async (req, res, next) => {
-  const {
-    firstName,
-    lastName,
-    street,
-    city,
-    state,
-    zipCode,
-    country,
-    email,
-    number,
-    exp_month,
-    exp_year,
-    cvc,
-  } = req.body;
-
-  if (!firstName) {
-    const error = new HttpError("you're missing information");
-    return next(error);
-  }
+  const { firstName, lastName, street, city, state, zipCode, country, email } =
+    req.body;
 
   let findUser;
 
@@ -421,26 +403,6 @@ const editDeliveryDetails = async (req, res, next) => {
     return next(error);
   }
 
-  let token;
-
-  try {
-    token = await stripe.tokens.create({
-      card: {
-        number: number,
-        exp_month: exp_month,
-        exp_year: exp_year,
-        cvc: cvc,
-      },
-    });
-  } catch (err) {
-    const error = new HttpError("had trouble processing your card");
-    return next(error);
-  }
-
-  const customer = await stripe.customers.update(findUser.stripeCustomerId, {
-    source: token.id,
-  });
-
   findUser.deliveryDetails.firstName = firstName;
   findUser.deliveryDetails.lastName = lastName;
   findUser.deliveryDetails.street = street;
@@ -457,7 +419,7 @@ const editDeliveryDetails = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ findUser, customer });
+  res.json({ findUser });
 };
 
 // const editEmail = async (req, res, next) => {
@@ -674,6 +636,53 @@ const getCustomer = async (req, res, next) => {
   res.json({ findUser, customer });
 };
 
+const updateCard = async () => {
+  const { number, exp_month, exp_year, cvc } = req.body;
+
+  let findUser;
+
+  try {
+    findUser = await Customer.findById(req.customerData.customerId);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
+
+  if (!findUser) {
+    const error = new HttpError(
+      "you're not logged in or your login token has expired"
+    );
+    return next(error);
+  }
+
+  if (findUser._id.toString() !== req.customerData.customerId) {
+    const error = new HttpError("you don't have permission to access that");
+    return next(error);
+  }
+
+  let token;
+
+  try {
+    token = await stripe.tokens.create({
+      card: {
+        number: number,
+        exp_month: exp_month,
+        exp_year: exp_year,
+        cvc: cvc,
+      },
+    });
+  } catch (err) {
+    const error = new HttpError("had trouble processing your card");
+    return next(error);
+  }
+
+  const customer = await stripe.customers.update(findUser.stripeCustomerId, {
+    source: token.id,
+  });
+
+  res.json({ customer });
+};
+
 // const editMessage = async (req, res, next) => {
 
 // }
@@ -689,6 +698,8 @@ exports.purchaseConsumerGood = purchaseConsumerGood;
 exports.getCustomer = getCustomer;
 
 exports.editDeliveryDetails = editDeliveryDetails;
+
+exports.updateCard = updateCard;
 
 exports.purchaseConsumerGoodOnAccount = purchaseConsumerGoodOnAccount;
 

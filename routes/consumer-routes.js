@@ -1,40 +1,36 @@
-const express = require("express")
+const express = require("express");
 
-const customerController = require("../controllers/consumer-controller")
+const customerController = require("../controllers/consumer-controller");
 
-const checkAuth = require('../middleware/customer-check-auth');
+const checkAuth = require("../middleware/customer-check-auth");
 
+const router = express.Router();
 
-const router = express.Router()
+router.post("/signup", customerController.signup);
 
-router.post("/signup", customerController.signup)
+router.post("/login", customerController.login);
 
-router.post("/login", customerController.login)
-
-router.post("/purchaseGood", customerController.purchaseConsumerGood)
-
-
+router.post("/purchaseGood", customerController.purchaseConsumerGood);
 
 router.use(checkAuth);
 
-router.get("/getCustomer", customerController.getCustomer)
+router.get("/getCustomer", customerController.getCustomer);
 
+router.patch("/updateDetails", customerController.editDeliveryDetails);
 
+router.patch("/updateCard", customerController.updateCard);
 
-router.patch("/updateDetails", customerController.editDeliveryDetails )
+router.post(
+  "/buyItemOnAccount",
+  customerController.purchaseConsumerGoodOnAccount
+);
 
+router.get("/getMessages", customerController.getMessages);
 
-router.post("/buyItemOnAccount", customerController.purchaseConsumerGoodOnAccount)
+router.get("/items", customerController.getItems);
 
-router.get("/getMessages", customerController.getMessages)
+router.post("/postMessage", customerController.createAMessage);
 
-router.get("/items", customerController.getItems)
+router.post("/createMessageBoard", customerController.createMessages);
 
-
-
-router.post("/postMessage", customerController.createAMessage)
-
-router.post("/createMessageBoard", customerController.createMessages)
-
-
-module.exports = router
+module.exports = router;

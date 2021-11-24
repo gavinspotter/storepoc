@@ -47,9 +47,25 @@ const DetailsContainer = () => {
           firstName: data.firstName,
           lastName: data.lastName,
           street: data.street,
+          state: data.state,
           city: data.city,
           country: data.country,
           zipCode: data.zipCode,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.customerToken,
+        }
+      );
+    } catch (err) {}
+  };
+
+  const cardSubmit = async (data) => {
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/customer/updateDetails`,
+        "PATCH",
+        JSON.stringify({
           number: data.number,
           exp_month: data.exp_month,
           exp_year: data.exp_year,
@@ -107,10 +123,25 @@ const DetailsContainer = () => {
         </h3>
 
         <div className="details-form">
-          <form onSubmit={handleSubmit(detailsSubmit)}>
+          {!toggleCard && (
+            <div className="details-toggle" onClick={toggleCardFunc}>
+              {" "}
+              <button className="details-toggle-button">edit card </button>{" "}
+              {stripeData && !stripeData.default_source && (
+                <div>❎ we still need this</div>
+              )}
+            </div>
+          )}
+          {toggleCard && (
+            <div className="details-toggle" onClick={toggleCardFunc}>
+              {" "}
+              edit details{" "}
+            </div>
+          )}
+          <div>
             <div className="details-delivInfo">
               {!toggleCard && customerData && (
-                <div>
+                <form onSubmit={handleSubmit(detailsSubmit)}>
                   <h3>delivery details</h3>
 
                   {
@@ -119,7 +150,7 @@ const DetailsContainer = () => {
                         <div>First Name:</div>
 
                         <input
-                          defaultValue={customerData.firstName}
+                          defaultValue={customerData.deliveryDetails.firstName}
                           {...register("firstName")}
                         />
                       </div>
@@ -127,7 +158,7 @@ const DetailsContainer = () => {
                       <div>Last Name:</div>
 
                       <input
-                        defaultValue={customerData.lastName}
+                        defaultValue={customerData.deliveryDetails.lastName}
                         {...register("lastName")}
                       />
 
@@ -141,7 +172,7 @@ const DetailsContainer = () => {
                       <div>Street:</div>
 
                       <input
-                        defaultValue={customerData.street}
+                        defaultValue={customerData.deliveryDetails.street}
                         {...register("street")}
                       />
 
@@ -154,7 +185,7 @@ const DetailsContainer = () => {
                       <div>State:</div>
 
                       <input
-                        defaultValue={customerData.state}
+                        defaultValue={customerData.deliveryDetails.state}
                         {...register("state")}
                       />
 
@@ -167,7 +198,7 @@ const DetailsContainer = () => {
                       <div>Zip Code:</div>
 
                       <input
-                        defaultValue={customerData.zipCode}
+                        defaultValue={customerData.deliveryDetails.zipCode}
                         {...register("zipCode")}
                       />
                       {/* 
@@ -180,7 +211,7 @@ const DetailsContainer = () => {
                       <div>Country:</div>
 
                       <input
-                        defaultValue={customerData.country}
+                        defaultValue={customerData.deliveryDetails.country}
                         {...register("country")}
                       />
 
@@ -190,15 +221,14 @@ const DetailsContainer = () => {
                       defaultValue={customerData.country}
                       {...register("country")}
                     /> */}
+
+                      <button className="details-submitButton-button">
+                        submit
+                      </button>
                     </div>
                   }
-                </div>
+                </form>
               )}
-            </div>
-
-            <div className="ilblock" onClick={toggleCardFunc}>
-              {" "}
-              edit card{" "}
             </div>
 
             {toggleCard && (
@@ -242,8 +272,7 @@ const DetailsContainer = () => {
                 </div>
               </div>
             )}
-            <button className="details-submitButton">submit</button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
