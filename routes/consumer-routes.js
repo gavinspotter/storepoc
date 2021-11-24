@@ -17,7 +17,7 @@ router.post("/purchaseGood", customerController.purchaseConsumerGood)
 
 router.use(checkAuth);
 
-router.get("/getCustomer")
+router.get("/getCustomer", customerController.getCustomer)
 
 
 

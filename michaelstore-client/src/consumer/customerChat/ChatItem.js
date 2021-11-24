@@ -7,8 +7,7 @@ const ChatItem = (props) => {
 
     const auth= useContext(AuthContext)
 
-    console.log(props.sender)
-    console.log(auth.customerId)
+    
 
     
     

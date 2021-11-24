@@ -311,6 +311,9 @@ body {
         margin-left: 2rem; }
     .details-paymentInfo-cn {
       display: inline-block; }
+  .details-submitButton {
+    margin-left: 8rem;
+    margin-top: 3rem; }
 
 .loading-spinner__overlay {
   height: 100%;

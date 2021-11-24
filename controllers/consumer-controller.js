@@ -10,7 +10,7 @@ const Admin = require("../models/Admin")
 
 const Messages = require("../models/Messages")
 const ConsumerGoods = require("../models/ConsumerGoods")
-const { findById } = require("../models/Admin")
+
 const stripe = require("stripe")(process.env.secretKey)
 
 const signup = async (req, res, next) => {
@@ -718,25 +718,31 @@ const getItems = async () => {
 const getCustomer = async (req, res, next) => {
 
 
-    let findCustomer
+    let findUser 
 
     try {
-        findCustomer = Customer.findById(req.customerData.customerId)
+        findUser = await Customer.findById(req.customerData.customerId)
     } catch (err) {
         const error = new HttpError("something went wrong")
         return next(error)
     }
 
-    if(!findCustomer){
-        const error = new HttpError("something went wrong, you're not logged in")
+    if(!findUser){
+        const error = new HttpError("you're not logged in or your login token has expired")
         return next(error)
     }
 
+
     const customer = await stripe.customers.retrieve(
-        findCustomer.stripeCustomerId
+        findUser.stripeCustomerId
     );
 
-    res.json({findCustomer, customer})
+    if(!customer){
+        const error = new HttpError("couldn't find your id")
+        return next(error)
+    }
+
+    res.json({findUser, customer})
 
 }
 
