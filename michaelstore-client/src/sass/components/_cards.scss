@@ -372,5 +372,44 @@
     margin-bottom: 3rem;
     margin-top: 3rem;
     padding-top: 3rem;
+    padding-left: 5rem;
+  }
+  &-form {
+    padding-top: 5rem;
+    padding-left: 5rem;
+  }
+
+  &-delivInfo {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 3rem;
+  }
+  &-paymentInfo {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 3rem;
+
+    &-num {
+      margin-right: 3rem;
+    }
+
+    &-cvc {
+      display: inline-block;
+      width: 3rem;
+      &-block {
+        padding-right: 4rem;
+      }
+    }
+    &-exp {
+      display: inline-block;
+      width: 3rem;
+      &-blockyear {
+        margin-left: 2rem;
+      }
+    }
+
+    &-cn {
+      display: inline-block;
+    }
   }
 }

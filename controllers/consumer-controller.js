@@ -732,7 +732,11 @@ const getCustomer = async (req, res, next) => {
         return next(error)
     }
 
-    res.json({findCustomer})
+    const customer = await stripe.customers.retrieve(
+        findCustomer.stripeCustomerId
+    );
+
+    res.json({findCustomer, customer})
 
 }
 

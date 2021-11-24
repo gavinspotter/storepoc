@@ -284,7 +284,33 @@ body {
     margin-right: 3rem;
     margin-bottom: 3rem;
     margin-top: 3rem;
-    padding-top: 3rem; }
+    padding-top: 3rem;
+    padding-left: 5rem; }
+  .details-form {
+    padding-top: 5rem;
+    padding-left: 5rem; }
+  .details-delivInfo {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 3rem; }
+  .details-paymentInfo {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 3rem; }
+    .details-paymentInfo-num {
+      margin-right: 3rem; }
+    .details-paymentInfo-cvc {
+      display: inline-block;
+      width: 3rem; }
+      .details-paymentInfo-cvc-block {
+        padding-right: 4rem; }
+    .details-paymentInfo-exp {
+      display: inline-block;
+      width: 3rem; }
+      .details-paymentInfo-exp-blockyear {
+        margin-left: 2rem; }
+    .details-paymentInfo-cn {
+      display: inline-block; }
 
 .loading-spinner__overlay {
   height: 100%;
