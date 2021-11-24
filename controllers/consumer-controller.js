@@ -1,778 +1,705 @@
-const HttpError = require("../models/HttpError")
+const HttpError = require("../models/HttpError");
 
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+const Customer = require("../models/Customers");
 
-const Customer = require("../models/Customers")
+const Admin = require("../models/Admin");
 
-const Admin = require("../models/Admin")
+const Messages = require("../models/Messages");
+const ConsumerGoods = require("../models/ConsumerGoods");
 
-const Messages = require("../models/Messages")
-const ConsumerGoods = require("../models/ConsumerGoods")
-
-const stripe = require("stripe")(process.env.secretKey)
+const stripe = require("stripe")(process.env.secretKey);
 
 const signup = async (req, res, next) => {
-    const { email, firstName, lastName , password } = req.body
+  const { email, firstName, lastName, password } = req.body;
 
-    let existingUser
+  let existingUser;
 
-    try {
-        existingUser = await Customer.findOne({ email: email })
-    } catch (err) {
-        const error = new HttpError(
-            "username already in use",
-            500
-        )
-        return next(error)
-    }
+  try {
+    existingUser = await Customer.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError("username already in use", 500);
+    return next(error);
+  }
 
-    if (existingUser) {
-        const error = new HttpError("this user already exists, please login", 422)
-        return next(error)
-    }
+  if (existingUser) {
+    const error = new HttpError("this user already exists, please login", 422);
+    return next(error);
+  }
 
-    let hashedPassword;
+  let hashedPassword;
 
-    try {
-        hashedPassword = await bcrypt.hash(password, 12);
-    } catch (err) {
-        const error = new HttpError(
-            'Could not create user, please try again.',
-            500
-        );
-        return next(error);
-    }
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (err) {
+    const error = new HttpError(
+      "Could not create user, please try again.",
+      500
+    );
+    return next(error);
+  }
 
-    let findAdmin 
+  let findAdmin;
 
-    try {
-        findAdmin = await Admin.find({username: "michaelross"})
-    } catch (err) {
-        const error = new HttpError("couldn't add you to our directory")
-        return next(error)
-    }
+  try {
+    findAdmin = await Admin.find({ username: "michaelross" });
+  } catch (err) {
+    const error = new HttpError("couldn't add you to our directory");
+    return next(error);
+  }
 
-    
+  let stripeCustomerId;
 
+  try {
+    stripeCustomerId = await stripe.customers.create({
+      description: "Welcome!",
+    });
+  } catch (err) {
+    const error = new HttpError("something went wrong, sorry");
+    return next(error);
+  }
 
-    
+  const createdCustomer = new Customer({
+    firstName,
+    lastName,
+    email,
+    stripeCustomerId: stripeCustomerId.id,
+    messages: {},
+    password: hashedPassword,
+    admin: findAdmin[0]._id,
+  });
 
+  const createdMessageBoard = new Messages({
+    admin: findAdmin[0]._id,
+    consumer: createdCustomer._id,
+    hidden: true,
+    messages: [],
+  });
 
-    let stripeCustomerId
+  try {
+    await createdMessageBoard.save();
+  } catch (err) {
+    const error = new HttpError("couldn't save that request");
+    return next(error);
+  }
 
-    try {
-        stripeCustomerId = await stripe.customers.create({
-            description: "Welcome!"
-        })
-    } catch (err) {
-        const error = new HttpError("something went wrong, sorry")
-        return next(error)
-    }
+  createdCustomer.messages = createdMessageBoard._id;
 
-    
+  try {
+    await createdCustomer.save();
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError("couldnt save this action", 500);
+    return next(error);
+  }
 
+  try {
+    findAdmin[0].messages.push(createdMessageBoard);
+    await findAdmin[0].save();
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError("couldn't perform that task");
+    return next(error);
+  }
 
-   
+  let token;
 
+  try {
+    token = jwt.sign(
+      { customerId: createdCustomer.id, email: createdCustomer.email },
+      "supersecret_dont_share",
+      { expiresIn: "24h" }
+    );
+  } catch (err) {
+    const error = new HttpError(
+      "Signing up failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
 
-
-    const createdCustomer = new Customer({
-        firstName,
-        lastName,
-        email,
-        stripeCustomerId: stripeCustomerId.id,
-        messages: {},
-        password: hashedPassword,
-        admin: findAdmin[0]._id
-        
-
-    })
-
-    
-
-    
-
-    const createdMessageBoard = new Messages({
-
-        admin: findAdmin[0]._id,
-        consumer: createdCustomer._id,
-        hidden: true,
-        messages: []
-
-
-    })
-
-
-
-    try {
-        await createdMessageBoard.save()
-    } catch (err) {
-        const error = new HttpError("couldn't save that request")
-        return next(error)
-    }
-
-    createdCustomer.messages = createdMessageBoard._id
-
-
-    try {
-        await createdCustomer.save()
-    } catch (err) {
-
-        console.log(err)
-        const error = new HttpError(
-            "couldnt save this action",
-            500
-        )
-        return next(error)
-    }
-
-    try {
-        findAdmin[0].messages.push(createdMessageBoard)
-        await findAdmin[0].save()
-    } catch (err) {
-        console.log(err)
-        const error = new HttpError("couldn't perform that task")
-        return next(error)
-    }
-
-    let token;
-
-    try {
-        token = jwt.sign(
-            { customerId: createdCustomer.id, email: createdCustomer.email },
-            'supersecret_dont_share',
-            { expiresIn: '24h' }
-        );
-    } catch (err) {
-        const error = new HttpError(
-            'Signing up failed, please try again later.',
-            500
-        );
-        return next(error);
-    }
-
-
-    res.status(201).json({ customerId: createdCustomer.id, email: createdCustomer.email, token: token })
-}
-
+  res
+    .status(201)
+    .json({
+      customerId: createdCustomer.id,
+      email: createdCustomer.email,
+      token: token,
+    });
+};
 
 const login = async (req, res, next) => {
-    const { email, password } = req.body
+  const { email, password } = req.body;
 
-    let existingUser
+  let existingUser;
 
-    try {
-        existingUser = await Customer.findOne({ email: email })
-    } catch (err) {
-        const error = new HttpError(
-            "login failed",
-            500
-        )
-        return next(error)
-    }
+  try {
+    existingUser = await Customer.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError("login failed", 500);
+    return next(error);
+  }
 
-    if (!existingUser) {
-        const error = new HttpError(
-            "wrong information",
-            401
-        )
-        return next(error)
-    }
+  if (!existingUser) {
+    const error = new HttpError("wrong information", 401);
+    return next(error);
+  }
 
-    let isValidPassword = false
+  let isValidPassword = false;
 
-    try {
-        isValidPassword = await bcrypt.compare(password, existingUser.password);
-    } catch (err) {
-        const error = new HttpError(
-            'Could not log you in, please check your credentials and try again.',
-            500
-        );
-        return next(error);
-    }
+  try {
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
+  } catch (err) {
+    const error = new HttpError(
+      "Could not log you in, please check your credentials and try again.",
+      500
+    );
+    return next(error);
+  }
 
-    if (!isValidPassword) {
-        const error = new HttpError(
-            'Invalid credentials, could not log you in.',
-            403
-        );
-        return next(error);
-    }
+  if (!isValidPassword) {
+    const error = new HttpError(
+      "Invalid credentials, could not log you in.",
+      403
+    );
+    return next(error);
+  }
 
-    let token;
+  let token;
 
-    try {
-        token = jwt.sign(
-            { customerId: existingUser.id, email: existingUser.email },
-            'supersecret_dont_share',
-            { expiresIn: '24h' }
-        );
-    } catch (err) {
-        const error = new HttpError(
-            'login failed, please try again later.',
-            500
-        );
-        return next(error);
-    }
+  try {
+    token = jwt.sign(
+      { customerId: existingUser.id, email: existingUser.email },
+      "supersecret_dont_share",
+      { expiresIn: "24h" }
+    );
+  } catch (err) {
+    const error = new HttpError("login failed, please try again later.", 500);
+    return next(error);
+  }
 
-
-    res.json({
-        customerId: existingUser.id, email: existingUser.email, customerToken: token 
-    })
-}
-
-
-
-
+  res.json({
+    customerId: existingUser.id,
+    email: existingUser.email,
+    customerToken: token,
+  });
+};
 
 // const favoriteBulk = async (req, res, next) => {
 
 // }
 
 const purchaseConsumerGood = async (req, res, next) => {
+  const {
+    itemId,
+    email,
+    firstName,
+    lastName,
+    street,
+    city,
+    state,
+    zipCode,
+    country,
+    number,
+    exp_month,
+    exp_year,
+    cvc,
+  } = req.body;
 
-    const { itemId, email, firstName, lastName, street, city, state, zipCode, country, number, exp_month, exp_year, cvc } = req.body
+  let findItem;
 
+  try {
+    findItem = await ConsumerGoods.findById(itemId);
+  } catch (err) {
+    const error = new HttpError("something has gone wrong, sorry");
+    return next(error);
+  }
 
-    let findItem 
+  if (findItem.sold === true) {
+    const error = new HttpError("this item is already sold");
+    return next(error);
+  }
 
-    try {
-        findItem = await ConsumerGoods.findById(itemId)
-    } catch (err) {
-        const error = new HttpError("something has gone wrong, sorry")
-        return next(error)
-    }
+  if (
+    !email ||
+    !firstName ||
+    !lastName ||
+    !street ||
+    !city ||
+    !state ||
+    !zipCode
+  ) {
+    const error = new HttpError(
+      "we're missing some information, we need your first and last name, street, city, state, zip code, and email. Details is where you can alter this."
+    );
+    return next(error);
+  }
 
-    if(findItem.sold === true){
-        const error = new HttpError("this item is already sold")
-        return next(error)
-    }
+  findItem.sold = true;
+  findItem.deliveryDetails.firstName = firstName;
+  findItem.deliveryDetails.lastName = lastName;
+  findItem.deliveryDetails.street = street;
+  findItem.deliveryDetails.city = city;
+  findItem.deliveryDetails.state = state;
+  findItem.deliveryDetails.zipCode = zipCode;
+  findItem.deliveryDetails.country = country;
+  findItem.deliveryDetails.email = email;
 
-    if(!email || !firstName || !lastName || !street || !city || !state|| !zipCode){
-        const error = new HttpError("we're missing some information, we need your first and last name, street, city, state, zip code, and email. Details is where you can alter this.")
-        return next(error)
-    }
+  let token;
 
-    findItem.sold = true
-    findItem.deliveryDetails.firstName = firstName
-    findItem.deliveryDetails.lastName = lastName 
-    findItem.deliveryDetails.street = street 
-    findItem.deliveryDetails.city = city 
-    findItem.deliveryDetails.state = state;
-    findItem.deliveryDetails.zipCode = zipCode;
-    findItem.deliveryDetails.country = country;
-    findItem.deliveryDetails.email = email 
+  try {
+    token = await stripe.tokens.create({
+      card: {
+        number: number,
+        exp_month: exp_month,
+        exp_year: exp_year,
+        cvc: cvc,
+      },
+    });
+  } catch (err) {
+    const error = new HttpError("had trouble processing your card");
+    return next(error);
+  }
 
-    let token
+  let charge;
 
+  try {
+    charge = await stripe.charges.create({
+      amount: findItem.price,
+      currency: "usd",
 
+      source: token.id,
+      description: "My First Test Charge (created for API docs)",
+    });
+    await findItem.save();
+  } catch (err) {
+    const error = new HttpError("couldn't save that");
+    return next(error);
+  }
 
-    try {
-        token = await stripe.tokens.create({
-            card: {
-                number: number ,
-                exp_month: exp_month,
-                exp_year: exp_year,
-                cvc: cvc,
-            },
-        });
-    } catch (err) {
-        const error = new HttpError("had trouble processing your card")
-        return next(error)
-    }
-
-
-    let charge 
-
-    try {
-        charge = await stripe.charges.create({
-            amount: findItem.price,
-            currency: 'usd',
-            
-            source: token.id,
-            description: 'My First Test Charge (created for API docs)',
-    
-        });
-        await findItem.save()
-    } catch (err) {
-        const error = new HttpError("couldn't save that")
-        return next(error)
-    }
-
-    res.json({ findItem, charge })
-
-
-
-}
+  res.json({ findItem, charge });
+};
 
 const purchaseConsumerGoodOnAccount = async (req, res, next) => {
+  const { itemId } = req.body;
 
+  let findUser;
 
-    const { itemId } = req.body
+  try {
+    findUser = await Customer.findById(req.customerData.customerId);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
 
-    let findUser 
-
-    try {
-        findUser = await Customer.findById(req.customerData.customerId)
-    } catch (err) {
-        const error = new HttpError("something went wrong")
-        return next(error)
-    }
-
-    if(!findUser){
-        const error = new HttpError("you're not logged in or your login token has expired")
-        return next(error)
-    }
-
-    if(findUser._id.toString() !== req.customerData.customerId){
-        const error = new HttpError("you don't have permission to access that")
-        return next(error)
-    }
-
-    let findItem 
-
-    try {
-        findItem = await ConsumerGoods.findById(itemId)
-    } catch (err) {
-        const error = new HttpError("something has gone wrong, sorry")
-        return next(error)
-    }
-    
-
-    const customer = await stripe.customers.retrieve(
-        findUser.stripeCustomerId
+  if (!findUser) {
+    const error = new HttpError(
+      "you're not logged in or your login token has expired"
     );
+    return next(error);
+  }
 
-    if(!customer.default_source){
-        const error = new HttpError("you haven't added a card yet")
-        return next(error)
-    }
+  if (findUser._id.toString() !== req.customerData.customerId) {
+    const error = new HttpError("you don't have permission to access that");
+    return next(error);
+  }
 
-    if(findItem.sold === true){
-        const error = new HttpError("this item is already sold")
-        return next(error)
-    }
+  let findItem;
 
-    if(!findUser.deliveryDetails.firstName || !findUser.deliveryDetails.lastName || !findUser.deliveryDetails.street || !findUser.deliveryDetails.city || !findUser.deliveryDetails.state || !findUser.deliveryDetails.zipCode || !findUser.deliveryDetails.country || !findUser.deliveryDetails.email ){
-        const error = new HttpError("you dont have all of your required credential's filled out, check the details tab.")
-        return next(error)
-    }
+  try {
+    findItem = await ConsumerGoods.findById(itemId);
+  } catch (err) {
+    const error = new HttpError("something has gone wrong, sorry");
+    return next(error);
+  }
 
-    findItem.deliveryDetails.firstName = findUser.deliveryDetails.firstName
-    findItem.deliveryDetails.lastName = findUser.deliveryDetails.lastName
-    findItem.deliveryDetails.street = findUser.deliveryDetails.street
-    findItem.deliveryDetails.city = findUser.deliveryDetails.city
-    findItem.deliveryDetails.state = findUser.deliveryDetails.state
-    findItem.deliveryDetails.zipCode = findUser.deliveryDetails.zipCode
-    findItem.deliveryDetails.country = findUser.deliveryDetails.country
-    findItem.deliveryDetails.email = findUser.deliveryDetails.email
-    findItem.sold = true
-    findItem.customer = findUser._id
+  const customer = await stripe.customers.retrieve(findUser.stripeCustomerId);
 
-    try {
-        await findItem.save()
-    } catch (err) {
-        const error = new HttpError("couldn't save that")
-        return next(error)
-    }
+  if (!customer.default_source) {
+    const error = new HttpError("you haven't added a card yet");
+    return next(error);
+  }
 
+  if (findItem.sold === true) {
+    const error = new HttpError("this item is already sold");
+    return next(error);
+  }
 
+  if (
+    !findUser.deliveryDetails.firstName ||
+    !findUser.deliveryDetails.lastName ||
+    !findUser.deliveryDetails.street ||
+    !findUser.deliveryDetails.city ||
+    !findUser.deliveryDetails.state ||
+    !findUser.deliveryDetails.zipCode ||
+    !findUser.deliveryDetails.country ||
+    !findUser.deliveryDetails.email
+  ) {
+    const error = new HttpError(
+      "you dont have all of your required credential's filled out, check the details tab."
+    );
+    return next(error);
+  }
 
-    try {
-        findUser.consumerPurchases.push(findItem._id)
-        await findUser.save()
-    } catch (err) {
-        const error = new HttpError("couldn't save that")
-        return next(error)
-    }
+  findItem.deliveryDetails.firstName = findUser.deliveryDetails.firstName;
+  findItem.deliveryDetails.lastName = findUser.deliveryDetails.lastName;
+  findItem.deliveryDetails.street = findUser.deliveryDetails.street;
+  findItem.deliveryDetails.city = findUser.deliveryDetails.city;
+  findItem.deliveryDetails.state = findUser.deliveryDetails.state;
+  findItem.deliveryDetails.zipCode = findUser.deliveryDetails.zipCode;
+  findItem.deliveryDetails.country = findUser.deliveryDetails.country;
+  findItem.deliveryDetails.email = findUser.deliveryDetails.email;
+  findItem.sold = true;
+  findItem.customer = findUser._id;
 
+  try {
+    await findItem.save();
+  } catch (err) {
+    const error = new HttpError("couldn't save that");
+    return next(error);
+  }
 
+  try {
+    findUser.consumerPurchases.push(findItem._id);
+    await findUser.save();
+  } catch (err) {
+    const error = new HttpError("couldn't save that");
+    return next(error);
+  }
 
-    
+  const charge = await stripe.charges.create({
+    amount: findItem.price,
+    currency: "usd",
+    customer: customer.id,
+    source: customer.default_source,
+    description: "My First Test Charge (created for API docs)",
+  });
 
-
-
-
-    const charge = await stripe.charges.create({
-        amount: findItem.price,
-        currency: 'usd',
-        customer: customer.id,
-        source: customer.default_source,
-        description: 'My First Test Charge (created for API docs)',
-
-    });
-
-    res.json({ findItem, findUser, charge })
-
-
-}
+  res.json({ findItem, findUser, charge });
+};
 
 const editDeliveryDetails = async (req, res, next) => {
+  const {
+    firstName,
+    lastName,
+    street,
+    city,
+    state,
+    zipCode,
+    country,
+    email,
+    number,
+    exp_month,
+    exp_year,
+    cvc,
+  } = req.body;
 
-    const { firstName, lastName, street, city, state, zipCode, country, email, number, exp_month, exp_year, cvc } = req.body
+  if (!firstName) {
+    const error = new HttpError("you're missing information");
+    return next(error);
+  }
 
+  let findUser;
 
-    let findUser 
+  try {
+    findUser = await Customer.findById(req.customerData.customerId);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
 
-    try {
-        findUser = await Customer.findById(req.customerData.customerId)
-    } catch (err) {
-        const error = new HttpError("something went wrong")
-        return next(error)
-    }
-
-    if(!findUser){
-        const error = new HttpError("you're not logged in or your login token has expired")
-        return next(error)
-    }
-
-    if(findUser._id.toString() !== req.customerData.customerId){
-        const error = new HttpError("you don't have permission to access that")
-        return next(error)
-    }
-
-    let token
-
-
-
-    try {
-        token = await stripe.tokens.create({
-            card: {
-                number: number ,
-                exp_month: exp_month,
-                exp_year: exp_year,
-                cvc: cvc,
-            },
-        });
-    } catch (err) {
-        const error = new HttpError("had trouble processing your card")
-        return next(error)
-    }
-
-
-    const customer = await stripe.customers.update(
-        findUser.stripeCustomerId,
-        {
-            source: token.id,
-
-        }
-
+  if (!findUser) {
+    const error = new HttpError(
+      "you're not logged in or your login token has expired"
     );
+    return next(error);
+  }
 
+  if (findUser._id.toString() !== req.customerData.customerId) {
+    const error = new HttpError("you don't have permission to access that");
+    return next(error);
+  }
 
+  let token;
 
-    findUser.deliveryDetails.firstName = firstName
-    findUser.deliveryDetails.lastName = lastName
-    findUser.deliveryDetails.street = street
-    findUser.deliveryDetails.city = city
-    findUser.deliveryDetails.state = state
-    findUser.deliveryDetails.zipCode = zipCode
-    findUser.deliveryDetails.country = country 
-    findUser.deliveryDetails.email = email
+  try {
+    token = await stripe.tokens.create({
+      card: {
+        number: number,
+        exp_month: exp_month,
+        exp_year: exp_year,
+        cvc: cvc,
+      },
+    });
+  } catch (err) {
+    const error = new HttpError("had trouble processing your card");
+    return next(error);
+  }
 
-    try {
-        await findUser.save()
-    } catch (err) {
-        const error = new HttpError("couldn't save that, sorry")
-        return next(error)
-    }
+  const customer = await stripe.customers.update(findUser.stripeCustomerId, {
+    source: token.id,
+  });
 
-    res.json({findUser, customer})
+  findUser.deliveryDetails.firstName = firstName;
+  findUser.deliveryDetails.lastName = lastName;
+  findUser.deliveryDetails.street = street;
+  findUser.deliveryDetails.city = city;
+  findUser.deliveryDetails.state = state;
+  findUser.deliveryDetails.zipCode = zipCode;
+  findUser.deliveryDetails.country = country;
+  findUser.deliveryDetails.email = email;
 
+  try {
+    await findUser.save();
+  } catch (err) {
+    const error = new HttpError("couldn't save that, sorry");
+    return next(error);
+  }
 
-
-
-}
+  res.json({ findUser, customer });
+};
 
 // const editEmail = async (req, res, next) => {
 
 // }
 
-
-
 const getMessages = async (req, res, next) => {
+  let findUser;
 
-    let findUser 
+  try {
+    findUser = await Customer.findById(req.customerData.customerId);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
 
-    try {
-        findUser = await Customer.findById(req.customerData.customerId)
-    } catch (err) {
-        const error = new HttpError("something went wrong")
-        return next(error)
-    }
+  if (!findUser) {
+    const error = new HttpError(
+      "you're not logged in or your login token has expired"
+    );
+    return next(error);
+  }
 
-    if(!findUser){
-        const error = new HttpError("you're not logged in or your login token has expired")
-        return next(error)
-    }
+  if (findUser._id.toString() !== req.customerData.customerId) {
+    const error = new HttpError("you don't have permission to access that");
+    return next(error);
+  }
 
-    if(findUser._id.toString() !== req.customerData.customerId){
-        const error = new HttpError("you don't have permission to access that")
-        return next(error)
-    }
+  let findMessageBoard;
 
-    let findMessageBoard 
+  try {
+    findMessageBoard = await Messages.findById(findUser.messages);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
 
-    try {
-        findMessageBoard = await Messages.findById(findUser.messages)
-    } catch (err) {
-        const error = new HttpError("something went wrong")
-        return next(error)
-    }
-
-
-    res.json({findMessageBoard})
-
-
-
-}
+  res.json({ findMessageBoard });
+};
 
 const createAMessage = async (req, res, next) => {
+  const { message } = req.body;
 
-    const { message} = req.body
+  let findUser;
 
-    let findUser 
+  try {
+    findUser = await Customer.findById(req.customerData.customerId);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
 
-    try {
-        findUser = await Customer.findById(req.customerData.customerId)
-    } catch (err) {
-        const error = new HttpError("something went wrong")
-        return next(error)
-    }
+  if (!findUser) {
+    const error = new HttpError(
+      "you're not logged in or your login token has expired"
+    );
+    return next(error);
+  }
 
-    if(!findUser){
-        const error = new HttpError("you're not logged in or your login token has expired")
-        return next(error)
-    }
+  if (findUser._id.toString() !== req.customerData.customerId) {
+    const error = new HttpError("you don't have permission to access that");
+    return next(error);
+  }
 
-    if(findUser._id.toString() !== req.customerData.customerId){
-        const error = new HttpError("you don't have permission to access that")
-        return next(error)
-    }
+  let findMessageBoard;
 
-    let findMessageBoard 
+  try {
+    findMessageBoard = await Messages.findById(findUser.messages);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
 
-    try {
-        findMessageBoard = await Messages.findById(findUser.messages)
-    } catch (err) {
-        const error = new HttpError("something went wrong")
-        return next(error)
-    }
+  const newMessage = {
+    message,
+    date: new Date(),
+    sender: req.customerData.customerId,
+  };
 
+  try {
+    findMessageBoard.hidden = false;
+    findMessageBoard.messages.push(newMessage);
+    await findMessageBoard.save();
+  } catch (err) {
+    const error = new HttpError("something went wrong sending that, sorry");
+    return next(error);
+  }
 
-    const newMessage = {
-        message,
-        date: new Date(),
-        sender: req.customerData.customerId
-    }
-
-
-
-    try {
-        findMessageBoard.hidden = false
-        findMessageBoard.messages.push(newMessage)
-        await findMessageBoard.save()
-    } catch (err) {
-        const error = new HttpError("something went wrong sending that, sorry")
-        return next(error)
-    }
-
-
-    res.json({findMessageBoard})
-
-
-
-
-
-
-
-
-
-
-
-}
+  res.json({ findMessageBoard });
+};
 
 const createMessages = async (req, res, next) => {
+  let findConsumer;
 
-    let findConsumer 
+  try {
+    findConsumer = await Customer.findById(req.customerData.customerId);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
 
-    try {
-        findConsumer = await Customer.findById(req.customerData.customerId)
-    } catch (err) {
-        const error = new HttpError("something went wrong")
-        return next(error)
-    }
+  if (!findConsumer) {
+    const error = new HttpError("you're not logged in");
+    return next(error);
+  }
 
-    if(!findConsumer){
-        const error = new HttpError("you're not logged in")
-        return next(error)
-    }
+  if (findConsumer.messages) {
+    const error = new HttpError("you already have a chat");
+    return next(error);
+  }
 
-    if(findConsumer.messages){
-        const error = new HttpError("you already have a chat")
-        return next(error)
-    }
+  let findAdmin;
 
+  try {
+    findAdmin = await Admin.find({ username: "michaelross" });
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
 
-    let findAdmin 
+  if (!findAdmin) {
+    const error = new HttpError("couldn't find the owner");
+    return next(error);
+  }
 
-    try {
-        findAdmin = await Admin.find({username: "michaelross"})
-    } catch (err) {
-        const error = new HttpError("something went wrong")
-        return next(error)
-    }
+  const createdMessageBoard = new Messages({
+    admin: findAdmin[0]._id,
+    consumer: findConsumer._id,
+    hidden: true,
+    messages: [],
+  });
 
-    if(!findAdmin){
-        const error = new HttpError("couldn't find the owner")
-        return next(error)
-    }
+  try {
+    await createdMessageBoard.save();
+  } catch (err) {
+    const error = new HttpError("couldn't save that request");
+    return next(error);
+  }
 
+  findConsumer.messages = createdMessageBoard._id;
 
+  try {
+    await findConsumer.save();
+  } catch (err) {
+    const error = new HttpError("couldn't perform this task");
+    return next(error);
+  }
 
-   
-    
+  try {
+    findAdmin[0].messages.push(createdMessageBoard);
+    await findAdmin[0].save();
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError("couldn't perform that task");
+    return next(error);
+  }
 
-
-
-
-    const createdMessageBoard = new Messages({
-
-        admin: findAdmin[0]._id,
-        consumer: findConsumer._id,
-        hidden: true,
-        messages: []
-
-
-
-
-    })
-
-
-    try {
-        await createdMessageBoard.save()
-    } catch (err) {
-        const error = new HttpError("couldn't save that request")
-        return next(error)
-    }
-
-    findConsumer.messages = createdMessageBoard._id
-
-    try {
-       await findConsumer.save()
-    } catch (err) {
-        const error = new HttpError("couldn't perform this task")
-        return next(error)
-    }
-
-    
-    try {
-        findAdmin[0].messages.push(createdMessageBoard)
-        await findAdmin[0].save()
-    } catch (err) {
-        console.log(err)
-        const error = new HttpError("couldn't perform that task")
-        return next(error)
-    }
-
-    res.json({findAdmin, findConsumer, createdMessageBoard})
-
-
-
-}
-
+  res.json({ findAdmin, findConsumer, createdMessageBoard });
+};
 
 const getItems = async () => {
+  let findConsumer;
 
-    let findConsumer 
+  try {
+    findConsumer = await Customer.findById(req.customerData.customerId);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
 
-    try {
-        findConsumer = await Customer.findById(req.customerData.customerId)
-    } catch (err) {
-        const error = new HttpError("something went wrong")
-        return next(error)
-    }
+  if (!findConsumer) {
+    const error = new HttpError("you're not logged in");
+    return next(error);
+  }
 
-    if(!findConsumer){
-        const error = new HttpError("you're not logged in")
-        return next(error)
-    }
+  let findConsumerGoods;
 
-    let findConsumerGoods 
+  try {
+    findConsumerGoods = ConsumerGoods.find({
+      _id: findConsumer.consumerPurchases,
+    });
+  } catch (err) {
+    const error = new HttpError("something went wrong finding those goods");
+    return next(error);
+  }
 
-    try {
-        findConsumerGoods = ConsumerGoods.find({_id: findConsumer.consumerPurchases})
-    } catch (err) {
-        const error = new HttpError("something went wrong finding those goods")
-        return next(error)
-    }
-
-
-    res.json({findConsumerGoods})
-
-}
-
+  res.json({ findConsumerGoods });
+};
 
 const getCustomer = async (req, res, next) => {
+  let findUser;
 
+  try {
+    findUser = await Customer.findById(req.customerData.customerId);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
 
-    let findUser 
-
-    try {
-        findUser = await Customer.findById(req.customerData.customerId)
-    } catch (err) {
-        const error = new HttpError("something went wrong")
-        return next(error)
-    }
-
-    if(!findUser){
-        const error = new HttpError("you're not logged in or your login token has expired")
-        return next(error)
-    }
-
-
-    const customer = await stripe.customers.retrieve(
-        findUser.stripeCustomerId
+  if (!findUser) {
+    const error = new HttpError(
+      "you're not logged in or your login token has expired"
     );
+    return next(error);
+  }
 
-    if(!customer){
-        const error = new HttpError("couldn't find your id")
-        return next(error)
-    }
+  const customer = await stripe.customers.retrieve(findUser.stripeCustomerId);
 
-    res.json({findUser, customer})
+  if (!customer) {
+    const error = new HttpError("couldn't find your id");
+    return next(error);
+  }
 
-}
+  res.json({ findUser, customer });
+};
 
 // const editMessage = async (req, res, next) => {
-    
+
 // }
 
+exports.signup = signup;
 
-exports.signup = signup
-
-exports.login = login
+exports.login = login;
 
 // exports.favoriteBulk = favoriteBulk
 
-exports.purchaseConsumerGood = purchaseConsumerGood
+exports.purchaseConsumerGood = purchaseConsumerGood;
 
-exports.getCustomer = getCustomer
+exports.getCustomer = getCustomer;
 
-exports.editDeliveryDetails = editDeliveryDetails
+exports.editDeliveryDetails = editDeliveryDetails;
 
-exports.purchaseConsumerGoodOnAccount = purchaseConsumerGoodOnAccount
+exports.purchaseConsumerGoodOnAccount = purchaseConsumerGoodOnAccount;
 
 // exports.editEmail = editEmail
 
-exports.getMessages = getMessages
+exports.getMessages = getMessages;
 
-exports.getItems = getItems
+exports.getItems = getItems;
 
-exports.createMessages = createMessages
+exports.createMessages = createMessages;
 
-exports.createAMessage = createAMessage
+exports.createAMessage = createAMessage;
 
 // exports.editMessage = editMessage

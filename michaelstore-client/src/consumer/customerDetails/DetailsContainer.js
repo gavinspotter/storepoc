@@ -41,7 +41,7 @@ const DetailsContainer = () => {
   const detailsSubmit = async (data) => {
     try {
       await sendRequest(
-        `http://localhost:5000/customer/updateDetails`,
+        `http://localhost:5000/api/customer/updateDetails`,
         "PATCH",
         JSON.stringify({
           firstName: data.firstName,
@@ -83,6 +83,16 @@ const DetailsContainer = () => {
     }
   };
 
+  const [toggleCard, setToggleCard] = useState(false);
+
+  const toggleCardFunc = () => {
+    if (toggleCard === true) {
+      setToggleCard(false);
+    } else {
+      setToggleCard(true);
+    }
+  };
+
   return (
     <div className="details">
       <ErrorModal error={error} onClear={clearError} />
@@ -99,139 +109,139 @@ const DetailsContainer = () => {
         <div className="details-form">
           <form onSubmit={handleSubmit(detailsSubmit)}>
             <div className="details-delivInfo">
-              {customerData && stripeData && (
+              {!toggleCard && customerData && (
                 <div>
                   <h3>delivery details</h3>
 
-                  <div>
-                    {!customerData.firstname && (
+                  {
+                    <div>
                       <div>
                         <div>First Name:</div>
 
-                        <input {...register("firstName")} />
+                        <input
+                          defaultValue={customerData.firstName}
+                          {...register("firstName")}
+                        />
                       </div>
-                    )}
 
-                    {customerData.firstName && (
-                      <div>
-                        <div>First Name:</div> ✅
-                        <span onClick={toggleFirstNameFunc}>edit</span>
-                        {toggleFirstName && (
-                          <input
-                            defaultValue={customerData.firstName}
-                            {...register("firstName")}
-                          />
-                        )}
-                      </div>
-                    )}
-
-                    <div>Last Name:</div>
-
-                    <input
-                      defaultValue={customerData.lastName}
-                      {...register("lastName")}
-                    />
-
-                    <div>Last Name:</div>
-
-                    <input
-                      defaultValue={customerData.lastName}
-                      {...register("lastName")}
-                    />
-
-                    <div>Street:</div>
-
-                    <input
-                      defaultValue={customerData.street}
-                      {...register("street")}
-                    />
-
-                    <div>Street:</div>
-
-                    <input
-                      defaultValue={customerData.street}
-                      {...register("street")}
-                    />
-                    <div>State:</div>
-
-                    <input
-                      defaultValue={customerData.state}
-                      {...register("state")}
-                    />
-
-                    <div>State:</div>
-
-                    <input
-                      defaultValue={customerData.state}
-                      {...register("state")}
-                    />
-                    <div>Zip Code:</div>
-
-                    <input
-                      defaultValue={customerData.zipCode}
-                      {...register("zipCode")}
-                    />
-
-                    <div>Zip Code:</div>
-
-                    <input
-                      defaultValue={customerData.zipCode}
-                      {...register("zipCode")}
-                    />
-                    <div>Country:</div>
-
-                    <input
-                      defaultValue={customerData.country}
-                      {...register("country")}
-                    />
-
-                    <div>Country:</div>
-
-                    <input
-                      defaultValue={customerData.country}
-                      {...register("country")}
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="details-paymentInfo">
-              <h3>card details</h3>
-              {stripeData && !stripeData.default_source && (
-                <div>
-                  <div>
-                    <div className="ilblock">
-                      <div className="details-payment-info-cn">
-                        card number:
-                      </div>
+                      <div>Last Name:</div>
 
                       <input
-                        className="details-paymentInfo-num"
-                        {...register("number")}
+                        defaultValue={customerData.lastName}
+                        {...register("lastName")}
                       />
-                    </div>
 
-                    <div className="ilblock details-paymentInfo-cvc-block">
-                      <div {...register("cvc")}>cvc:</div>
+                      {/* <div>Last Name:</div>
 
-                      <input className="details-paymentInfo-cvc" />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="ilblock">
-                      <div {...register("exp_month")}>month:</div>
+                    <input
+                      defaultValue={customerData.lastName}
+                      {...register("lastName")}
+                    /> */}
 
-                      <input className="details-paymentInfo-exp" />
-                    </div>
-                    <div className="ilblock details-paymentInfo-exp-blockyear">
-                      <div {...register("exp_year")}>year:</div>
+                      <div>Street:</div>
 
-                      <input className="details-paymentInfo-exp" />
+                      <input
+                        defaultValue={customerData.street}
+                        {...register("street")}
+                      />
+
+                      {/* <div>Street:</div>
+
+                    <input
+                      defaultValue={customerData.street}
+                      {...register("street")}
+                    /> */}
+                      <div>State:</div>
+
+                      <input
+                        defaultValue={customerData.state}
+                        {...register("state")}
+                      />
+
+                      {/* <div>State:</div>
+
+                    <input
+                      defaultValue={customerData.state}
+                      {...register("state")}
+                    /> */}
+                      <div>Zip Code:</div>
+
+                      <input
+                        defaultValue={customerData.zipCode}
+                        {...register("zipCode")}
+                      />
+                      {/* 
+                    <div>Zip Code:</div>
+
+                    <input
+                      defaultValue={customerData.zipCode}
+                      {...register("zipCode")}
+                    /> */}
+                      <div>Country:</div>
+
+                      <input
+                        defaultValue={customerData.country}
+                        {...register("country")}
+                      />
+
+                      {/* <div>Country:</div>
+
+                    <input
+                      defaultValue={customerData.country}
+                      {...register("country")}
+                    /> */}
                     </div>
-                  </div>
+                  }
                 </div>
               )}
             </div>
+
+            <div className="ilblock" onClick={toggleCardFunc}>
+              {" "}
+              edit card{" "}
+            </div>
+
+            {toggleCard && (
+              <div>
+                <div className="details-paymentInfo">
+                  <h3>card details</h3>
+                  {stripeData && (
+                    <div>
+                      <div>
+                        <div className="ilblock">
+                          <div className="details-payment-info-cn">
+                            card number:
+                          </div>
+
+                          <input
+                            className="details-paymentInfo-num"
+                            {...register("number")}
+                          />
+                        </div>
+
+                        <div className="ilblock details-paymentInfo-cvc-block">
+                          <div {...register("cvc")}>cvc:</div>
+
+                          <input className="details-paymentInfo-cvc" />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="ilblock">
+                          <div {...register("exp_month")}>month:</div>
+
+                          <input className="details-paymentInfo-exp" />
+                        </div>
+                        <div className="ilblock details-paymentInfo-exp-blockyear">
+                          <div {...register("exp_year")}>year:</div>
+
+                          <input className="details-paymentInfo-exp" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
             <button className="details-submitButton">submit</button>
           </form>
         </div>
