@@ -11,11 +11,17 @@ const DetailsContainer = () => {
     const auth = useContext(AuthContext)
 
 
-    
+
 
     return (
-        <div>
+        <div className="details">
+
             <div onClick={auth.customerLogout}> logout</div>
+
+            <div className="details-container">
+                <h3 className="details-title">Hey there, we need some details to perfect your order!</h3>
+                
+            </div>
         </div>
     )
 }

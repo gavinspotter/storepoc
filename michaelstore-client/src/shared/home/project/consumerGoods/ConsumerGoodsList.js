@@ -5,14 +5,16 @@ import ConsumerGoodsItem from './ConsumerGoodsItem'
 
 const ConsumerGoodsList = (props) => {
 
+    const isSold = props.items.filter(x => !x.sold )
 
+    
 
 
 
     return (
         <div className="consumerGoods">
             { props.items &&
-            props.items.map(x => 
+            isSold.map(x => 
                 <ConsumerGoodsItem
                 key={x._id}
                 _id={x._id}

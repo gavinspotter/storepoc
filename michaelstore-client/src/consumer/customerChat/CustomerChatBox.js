@@ -9,6 +9,7 @@ import { AuthContext } from '../../shared/context/auth-context'
 
 import ErrorModal from '../../shared/UIElements/ErrorModal'
 import ChatItem from './ChatItem'
+import CustomerItemsList from './CustomerItemsList'
 
 const CustomerChatBox = () => {
 
@@ -241,7 +242,7 @@ const CustomerChatBox = () => {
 
             }
             <div className="customerMessage-items">
-
+                <CustomerItemsList/>
             </div>
 
 

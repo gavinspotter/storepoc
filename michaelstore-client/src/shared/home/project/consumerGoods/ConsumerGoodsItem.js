@@ -110,6 +110,38 @@ const ConsumerGoodsItem = (props) => {
 
     }
 
+
+    const submitPurchase = async () => {
+
+        try {
+            await sendRequest(
+                `${process.env.REACT_APP_BACKEND_URL}/customer/buyItemOnAccount`,
+                "POST",
+                JSON.stringify({
+                    itemId: props._id
+                }),
+                {
+                    "Content-Type": "application/json",
+                    Authorization: 'Bearer ' + auth.customerToken 
+                }
+            
+                
+            )
+
+            window.location.reload();
+            navigate('/consumerGoods')
+
+            
+            
+
+        } catch (err) {
+
+        }
+
+
+
+    }
+
     return (
         <div className="consumerGoods--card">
             <ErrorModal
@@ -133,7 +165,19 @@ const ConsumerGoodsItem = (props) => {
 
             </div>
 
-            <div>
+            {
+                auth.customerToken &&
+                <div>
+                    <div onClick={submitPurchase} className="consumerGoods--card-adminText-button"> buy </div>
+
+                </div>
+            }
+
+            { auth.token &&
+                
+                <div> 
+
+                
                 
                 <div className="consumerGoods--card-adminText-button" onClick={deleteModalTrig} >delete</div>
                 {deleteMod &&
@@ -146,7 +190,7 @@ const ConsumerGoodsItem = (props) => {
                 </div>
                 
                 }
-            </div>
+            </div>}
         </div>
     )
 }

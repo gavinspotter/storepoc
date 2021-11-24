@@ -11,19 +11,24 @@ router.post("/signup", customerController.signup)
 
 router.post("/login", customerController.login)
 
+router.post("/purchaseGood", customerController.purchaseConsumerGood)
+
 
 
 router.use(checkAuth);
+
+router.get("/getCustomer")
 
 
 
 router.patch("/updateDetails", customerController.editDeliveryDetails )
 
-router.post("/purchaseGood", customerController.purchaseConsumerGood)
 
 router.post("/buyItemOnAccount", customerController.purchaseConsumerGoodOnAccount)
 
 router.get("/getMessages", customerController.getMessages)
+
+router.get("/items", customerController.getItems)
 
 
 

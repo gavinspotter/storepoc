@@ -10,6 +10,7 @@ const Admin = require("../models/Admin")
 
 const Messages = require("../models/Messages")
 const ConsumerGoods = require("../models/ConsumerGoods")
+const { findById } = require("../models/Admin")
 const stripe = require("stripe")(process.env.secretKey)
 
 const signup = async (req, res, next) => {
@@ -250,7 +251,7 @@ const purchaseConsumerGood = async (req, res, next) => {
     }
 
     if(!email || !firstName || !lastName || !street || !city || !state|| !zipCode){
-        const error = new HttpError("we're missing some information, we need your first and last name, street, city, state, zip code, and email")
+        const error = new HttpError("we're missing some information, we need your first and last name, street, city, state, zip code, and email. Details is where you can alter this.")
         return next(error)
     }
 
@@ -354,6 +355,19 @@ const purchaseConsumerGoodOnAccount = async (req, res, next) => {
         return next(error)
     }
 
+    if(!findUser.deliveryDetails.firstName || !findUser.deliveryDetails.lastName || !findUser.deliveryDetails.street || !findUser.deliveryDetails.city || !findUser.deliveryDetails.state || !findUser.deliveryDetails.zipCode || !findUser.deliveryDetails.country || !findUser.deliveryDetails.email ){
+        const error = new HttpError("you dont have all of your required credential's filled out, check the details tab.")
+        return next(error)
+    }
+
+    findItem.deliveryDetails.firstName = findUser.deliveryDetails.firstName
+    findItem.deliveryDetails.lastName = findUser.deliveryDetails.lastName
+    findItem.deliveryDetails.street = findUser.deliveryDetails.street
+    findItem.deliveryDetails.city = findUser.deliveryDetails.city
+    findItem.deliveryDetails.state = findUser.deliveryDetails.state
+    findItem.deliveryDetails.zipCode = findUser.deliveryDetails.zipCode
+    findItem.deliveryDetails.country = findUser.deliveryDetails.country
+    findItem.deliveryDetails.email = findUser.deliveryDetails.email
     findItem.sold = true
     findItem.customer = findUser._id
 
@@ -554,7 +568,7 @@ const createAMessage = async (req, res, next) => {
         sender: req.customerData.customerId
     }
 
-    
+
 
     try {
         findMessageBoard.hidden = false
@@ -669,6 +683,59 @@ const createMessages = async (req, res, next) => {
 
 }
 
+
+const getItems = async () => {
+
+    let findConsumer 
+
+    try {
+        findConsumer = await Customer.findById(req.customerData.customerId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!findConsumer){
+        const error = new HttpError("you're not logged in")
+        return next(error)
+    }
+
+    let findConsumerGoods 
+
+    try {
+        findConsumerGoods = ConsumerGoods.find({_id: findConsumer.consumerPurchases})
+    } catch (err) {
+        const error = new HttpError("something went wrong finding those goods")
+        return next(error)
+    }
+
+
+    res.json({findConsumerGoods})
+
+}
+
+
+const getCustomer = async (req, res, next) => {
+
+
+    let findCustomer
+
+    try {
+        findCustomer = Customer.findById(req.customerData.customerId)
+    } catch (err) {
+        const error = new HttpError("something went wrong")
+        return next(error)
+    }
+
+    if(!findCustomer){
+        const error = new HttpError("something went wrong, you're not logged in")
+        return next(error)
+    }
+
+    res.json({findCustomer})
+
+}
+
 // const editMessage = async (req, res, next) => {
     
 // }
@@ -682,6 +749,8 @@ exports.login = login
 
 exports.purchaseConsumerGood = purchaseConsumerGood
 
+exports.getCustomer = getCustomer
+
 exports.editDeliveryDetails = editDeliveryDetails
 
 exports.purchaseConsumerGoodOnAccount = purchaseConsumerGoodOnAccount
@@ -689,6 +758,8 @@ exports.purchaseConsumerGoodOnAccount = purchaseConsumerGoodOnAccount
 // exports.editEmail = editEmail
 
 exports.getMessages = getMessages
+
+exports.getItems = getItems
 
 exports.createMessages = createMessages
 
