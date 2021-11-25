@@ -1,11 +1,9 @@
 @keyframes moveInRight {
   0% {
-    opacity: 0;
     transform: translateX(10rem); }
   80% {
     transform: translateX(-1rem); }
   100% {
-    opacity: 1;
     transform: translate(0); } }
 
 *,
@@ -402,6 +400,20 @@ body {
     margin-left: auto;
     width: 15rem;
     animation: moveInRight 1s ease-out; }
+  .home-goods {
+    overflow: auto;
+    position: relative;
+    width: 100%;
+    min-height: 80vh;
+    background: #f7f3f3; }
+    .home-goods-header {
+      color: #838383;
+      margin-top: 3rem;
+      display: block;
+      font-size: 4rem;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center; }
 
 .loading-spinner__overlay {
   height: 100%;
