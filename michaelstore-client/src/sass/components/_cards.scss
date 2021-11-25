@@ -487,3 +487,31 @@
     }
   }
 }
+
+.home {
+  &-bench {
+    position: relative;
+    width: 100%;
+    height: 95vh;
+  }
+
+  position: absolute;
+  width: 100%;
+  height: 95vh;
+
+  &-header {
+    background: white;
+    border-radius: 5rem;
+    padding: 3rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 35.5%;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+
+    width: 15rem;
+    animation: moveInRight 1s ease-out;
+  }
+}
