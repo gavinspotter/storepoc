@@ -276,6 +276,7 @@
   }
 
   &-items {
+    overflow-y: auto;
     position: relative;
     width: 27.5%;
     min-height: 98vh;
@@ -460,6 +461,29 @@
         padding: 0.5rem;
         margin-bottom: 2rem;
       }
+    }
+  }
+}
+
+.customerItemList {
+  overflow-y: auto;
+  max-height: 100%;
+  &-m {
+    max-width: 15rem;
+    margin-right: auto;
+    margin-left: auto;
+
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: block;
+    text-align: center;
+    &-picture {
+      max-height: 10rem;
+      max-width: 15rem;
+    }
+
+    &-border {
+      border-bottom: rgb(209, 209, 209) solid 0.1rem;
     }
   }
 }

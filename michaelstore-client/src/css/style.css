@@ -215,6 +215,7 @@ body {
     width: -moz-fit-content;
     height: -moz-fit-content; }
   .customerMessage-items {
+    overflow-y: auto;
     position: relative;
     width: 27.5%;
     min-height: 98vh;
@@ -352,6 +353,23 @@ body {
         border-radius: 2rem;
         padding: 0.5rem;
         margin-bottom: 2rem; }
+
+.customerItemList {
+  overflow-y: auto;
+  max-height: 100%; }
+  .customerItemList-m {
+    max-width: 15rem;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: block;
+    text-align: center; }
+    .customerItemList-m-picture {
+      max-height: 10rem;
+      max-width: 15rem; }
+    .customerItemList-m-border {
+      border-bottom: #d1d1d1 solid 0.1rem; }
 
 .loading-spinner__overlay {
   height: 100%;

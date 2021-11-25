@@ -125,12 +125,13 @@ const CustomerChatBox = () => {
           }
         );
 
-        setGrabItems(responseData.findConsumerGoods);
+        console.log(responseData);
+        setGrabItems(responseData.findGoods);
       } catch (err) {}
     };
 
     fetchItems();
-  }, [auth.customerToken, sendRequest]);
+  }, [sendRequest, auth.customerToken]);
 
   return (
     <div className="customerMessage">
@@ -149,7 +150,7 @@ const CustomerChatBox = () => {
         </div>
       )}
       <div className="customerMessage-items">
-        <CustomerItemsList items={grabItems} />
+        {grabItems && <CustomerItemsList items={grabItems} />}
       </div>
 
       <div className="customerMessage-form-border">

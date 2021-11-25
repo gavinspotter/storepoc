@@ -9,7 +9,6 @@ const Admin = require("../models/Admin");
 
 const Messages = require("../models/Messages");
 const ConsumerGoods = require("../models/ConsumerGoods");
-const { update } = require("../models/Admin");
 
 const stripe = require("stripe")(process.env.secretKey);
 
@@ -580,33 +579,33 @@ const createMessages = async (req, res, next) => {
   res.json({ findAdmin, findConsumer, createdMessageBoard });
 };
 
-const getItems = async () => {
-  let findConsumer;
+const getItems = async (req, res, next) => {
+  let findUser;
 
   try {
-    findConsumer = await Customer.findById(req.customerData.customerId);
+    findUser = await Customer.findById(req.customerData.customerId);
   } catch (err) {
     const error = new HttpError("something went wrong");
     return next(error);
   }
 
-  if (!findConsumer) {
+  if (!findUser) {
     const error = new HttpError("you're not logged in");
     return next(error);
   }
 
-  let findConsumerGoods;
+  let findGoods;
 
   try {
-    findConsumerGoods = ConsumerGoods.find({
-      _id: findConsumer.consumerPurchases,
+    findGoods = await ConsumerGoods.find({
+      _id: findUser.consumerPurchases,
     });
   } catch (err) {
     const error = new HttpError("something went wrong finding those goods");
     return next(error);
   }
 
-  res.json({ findConsumerGoods });
+  res.json({ findGoods });
 };
 
 const getCustomer = async (req, res, next) => {
