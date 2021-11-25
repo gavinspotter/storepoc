@@ -12,3 +12,12 @@
 .flexOff {
   display: none;
 }
+
+.delivstatus {
+  &-shipped {
+    color: rgb(1, 105, 1);
+  }
+  &-pending {
+    color: rgb(170, 170, 0);
+  }
+}

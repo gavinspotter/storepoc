@@ -11,6 +11,7 @@ const CustomerItemsList = (props) => {
           name={x.name}
           bucketPhotoId={x.bucketPhotoId}
           description={x.description}
+          delivered={x.delivered}
         />
       ))}
     </div>
