@@ -3,7 +3,7 @@ import MessageBoardsItem from "./MessageBoardsItem";
 
 const MessageBoardsList = (props) => {
   return (
-    <div>
+    <div className="adminMessages-messageBoards-counter">
       {props.items &&
         props.items.map((x) => (
           <MessageBoardsItem

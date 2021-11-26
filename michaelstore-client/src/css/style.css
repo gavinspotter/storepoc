@@ -583,12 +583,14 @@ body {
     border-right: #d1d1d1 solid 0.1rem;
     height: 98vh;
     overflow: auto; }
+    .adminMessages-messageBoards-counter {
+      width: 100%;
+      height: 98vh;
+      overflow-y: auto; }
     .adminMessages-messageBoards-item {
-      padding-top: 2rem;
-      padding-bottom: 2rem;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
       display: block;
-      margin-top: 2rem;
-      margin-bottom: 2rem;
       border-bottom: #d1d1d1 solid 0.1rem; }
 
 .loading-spinner__overlay {

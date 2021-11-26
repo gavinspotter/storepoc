@@ -39,6 +39,8 @@ const App = () => {
     customerLogin,
     customerLogout,
     customerId,
+    messageRef,
+    setMessageRef,
   } = useAuth();
 
   let route;
@@ -103,6 +105,8 @@ const App = () => {
         customerId: customerId,
         customerLogin: customerLogin,
         customerLogout: customerLogout,
+        messageRef: messageRef,
+        setMessageRef: setMessageRef,
       }}
     >
       <Router>

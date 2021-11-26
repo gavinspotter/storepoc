@@ -30,8 +30,13 @@ const MessageBoardsItem = (props) => {
     fetchCustomer();
   }, [sendRequest, auth.token, props.consumer]);
 
+  const setContext = () => {
+    auth.setMessageRef(props.consumer);
+    console.log(auth.messageRef);
+  };
+
   return (
-    <div className="adminMessages-messageBoards-item">
+    <div onClick={setContext} className="adminMessages-messageBoards-item">
       {assignCustomer && (
         <div>
           {assignCustomer.firstName} {assignCustomer.lastName} <br />

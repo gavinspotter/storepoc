@@ -14,7 +14,17 @@ const DetailsContainer = () => {
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isSubmitSuccessful },
+  } = useForm({
+    number: "",
+    exp_month: "",
+    exp_year: "",
+    cvc: "",
+  });
 
   const [customerData, setCustomerData] = useState();
 
@@ -25,6 +35,17 @@ const DetailsContainer = () => {
   const [detailsConfirmation, setDetailsConfirmation] = useState(false);
 
   const [cardConfirmation, setCardConfirmation] = useState(false);
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset({
+        number: "",
+        exp_month: "",
+        exp_year: "",
+        cvc: "",
+      });
+    }
+  }, [reset, isSubmitSuccessful]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -123,7 +144,7 @@ const DetailsContainer = () => {
     <div className="details">
       <ErrorModal error={error} onClear={clearError} />
 
-      {/* {isLoading && <LoadingSpinner  asOverlay/>} */}
+      {isLoading && <LoadingSpinner asOverlay />}
 
       <div onClick={auth.customerLogout}> logout</div>
 
@@ -341,23 +362,30 @@ const DetailsContainer = () => {
                         </div>
 
                         <div className="details-paymentInfo-cvc-block">
-                          <div className="ilblock" {...register("cvc")}>
-                            cvc:
-                          </div>
+                          <div className="ilblock">cvc:</div>
 
-                          <input className="details-paymentInfo-cvc inlblock" />
+                          <input
+                            {...register("cvc")}
+                            className="details-paymentInfo-cvc inlblock"
+                          />
                         </div>
                       </div>
                       <div>
                         <div className="ilblock">
-                          <div {...register("exp_month")}>month:</div>
+                          <div>month:</div>
 
-                          <input className="details-paymentInfo-exp" />
+                          <input
+                            {...register("exp_month")}
+                            className="details-paymentInfo-exp"
+                          />
                         </div>
                         <div className="ilblock details-paymentInfo-exp-blockyear">
-                          <div {...register("exp_year")}>year:</div>
+                          <div>year:</div>
 
-                          <input className="details-paymentInfo-exp" />
+                          <input
+                            {...register("exp_year")}
+                            className="details-paymentInfo-exp"
+                          />
                         </div>
                         <button className="details-paymentInfo-button">
                           submit
