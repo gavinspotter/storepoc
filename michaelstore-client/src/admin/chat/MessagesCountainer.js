@@ -1,65 +1,45 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState } from "react";
 
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
-import { useHttpClient } from '../../shared/hooks/http-hook'
+import { AuthContext } from "../../shared/context/auth-context";
 
-import { AuthContext } from '../../shared/context/auth-context'
-
-
-
-
-import MessageBoardsList from './MessageBoardsList'
-
-
+import MessageBoardsList from "./MessageBoardsList";
 
 const MessagesCountainer = () => {
+  const auth = useContext(AuthContext);
 
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-    const auth = useContext(AuthContext)
+  const [messageBoards, setMessageBoards] = useState();
 
-    const { isLoading, error, sendRequest, clearError } = useHttpClient()
+  useEffect(() => {
+    const fetchMessageBoards = async () => {
+      try {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/admin/getMessages`,
+          "GET",
+          null,
+          {
+            //"Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          }
+        );
 
-    const [messageBoards, setMessageBoards] = useState()
+        setMessageBoards(responseData.findMessages);
+      } catch (err) {}
+    };
 
-    useEffect(() => {
+    fetchMessageBoards();
+  }, [sendRequest, auth.token]);
 
-        const fetchMessageBoards = async () => {
-            try {
-                const responseData = await sendRequest(
-                    `${process.env.REACT_APP_BACKEND_URL}/admin/getMessages`,
-                    "GET",
-                    null,
-                    {
-                        //"Content-Type": "application/json",
-                        Authorization: 'Bearer ' + auth.token 
-                    }
+  return (
+    <div className="adminMessages">
+      <div className="adminMessages-messageBoards">
+        <MessageBoardsList items={messageBoards} />
+      </div>
+    </div>
+  );
+};
 
-                
-                    
-                )
-                
-                setMessageBoards(responseData.findMessages)
-          
-            } catch (err) {
-    
-            }
-        }
-
-        fetchMessageBoards()
-
-        
-
-    },[sendRequest, auth.token])
-
-
-    return (
-        <div>
-            <MessageBoardsList
-            items={messageBoards}
-            />
-            
-        </div>
-    )
-}
-
-export default MessagesCountainer
+export default MessagesCountainer;

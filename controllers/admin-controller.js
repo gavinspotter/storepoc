@@ -15,6 +15,7 @@ const ConsumerGoods = require("../models/ConsumerGoods");
 const Messages = require("../models/Messages");
 
 const fs = require("fs");
+const Customers = require("../models/Customers");
 
 const signup = async (req, res, next) => {
   const { username, password } = req.body;
@@ -75,13 +76,11 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res
-    .status(201)
-    .json({
-      userId: createdAdmin.id,
-      username: createdAdmin.username,
-      token: token,
-    });
+  res.status(201).json({
+    userId: createdAdmin.id,
+    username: createdAdmin.username,
+    token: token,
+  });
 };
 
 const login = async (req, res, next) => {
@@ -610,6 +609,35 @@ const createAMessage = async (req, res, next) => {
 
 // }
 
+const getCustomer = async (req, res, next) => {
+  const consumerId = req.params.consumerId;
+
+  let findAdmin;
+
+  try {
+    findAdmin = await Admin.findById(req.userData.userId);
+  } catch (err) {
+    const error = new HttpError("something went wrong");
+    return next(error);
+  }
+
+  if (!findAdmin) {
+    const error = new HttpError("you're not logged in, michael");
+    return next(error);
+  }
+
+  let findConsumer;
+
+  try {
+    findConsumer = await Customers.findById(consumerId);
+  } catch (err) {
+    const error = new HttpError("something went wrong finding that customer");
+    return next(error);
+  }
+
+  res.json({ findConsumer });
+};
+
 exports.signup = signup;
 
 exports.login = login;
@@ -633,5 +661,7 @@ exports.deleteConsumerItem = deleteConsumerItem;
 exports.getMessages = getMessages;
 
 exports.createAMessage = createAMessage;
+
+exports.getCustomer = getCustomer;
 
 // exports.editMessage = editMessage

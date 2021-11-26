@@ -1,21 +1,19 @@
-import React from 'react'
-import MessageBoardsItem from './MessageBoardsItem'
+import React from "react";
+import MessageBoardsItem from "./MessageBoardsItem";
 
 const MessageBoardsList = (props) => {
-    return (
-        <div>
-            {
-                props.items &&
-                props.items.map(x => {
-                    <MessageBoardsItem
-                    key={x._id}
-                    
+  return (
+    <div>
+      {props.items &&
+        props.items.map((x) => (
+          <MessageBoardsItem
+            key={x._id}
+            messages={x.messages}
+            hidden={x.hidden}
+          />
+        ))}
+    </div>
+  );
+};
 
-                    />
-                })
-            }
-        </div>
-    )
-}
-
-export default MessageBoardsList
+export default MessageBoardsList;
