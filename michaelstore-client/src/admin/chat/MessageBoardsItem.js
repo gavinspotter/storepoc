@@ -32,7 +32,7 @@ const MessageBoardsItem = (props) => {
 
   const setContext = () => {
     auth.setMessageRef(props.consumer);
-    console.log(auth.messageRef);
+    auth.setMessageBoardId(props.messageBoard);
   };
 
   return (

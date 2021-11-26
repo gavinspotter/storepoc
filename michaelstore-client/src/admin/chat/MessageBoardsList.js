@@ -8,6 +8,7 @@ const MessageBoardsList = (props) => {
         props.items.map((x) => (
           <MessageBoardsItem
             key={x._id}
+            messageBoard={x._id}
             messages={x.messages}
             consumer={x.consumer}
             hidden={x.hidden}

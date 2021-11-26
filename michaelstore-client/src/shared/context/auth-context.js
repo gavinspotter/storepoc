@@ -13,4 +13,6 @@ export const AuthContext = createContext({
   customerLogout: () => {},
   messageRef: null,
   setMessageRef: () => {},
+  messageBoardId: null,
+  setMessageBoardId: () => {},
 });

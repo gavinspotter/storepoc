@@ -110,6 +110,7 @@ export const useAuth = () => {
   }, [customerLogin]);
 
   const [messageRef, setMessageRef] = useState();
+  const [messageBoardId, setMessageBoardId] = useState();
 
   return {
     token,
@@ -122,5 +123,7 @@ export const useAuth = () => {
     customerId,
     messageRef,
     setMessageRef,
+    messageBoardId,
+    setMessageBoardId,
   };
 };

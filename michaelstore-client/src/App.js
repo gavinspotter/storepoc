@@ -41,6 +41,8 @@ const App = () => {
     customerId,
     messageRef,
     setMessageRef,
+    messageBoardId,
+    setMessageBoardId,
   } = useAuth();
 
   let route;
@@ -107,6 +109,8 @@ const App = () => {
         customerLogout: customerLogout,
         messageRef: messageRef,
         setMessageRef: setMessageRef,
+        messageBoardId: messageBoardId,
+        setMessageBoardId: setMessageBoardId,
       }}
     >
       <Router>

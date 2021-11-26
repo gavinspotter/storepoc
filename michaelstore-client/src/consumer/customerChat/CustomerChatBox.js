@@ -82,32 +82,6 @@ const CustomerChatBox = () => {
     } catch (err) {}
 
     setmTrigger(true);
-
-    // const fetchMessages = async () => {
-    //     try {
-    //         const responseData = await sendRequest(
-    //             `${process.env.REACT_APP_BACKEND_URL}/customer/getMessages`,
-    //             "GET",
-    //             null,
-    //             {
-    //                 //"Content-Type": "application/json",
-    //                 Authorization: 'Bearer ' + auth.customerToken
-    //             }
-
-    //         )
-
-    //         setMessages(responseData.findMessageBoard.messages)
-
-    //     } catch (err) {
-
-    //     }
-    // }
-
-    // fetchMessages();
-
-    //
-
-    // handleBackClick()
   };
 
   const [grabItems, setGrabItems] = useState();
