@@ -10,7 +10,6 @@ import ErrorModal from "../../shared/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/UIElements/LoadingSpinner";
 
 import "../../css/style.css";
-import { set } from "mongoose";
 
 const AddItemContainer = () => {
   const [file, setFile] = useState();
@@ -125,7 +124,7 @@ const AddItemContainer = () => {
       formData.append("bucketPhotoId", file);
       formData.append("name", cData.name);
       formData.append("description", cData.description);
-      formData.append("price", cData.price);
+      formData.append("price", cData.Number());
 
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/admin/createConsumerItem`,
@@ -156,7 +155,7 @@ const AddItemContainer = () => {
       formData.append("bucketPhotoId", file2);
       formData.append("name", data.bulkName);
       formData.append("description", data.bulkDescription);
-      formData.append("price", data.bulkPrice);
+      formData.append("price", data.bulkPrice.Number());
 
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/admin/createBulkItem`,
@@ -233,7 +232,7 @@ const AddItemContainer = () => {
                 <br />
                 <label>price</label>
                 <br />
-                <input {...register("price")} type="number" />
+                <input {...register("price")} />
                 <br />
                 <button>submit</button>
               </div>
@@ -282,7 +281,7 @@ const AddItemContainer = () => {
                 <br />
                 <label>price</label>
                 <br />
-                <input {...register("bulkPrice")} type="number" />
+                <input {...register("bulkPrice")} />
                 <br />
                 <button>submit</button>
               </div>
