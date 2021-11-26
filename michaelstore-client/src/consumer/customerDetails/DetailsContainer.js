@@ -42,6 +42,7 @@ const DetailsContainer = () => {
       console.log(responseData);
 
       if (
+        responseData.findUser.deliveryDetails &&
         responseData.findUser.deliveryDetails.firstName &&
         responseData.findUser.deliveryDetails.lastName &&
         responseData.findUser.deliveryDetails.street &&
@@ -136,8 +137,8 @@ const DetailsContainer = () => {
             <div className="details-toggle" onClick={toggleCardFunc}>
               {" "}
               <button className="details-toggle-button">edit card </button>{" "}
-              {stripeData && !stripeData.default_source && (
-                <div>❎ we still need this</div>
+              {!detailsConfirmation && (
+                <div>❎ we still need some details from you</div>
               )}
             </div>
           )}
@@ -146,6 +147,9 @@ const DetailsContainer = () => {
               <button className="details-toggle-button-blue">
                 edit details{" "}
               </button>
+              {stripeData && !stripeData.default_source && (
+                <div>❎ we still need this</div>
+              )}
             </div>
           )}
           <div>
@@ -153,34 +157,57 @@ const DetailsContainer = () => {
               {!toggleCard && customerData && (
                 <form onSubmit={handleSubmit(detailsSubmit)}>
                   <h3>delivery details</h3>
-                  {customerData.deliveryDetails.firstName &&
-                    customerData.deliveryDetails.lastName &&
-                    customerData.deliveryDetails.street &&
-                    customerData.deliveryDetails.city &&
-                    customerData.deliveryDetails.state &&
-                    customerData.deliveryDetails.country &&
-                    customerData.deliveryDetails.zipCode &&
-                    detailsConfirmation && (
-                      <div>we have your information ✅</div>
-                    )}
+
+                  {customerData.deliveryDetails && (
+                    <div>
+                      {customerData.deliveryDetails.firstName &&
+                        customerData.deliveryDetails.lastName &&
+                        customerData.deliveryDetails.street &&
+                        customerData.deliveryDetails.city &&
+                        customerData.deliveryDetails.state &&
+                        customerData.deliveryDetails.country &&
+                        customerData.deliveryDetails.zipCode &&
+                        detailsConfirmation && (
+                          <div>we have your information ✅</div>
+                        )}
+                    </div>
+                  )}
 
                   {
                     <div>
                       <div>
                         <div>First Name:</div>
 
-                        <input
-                          defaultValue={customerData.deliveryDetails.firstName}
-                          {...register("firstName")}
-                        />
+                        {(!customerData.deliveryDetails ||
+                          !customerData.deliveryDetails.firstName) && (
+                          <input {...register("firstName")} />
+                        )}
+
+                        {customerData.deliveryDetails &&
+                          customerData.deliveryDetails.firstName && (
+                            <input
+                              defaultValue={
+                                customerData.deliveryDetails.firstName
+                              }
+                              {...register("firstName")}
+                            />
+                          )}
                       </div>
 
                       <div>Last Name:</div>
 
-                      <input
-                        defaultValue={customerData.deliveryDetails.lastName}
-                        {...register("lastName")}
-                      />
+                      {(!customerData.deliveryDetails ||
+                        !customerData.deliveryDetails.lastName) && (
+                        <input {...register("lastName")} />
+                      )}
+
+                      {customerData.deliveryDetails &&
+                        customerData.deliveryDetails.lastName && (
+                          <input
+                            defaultValue={customerData.deliveryDetails.lastName}
+                            {...register("lastName")}
+                          />
+                        )}
 
                       {/* <div>Last Name:</div>
 
@@ -190,18 +217,32 @@ const DetailsContainer = () => {
                     /> */}
 
                       <div>Street:</div>
+                      {customerData.deliveryDetails &&
+                        customerData.deliveryDetails.street && (
+                          <input
+                            defaultValue={customerData.deliveryDetails.street}
+                            {...register("street")}
+                          />
+                        )}
 
-                      <input
-                        defaultValue={customerData.deliveryDetails.street}
-                        {...register("street")}
-                      />
+                      {(!customerData.deliveryDetails ||
+                        !customerData.deliveryDetails.street) && (
+                        <input {...register("street")} />
+                      )}
 
                       <div>city:</div>
+                      {(!customerData.deliveryDetails ||
+                        !customerData.deliveryDetails.city) && (
+                        <input {...register("city")} />
+                      )}
 
-                      <input
-                        defaultValue={customerData.deliveryDetails.city}
-                        {...register("city")}
-                      />
+                      {customerData.deliveryDetails &&
+                        customerData.deliveryDetails.city && (
+                          <input
+                            defaultValue={customerData.deliveryDetails.city}
+                            {...register("city")}
+                          />
+                        )}
 
                       {/* <div>Street:</div>
 
@@ -210,11 +251,18 @@ const DetailsContainer = () => {
                       {...register("street")}
                     /> */}
                       <div>State:</div>
+                      {(!customerData.deliveryDetails ||
+                        !customerData.deliveryDetails.state) && (
+                        <input {...register("state")} />
+                      )}
 
-                      <input
-                        defaultValue={customerData.deliveryDetails.state}
-                        {...register("state")}
-                      />
+                      {customerData.deliveryDetails &&
+                        customerData.deliveryDetails.state && (
+                          <input
+                            defaultValue={customerData.deliveryDetails.state}
+                            {...register("state")}
+                          />
+                        )}
 
                       {/* <div>State:</div>
 
@@ -223,11 +271,18 @@ const DetailsContainer = () => {
                       {...register("state")}
                     /> */}
                       <div>Zip Code:</div>
+                      {(!customerData.deliveryDetails ||
+                        !customerData.deliveryDetails.zipCode) && (
+                        <input {...register("zipCode")} />
+                      )}
 
-                      <input
-                        defaultValue={customerData.deliveryDetails.zipCode}
-                        {...register("zipCode")}
-                      />
+                      {customerData.deliveryDetails &&
+                        customerData.deliveryDetails.zipCode && (
+                          <input
+                            defaultValue={customerData.deliveryDetails.zipCode}
+                            {...register("zipCode")}
+                          />
+                        )}
                       {/* 
                     <div>Zip Code:</div>
 
@@ -236,11 +291,18 @@ const DetailsContainer = () => {
                       {...register("zipCode")}
                     /> */}
                       <div>Country:</div>
+                      {(!customerData.deliveryDetails ||
+                        !customerData.deliveryDetails.country) && (
+                        <input {...register("country")} />
+                      )}
 
-                      <input
-                        defaultValue={customerData.deliveryDetails.country}
-                        {...register("country")}
-                      />
+                      {customerData.deliveryDetails &&
+                        customerData.deliveryDetails.country && (
+                          <input
+                            defaultValue={customerData.deliveryDetails.country}
+                            {...register("country")}
+                          />
+                        )}
 
                       {/* <div>Country:</div>
 

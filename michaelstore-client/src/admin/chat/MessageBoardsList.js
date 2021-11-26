@@ -9,6 +9,7 @@ const MessageBoardsList = (props) => {
           <MessageBoardsItem
             key={x._id}
             messages={x.messages}
+            consumer={x.consumer}
             hidden={x.hidden}
           />
         ))}

@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const MessageItem = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+const MessageItem = (props) => {
+  return <div></div>;
+};
 
-export default MessageItem
+export default MessageItem;
