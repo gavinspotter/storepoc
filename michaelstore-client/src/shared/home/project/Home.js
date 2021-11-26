@@ -9,6 +9,8 @@ import HomeBulkList from "./HomeBulkList";
 
 import { useHttpClient } from "../../hooks/http-hook";
 import ErrorModal from "../../UIElements/ErrorModal";
+import HomeConsumerGoodsList from "./HomeConsumerGoodsList";
+import ConsumerGoodsList from "./consumerGoods/ConsumerGoodsList";
 
 const Home = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -28,6 +30,22 @@ const Home = () => {
     };
 
     fetchBulk();
+  }, [sendRequest]);
+
+  const [consumerGoodsList, setConsumerGoodsList] = useState();
+
+  useEffect(() => {
+    const fetchcg = async () => {
+      try {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/admin/getConsumerItems`
+        );
+
+        setConsumerGoodsList(responseData.findConsumerItems);
+      } catch (err) {}
+    };
+
+    fetchcg();
   }, [sendRequest]);
 
   return (
@@ -70,6 +88,14 @@ const Home = () => {
         <div className="home-inventory-bulkTitle">Bulk</div>
         <div className="home-inventory-bulkSlide">
           {bulk && <HomeBulkList items={bulk} />}
+        </div>
+        <div className="home-inventory-goodsTitle">Retail</div>
+        <div className="home-of">
+          <div className="home-inventory-goodsSlide">
+            {consumerGoodsList && (
+              <HomeConsumerGoodsList items={consumerGoodsList} />
+            )}
+          </div>
         </div>
       </div>
     </div>
