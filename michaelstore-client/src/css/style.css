@@ -1,3 +1,11 @@
+@keyframes moveInLeft {
+  0% {
+    transform: translateX(-10rem); }
+  80% {
+    transform: translateX(1rem); }
+  100% {
+    transform: translate(0); } }
+
 @keyframes moveInRight {
   0% {
     transform: translateX(10rem); }
@@ -404,7 +412,8 @@ body {
     overflow: auto;
     position: relative;
     width: 100%;
-    min-height: 95vh;
+    height: 68vh;
+    height: 95vh;
     background: #f7f3f3; }
     .home-goods-header {
       color: #838383;
@@ -415,7 +424,8 @@ body {
       margin-right: auto;
       text-align: center;
       left: 0;
-      right: 0; }
+      right: 0;
+      animation: moveInRight 1s ease-out; }
       .home-goods-header-hey {
         color: #838383;
         margin-top: 13rem;
@@ -425,7 +435,8 @@ body {
         margin-right: auto;
         text-align: center;
         left: 0;
-        right: 0; }
+        right: 0;
+        animation: moveInRight 1s ease-out; }
       .home-goods-header-img {
         margin-top: 7rem;
         position: absolute;
@@ -434,7 +445,8 @@ body {
         width: 40rem;
         text-align: center;
         margin-left: auto;
-        margin-right: auto; }
+        margin-right: auto;
+        animation: moveInRight 1s ease-out; }
     .home-goods-header2 {
       color: blue;
       margin-top: 43rem;
@@ -444,7 +456,8 @@ body {
       margin-right: auto;
       text-align: center;
       left: 0;
-      right: 0; }
+      right: 0;
+      animation: moveInLeft 1s ease-out; }
       .home-goods-header2-hey2 {
         color: green;
         margin-top: 38rem;
@@ -454,7 +467,8 @@ body {
         margin-right: auto;
         text-align: center;
         left: 0;
-        right: 0; }
+        right: 0;
+        animation: moveInLeft 1s ease-out; }
       .home-goods-header2-img2 {
         margin-top: 32rem;
         position: absolute;
@@ -463,11 +477,52 @@ body {
         width: 40rem;
         text-align: center;
         margin-left: auto;
-        margin-right: auto; }
+        margin-right: auto;
+        animation: moveInLeft 1s ease-out; }
   .home-inventory {
+    overflow: auto;
     width: 100%;
     height: 80vh;
     background-color: #ffb62f; }
+    .home-inventory-bulkTitle {
+      margin-top: 8rem;
+      width: 8rem;
+      color: white;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 5rem; }
+    .home-inventory-bulkSlide {
+      overflow-x: auto;
+      margin-top: 2rem;
+      max-width: 100%;
+      height: 15rem;
+      background: white;
+      border-bottom: #d1d1d1 solid 0.1rem;
+      border-top: #d1d1d1 solid 0.1rem;
+      text-align: center;
+      white-space: nowrap; }
+      .home-inventory-bulkSlide-item {
+        vertical-align: top;
+        max-width: 15rem;
+        height: 15rem;
+        border-right: #d1d1d1 solid 0.1rem;
+        padding-right: 2rem;
+        padding-left: 2rem;
+        display: inline-block;
+        text-align: center; }
+        .home-inventory-bulkSlide-item-stuff {
+          display: inline-block; }
+          .home-inventory-bulkSlide-item-stuff:first-child {
+            border-left: #d1d1d1 solid 0.1rem; }
+          .home-inventory-bulkSlide-item-stuff:last-child {
+            border-right: #d1d1d1 solid 0.1rem; }
+        .home-inventory-bulkSlide-item-img {
+          max-height: 10rem;
+          max-width: 15rem; }
+          .home-inventory-bulkSlide-item-img-wrapper {
+            margin-top: 1rem;
+            height: 10rem;
+            width: 15rem; }
 
 .loading-spinner__overlay {
   height: 100%;

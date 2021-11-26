@@ -492,6 +492,7 @@
   &-bench {
     position: relative;
     width: 100%;
+
     height: 95vh;
   }
 
@@ -520,7 +521,8 @@
     overflow: auto;
     position: relative;
     width: 100%;
-    min-height: 95vh;
+    height: 68vh;
+    height: 95vh;
     background: rgb(247, 243, 243);
     &-header {
       color: rgb(131, 131, 131);
@@ -532,6 +534,7 @@
       text-align: center;
       left: 0;
       right: 0;
+      animation: moveInRight 1s ease-out;
       &-hey {
         color: rgb(131, 131, 131);
         margin-top: 13rem;
@@ -542,6 +545,7 @@
         text-align: center;
         left: 0;
         right: 0;
+        animation: moveInRight 1s ease-out;
       }
 
       &-img {
@@ -554,6 +558,7 @@
         text-align: center;
         margin-left: auto;
         margin-right: auto;
+        animation: moveInRight 1s ease-out;
       }
     }
     &-header2 {
@@ -567,6 +572,7 @@
       left: 0;
       right: 0;
 
+      animation: moveInLeft 1s ease-out;
       &-hey2 {
         color: green;
         margin-top: 38rem;
@@ -577,6 +583,7 @@
         text-align: center;
         left: 0;
         right: 0;
+        animation: moveInLeft 1s ease-out;
       }
 
       &-img2 {
@@ -589,12 +596,76 @@
         text-align: center;
         margin-left: auto;
         margin-right: auto;
+        animation: moveInLeft 1s ease-out;
       }
     }
   }
   &-inventory {
+    overflow: auto;
     width: 100%;
     height: 80vh;
     background-color: rgb(255, 182, 47);
+
+    &-bulkTitle {
+      margin-top: 8rem;
+      width: 8rem;
+      color: white;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 5rem;
+    }
+    &-bulkSlide {
+      overflow-x: auto;
+      margin-top: 2rem;
+      max-width: 100%;
+      height: 15rem;
+      background: white;
+      border-bottom: rgb(209, 209, 209) solid 0.1rem;
+      border-top: rgb(209, 209, 209) solid 0.1rem;
+      text-align: center;
+      white-space: nowrap;
+
+      &-item {
+        vertical-align: top;
+        max-width: 15rem;
+        height: 15rem;
+
+        border-right: rgb(209, 209, 209) solid 0.1rem;
+        padding-right: 2rem;
+        padding-left: 2rem;
+        display: inline-block;
+        text-align: center;
+
+        &-stuff {
+          // max-width: 100%;
+
+          // height: 15rem;
+          // overflow-x: auto;
+          display: inline-block;
+          &:first-child {
+            border-left: rgb(209, 209, 209) solid 0.1rem;
+          }
+          &:last-child {
+            border-right: rgb(209, 209, 209) solid 0.1rem;
+          }
+        }
+
+        &-img {
+          &-wrapper {
+            margin-top: 1rem;
+            height: 10rem;
+
+            width: 15rem;
+          }
+
+          max-height: 10rem;
+
+          max-width: 15rem;
+        }
+      }
+    }
+
+    &-goodsSlide {
+    }
   }
 }

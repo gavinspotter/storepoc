@@ -11,17 +11,15 @@ const NavBar = () => {
   return (
     <div className="navbar">
       <div className="navbar--left">
-        {!auth.isLoggedIn && !auth.customerIsLoggedIn && (
-          <NavLink to="/">home</NavLink>
-        )}
+        <NavLink to="/">home</NavLink>
 
-        {auth.isLoggedIn && (
+        {/* {auth.isLoggedIn && (
           <div>
             <NavLink className="nav--left-aboutUs" to="/">
-              about us
+              home
             </NavLink>
           </div>
-        )}
+        )} */}
       </div>
       <div className="navbar--right">
         <NavLink className="navbar--right-bulk" to="/bulkItems">
