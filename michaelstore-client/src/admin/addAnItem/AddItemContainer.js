@@ -87,11 +87,11 @@ const AddItemContainer = () => {
     formState: { isSubmitSuccessful },
   } = useForm({
     name: "",
-    price: 0,
+    price: "",
     description: "",
     bulkName: "",
     bulkDescription: "",
-    bulkPrice: 0,
+    bulkPrice: "",
     image: null,
     bulkImage: null,
   });
@@ -100,11 +100,11 @@ const AddItemContainer = () => {
     if (isSubmitSuccessful) {
       reset({
         name: "",
-        price: 0,
+        price: "",
         description: "",
         bulkName: "",
         bulkDescription: "",
-        bulkPrice: 0,
+        bulkPrice: "",
       });
     }
     setPreviewUrl(null);
@@ -113,10 +113,12 @@ const AddItemContainer = () => {
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const [toggleItem, setToggleItem] = useState();
+  const [aNumber, setANumber] = useState();
 
   const submitConsumerItem = async (cData) => {
     console.log(cData);
+
+    const instance = cData.priceD.concat(cData.priceC);
 
     try {
       //const fileContent = fs.readFileSync(data.image[0])
@@ -124,7 +126,7 @@ const AddItemContainer = () => {
       formData.append("bucketPhotoId", file);
       formData.append("name", cData.name);
       formData.append("description", cData.description);
-      formData.append("price", cData.Number());
+      formData.append("price", Number(instance));
 
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/admin/createConsumerItem`,
@@ -144,18 +146,21 @@ const AddItemContainer = () => {
           Authorization: "Bearer " + auth.token,
         }
       );
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const submitBulkItem = async (data) => {
     console.log(data);
+
     try {
       //const fileContent = fs.readFileSync(data.image[0])
       const formData = new FormData();
       formData.append("bucketPhotoId", file2);
       formData.append("name", data.bulkName);
       formData.append("description", data.bulkDescription);
-      formData.append("price", data.bulkPrice.Number());
+      formData.append("price", Number(data.bulkPrice));
 
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/admin/createBulkItem`,
@@ -220,7 +225,6 @@ const AddItemContainer = () => {
                 {/* <button type="button" onClick={pickImageHandler}> pick image</button> */}
                 <div></div>
                 <br />
-
                 <br />
                 <label>product</label>
                 <br />
@@ -232,8 +236,9 @@ const AddItemContainer = () => {
                 <br />
                 <label>price</label>
                 <br />
-                <input {...register("price")} />
+                $<input {...register("priceD")} />
                 <br />
+                ¢<input {...register("priceC")} maxLength="2" />
                 <button>submit</button>
               </div>
               {previewUrl && (
@@ -269,7 +274,6 @@ const AddItemContainer = () => {
                 {/* <button type="button" onClick={pickImageHandler}> pick image</button> */}
                 <div></div>
                 <br />
-
                 <br />
                 <label>product</label>
                 <br />
@@ -281,7 +285,7 @@ const AddItemContainer = () => {
                 <br />
                 <label>price</label>
                 <br />
-                <input {...register("bulkPrice")} />
+                $<input {...register("bulkPrice")} />
                 <br />
                 <button>submit</button>
               </div>
