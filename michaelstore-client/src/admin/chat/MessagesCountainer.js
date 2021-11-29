@@ -15,6 +15,8 @@ const MessagesCountainer = () => {
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
+  const [socketTrig, setSocketTrig] = useState();
+
   const {
     register,
     handleSubmit,
@@ -38,6 +40,16 @@ const MessagesCountainer = () => {
   const setTimeScroll = () => {
     setTimeout(handleBackClick, 1000);
   };
+
+  useEffect(() => {
+    const socket = io("http://localhost:5000");
+    console.log(socket);
+
+    socket.on("customerMessage", (update) => {
+      console.log(update);
+      setSocketTrig(update);
+    });
+  }, []);
 
   const [messageBoards, setMessageBoards] = useState();
 
@@ -69,7 +81,7 @@ const MessagesCountainer = () => {
 
     fetchMessageBoards();
     setmTrigger(false);
-  }, [sendRequest, auth.token, auth.messageRef, mTrigger]);
+  }, [sendRequest, auth.token, auth.messageRef, mTrigger, socketTrig]);
 
   const submitAMessage = async (data) => {
     const socket = io("http://localhost:5000");
@@ -87,7 +99,7 @@ const MessagesCountainer = () => {
           Authorization: "Bearer " + auth.token,
         }
       );
-      socket.emit("update", Math.random() * 100000);
+      socket.emit("adminMessage", Math.random() * 100000);
     } catch (err) {}
 
     setmTrigger(true);

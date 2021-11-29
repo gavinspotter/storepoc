@@ -48,7 +48,7 @@ const CustomerChatBox = () => {
     const socket = io("http://localhost:5000");
     console.log(socket);
 
-    socket.on("update", (update) => {
+    socket.on("adminMessage", (update) => {
       console.log(update);
       setSocketTrig(update);
     });
@@ -79,6 +79,8 @@ const CustomerChatBox = () => {
   }, [sendRequest, mTrigger, auth.customerToken, socketTrig]);
 
   const submitAMessage = async (data) => {
+    const socket = io("http://localhost:5000");
+
     try {
       sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/customer/postMessage`,
@@ -91,6 +93,8 @@ const CustomerChatBox = () => {
           Authorization: "Bearer " + auth.customerToken,
         }
       );
+
+      socket.emit("customerMessage", Math.random() * 100000);
     } catch (err) {}
 
     setmTrigger(true);

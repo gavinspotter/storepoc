@@ -83,10 +83,16 @@ app.use((error, req, res, next) => {
 //app.listen(process.env.PORT || 5000);
 
 io.on("connection", (socket) => {
-  socket.on("update", (update) => {
+  socket.on("customerMessage", (update) => {
     console.log(update);
 
-    io.emit("update", update);
+    io.emit("customerMessage", update);
+  });
+
+  socket.on("adminMessage", (update) => {
+    console.log(update);
+
+    io.emit("adminMessage", update);
   });
 });
 
