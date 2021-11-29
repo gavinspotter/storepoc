@@ -14,6 +14,8 @@ router.get("/getBulk", adminController.getBulkItems);
 
 router.get("/getConsumerItems", adminController.getConsumerItems);
 
+router.get("/getAConsumerItem/:itemId", adminController.getAConsumerItem);
+
 router.use(checkAuth);
 
 router.get("/getMessages", adminController.getMessages);
