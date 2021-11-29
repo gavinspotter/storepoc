@@ -524,8 +524,9 @@
   &-goods {
     overflow: auto;
     position: relative;
+
     width: 100%;
-    height: 68vh;
+
     height: 95vh;
     background: rgb(247, 243, 243);
     &-header {
@@ -606,6 +607,8 @@
   }
 
   &-inventory {
+    position: relative;
+
     overflow: auto;
     width: 100%;
     min-height: 80vh;

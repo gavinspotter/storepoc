@@ -2,7 +2,7 @@ import React, { useRef, useContext, useEffect, useState } from "react";
 
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useForm } from "react-hook-form";
-
+import io from "socket.io-client";
 import { AuthContext } from "../../shared/context/auth-context";
 
 import ErrorModal from "../../shared/UIElements/ErrorModal";
@@ -31,6 +31,8 @@ const CustomerChatBox = () => {
 
   const [mTrigger, setmTrigger] = useState();
 
+  const [socketTrig, setSocketTrig] = useState();
+
   const titleRef = useRef();
 
   const handleBackClick = () => {
@@ -41,6 +43,16 @@ const CustomerChatBox = () => {
   const setTimeScroll = () => {
     setTimeout(handleBackClick, 1000);
   };
+
+  useEffect(() => {
+    const socket = io("http://localhost:5000");
+    console.log(socket);
+
+    socket.on("update", (update) => {
+      console.log(update);
+      setSocketTrig(update);
+    });
+  }, []);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -64,7 +76,7 @@ const CustomerChatBox = () => {
     fetchMessages();
 
     setmTrigger(false);
-  }, [sendRequest, mTrigger, auth.customerToken]);
+  }, [sendRequest, mTrigger, auth.customerToken, socketTrig]);
 
   const submitAMessage = async (data) => {
     try {

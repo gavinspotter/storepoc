@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import freightImg from "../../../img/homepage-freight.jpg";
 
@@ -12,7 +12,7 @@ import ErrorModal from "../../UIElements/ErrorModal";
 import HomeConsumerGoodsList from "./HomeConsumerGoodsList";
 import ConsumerGoodsList from "./consumerGoods/ConsumerGoodsList";
 
-const Home = () => {
+const Home = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [bulk, setBulk] = useState();
@@ -48,8 +48,17 @@ const Home = () => {
     fetchcg();
   }, [sendRequest]);
 
+  const [height, setHeight] = useState(0);
+  const ref = useRef(null);
+
+  //   useEffect(() => {
+  //     setHeight(ref.current.clientHeight)
+  //   })
+
+  console.log(ref);
+
   return (
-    <div>
+    <div className="ignore">
       <ErrorModal error={error} onClear={clearError} />
       <div className="home-bench">
         <img
@@ -81,7 +90,7 @@ const Home = () => {
         <h1 className="home-goods-header2-hey2">Safe,</h1>
         <h1 className="home-goods-header2">
           {" "}
-          <span className="colorGrey">and</span> smart!
+          <span className="colorGrey">and</span> easy!
         </h1>
       </div>
       <div className="home-inventory">

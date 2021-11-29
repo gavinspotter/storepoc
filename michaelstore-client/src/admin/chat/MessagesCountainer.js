@@ -2,6 +2,7 @@ import React, { useRef, useContext, useEffect, useState } from "react";
 
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useForm } from "react-hook-form";
+import io from "socket.io-client";
 
 import { AuthContext } from "../../shared/context/auth-context";
 
@@ -20,6 +21,12 @@ const MessagesCountainer = () => {
     reset,
     formState: { isSubmitSuccessful },
   } = useForm({ message: "" });
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset({ message: "" });
+    }
+  }, [reset, isSubmitSuccessful]);
 
   const titleRef = useRef();
 
@@ -61,11 +68,14 @@ const MessagesCountainer = () => {
     };
 
     fetchMessageBoards();
-  }, [sendRequest, auth.token, auth.messageRef]);
+    setmTrigger(false);
+  }, [sendRequest, auth.token, auth.messageRef, mTrigger]);
 
   const submitAMessage = async (data) => {
+    const socket = io("http://localhost:5000");
+
     try {
-      sendRequest(
+      await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/admin/postMessage`,
         "POST",
         JSON.stringify({
@@ -77,6 +87,7 @@ const MessagesCountainer = () => {
           Authorization: "Bearer " + auth.token,
         }
       );
+      socket.emit("update", Math.random() * 100000);
     } catch (err) {}
 
     setmTrigger(true);
