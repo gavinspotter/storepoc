@@ -56,11 +56,11 @@ const App = () => {
 
         <Route path="/" element={<Home />} />
         <Route path="/consumerGoods" element={<ConsumerGoodsContainer />} />
-        <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook />} />
+        <Route path="/consumerGoods/:goodId" element={<ConsumerGoodsLook />} />
         <Route path="/bulkItems" element={<BulkContainer />} />
         <Route path="/bulkItems/:biId" element={<BulkLook />} />
 
-        <Route path="*" element={<AboutUs />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     );
   } else if (customerToken) {
@@ -71,11 +71,11 @@ const App = () => {
 
         <Route path="/" element={<Home />} />
         <Route path="/consumerGoods" element={<ConsumerGoodsContainer />} />
-        <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook />} />
+        <Route path="/consumerGoods/:goodId" element={<ConsumerGoodsLook />} />
         <Route path="/bulkItems" element={<BulkContainer />} />
         <Route path="/bulkItems/:biId" element={<BulkLook />} />
 
-        <Route path="*" element={<AboutUs />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     );
   } else {
@@ -85,11 +85,11 @@ const App = () => {
         <Route path="/michaelross" element={<LoginContainer />} />
 
         <Route path="/consumerGoods" element={<ConsumerGoodsContainer />} />
-        <Route path="/consumerGoods/:cgId" element={<ConsumerGoodsLook />} />
+        <Route path="/consumerGoods/:goodId" element={<ConsumerGoodsLook />} />
         <Route path="/bulkItems" element={<BulkContainer />} />
         <Route path="/bulkItems/:biId" element={<BulkLook />} />
         <Route path="/welcome" element={<WelcomeContainer />} />
-        <Route path="*" element={<AboutUs />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     );
   }
