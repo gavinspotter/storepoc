@@ -872,3 +872,53 @@
     }
   }
 }
+
+.aConsumerItem {
+  width: 100%;
+  min-height: 98vh;
+  max-height: 100%;
+  background-color: rgb(255, 182, 47);
+  overflow: auto;
+
+  &-itemContainer {
+    overflow: auto;
+    margin-top: 4rem;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 60rem;
+    height: 60rem;
+    background-color: white;
+    margin-bottom: 4rem;
+    &-img {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      max-width: 40rem;
+      max-height: 40rem;
+      border-radius: 2rem;
+      &-container {
+        margin-top: 3rem;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        max-width: 40rem;
+        max-height: 40rem;
+      }
+    }
+
+    &-labels {
+      color: rgb(100, 100, 100);
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      max-width: 40rem;
+      margin-top: 3rem;
+      &-description {
+        overflow-wrap: break-word;
+        max-height: 5rem;
+        width: 40rem;
+        display: block;
+      }
+    }
+  }
+}

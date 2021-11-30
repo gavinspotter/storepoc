@@ -334,6 +334,11 @@ const deleteBulkItem = async (req, res, next) => {
 const createConsumerItem = async (req, res, next) => {
   const { name, description, price, notes, bucketPhotoId } = req.body;
 
+  if (description.length > 251) {
+    const error = new HttpError("that's to long of a description");
+    return next(error);
+  }
+
   let findUser;
 
   try {

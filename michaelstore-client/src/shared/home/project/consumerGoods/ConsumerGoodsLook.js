@@ -16,6 +16,8 @@ const ConsumerGoodsLook = () => {
 
   const [aGood, setAGood] = useState();
 
+  const [aPrice, setAPrice] = useState();
+
   useEffect(() => {
     const fetchAnItem = async () => {
       const responseData = await sendRequest(
@@ -27,16 +29,42 @@ const ConsumerGoodsLook = () => {
         }
       );
       setAGood(responseData.findItem);
+
+      const thePrice = responseData.findItem.price.toString();
+
+      const thePriceSplice =
+        thePrice.slice(0, thePrice.length - 2) +
+        "." +
+        thePrice.slice(thePrice.length - 2);
+
+      setAPrice(thePriceSplice);
     };
 
     fetchAnItem();
   }, [goodId, sendRequest, auth.token]);
 
   return (
-    <div>
+    <div className="aConsumerItem">
       <ErrorModal error={error} onClear={clearError} />
-      <div>hi</div>
-      {aGood && <div></div>}
+
+      {aGood && aPrice && (
+        <div className="aConsumerItem-itemContainer">
+          <div className="aConsumerItem-itemContainer-img-container">
+            <img
+              className="aConsumerItem-itemContainer-img"
+              src={`https://s3.us-east-1.amazonaws.com/michaelrossbucket/${aGood.bucketPhotoId}`}
+              alt={`${aGood.description}`}
+            />
+          </div>
+          <div className="aConsumerItem-itemContainer-labels">
+            <div>{aGood.name}</div>
+            <div className="aConsumerItem-itemContainer-labels-description">
+              {aGood.description.slice(0, 250)}
+            </div>
+            {aPrice && <div>{aPrice}</div>}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
