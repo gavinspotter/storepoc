@@ -426,8 +426,7 @@ body {
       margin-right: auto;
       text-align: center;
       left: 0;
-      right: 0;
-      animation: moveInRight 1s ease-out; }
+      right: 0; }
       .home-goods-header-hey {
         color: #838383;
         margin-top: 13rem;
@@ -437,8 +436,7 @@ body {
         margin-right: auto;
         text-align: center;
         left: 0;
-        right: 0;
-        animation: moveInRight 1s ease-out; }
+        right: 0; }
       .home-goods-header-img {
         margin-top: 7rem;
         position: absolute;
@@ -447,8 +445,7 @@ body {
         width: 40rem;
         text-align: center;
         margin-left: auto;
-        margin-right: auto;
-        animation: moveInRight 1s ease-out; }
+        margin-right: auto; }
     .home-goods-header2 {
       color: blue;
       margin-top: 43rem;
@@ -458,8 +455,7 @@ body {
       margin-right: auto;
       text-align: center;
       left: 0;
-      right: 0;
-      animation: moveInLeft 1s ease-out; }
+      right: 0; }
       .home-goods-header2-hey2 {
         color: green;
         margin-top: 38rem;
@@ -469,8 +465,7 @@ body {
         margin-right: auto;
         text-align: center;
         left: 0;
-        right: 0;
-        animation: moveInLeft 1s ease-out; }
+        right: 0; }
       .home-goods-header2-img2 {
         margin-top: 32rem;
         position: absolute;
@@ -479,8 +474,7 @@ body {
         width: 40rem;
         text-align: center;
         margin-left: auto;
-        margin-right: auto;
-        animation: moveInLeft 1s ease-out; }
+        margin-right: auto; }
   .home-inventory {
     position: relative;
     overflow: auto;
@@ -677,7 +671,9 @@ body {
     max-width: 60rem;
     height: 60rem;
     background-color: white;
-    margin-bottom: 4rem; }
+    margin-bottom: 4rem;
+    box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem #7c7c7c;
+    border-radius: 2rem; }
     .aConsumerItem-itemContainer-img {
       margin-left: auto;
       margin-right: auto;
@@ -780,6 +776,9 @@ body {
 
 .colorGrey {
   color: #838383; }
+
+.cloudAnimation {
+  animation: moveInRight 1s ease-out; }
 
 .navbar {
   width: 100%;

@@ -57,6 +57,28 @@ const Home = (props) => {
 
   console.log(ref);
 
+  const cloudWrapper = useRef(null);
+
+  console.log(cloudWrapper);
+
+  const cloud1 = useRef(null);
+
+  useEffect(() => {
+    if (cloudWrapper.current != null) {
+      console.log(cloudWrapper);
+      const observer = new IntersectionObserver((entrys) => {
+        entrys.forEach((entry) => {
+          if (entry.isIntersecting) {
+            cloud1.current.classList.add("cloudAnimation");
+            return;
+          }
+        });
+      });
+
+      observer.observe(cloud1.current);
+    }
+  });
+
   return (
     <div className="ignore">
       <ErrorModal error={error} onClear={clearError} />
@@ -73,8 +95,9 @@ const Home = (props) => {
           </div>
         )}
       </div>
-      <div className="home-goods">
+      <div ref={cloudWrapper} className="home-goods">
         <img
+          ref={cloud1}
           src={cloud}
           className="home-goods-header-img"
           alt="come shop with us at importbuyz.com"
