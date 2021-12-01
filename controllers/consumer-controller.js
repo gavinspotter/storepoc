@@ -214,7 +214,7 @@ const purchaseConsumerGood = async (req, res, next) => {
     return next(error);
   }
 
-  if (findItem.sold === true) {
+  if (findItem.sold) {
     const error = new HttpError("this item is already sold");
     return next(error);
   }
@@ -229,20 +229,10 @@ const purchaseConsumerGood = async (req, res, next) => {
     !zipCode
   ) {
     const error = new HttpError(
-      "we're missing some information, we need your first and last name, street, city, state, zip code, and email. Details is where you can alter this."
+      "we're missing some information, we need your first and last name, street, city, state, zip code, and email."
     );
     return next(error);
   }
-
-  findItem.sold = true;
-  findItem.deliveryDetails.firstName = firstName;
-  findItem.deliveryDetails.lastName = lastName;
-  findItem.deliveryDetails.street = street;
-  findItem.deliveryDetails.city = city;
-  findItem.deliveryDetails.state = state;
-  findItem.deliveryDetails.zipCode = zipCode;
-  findItem.deliveryDetails.country = country;
-  findItem.deliveryDetails.email = email;
 
   let token;
 
@@ -259,6 +249,15 @@ const purchaseConsumerGood = async (req, res, next) => {
     const error = new HttpError("had trouble processing your card");
     return next(error);
   }
+  findItem.sold = true;
+  findItem.deliveryDetails.firstName = firstName;
+  findItem.deliveryDetails.lastName = lastName;
+  findItem.deliveryDetails.street = street;
+  findItem.deliveryDetails.city = city;
+  findItem.deliveryDetails.state = state;
+  findItem.deliveryDetails.zipCode = zipCode;
+
+  findItem.deliveryDetails.email = email;
 
   let charge;
 
@@ -268,7 +267,7 @@ const purchaseConsumerGood = async (req, res, next) => {
       currency: "usd",
 
       source: token.id,
-      description: "My First Test Charge (created for API docs)",
+      description: findItem.name,
     });
     await findItem.save();
   } catch (err) {

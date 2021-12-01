@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 
 import { useHttpClient } from "../../../hooks/http-hook";
 
@@ -53,8 +53,25 @@ const BulkItem = (props) => {
     // console.log(globalC)
   };
 
+  const cardAnimation = useRef(null);
+
+  useEffect(() => {
+    if (cardAnimation.current != null) {
+      const observer = new IntersectionObserver((entrys) => {
+        entrys.forEach((entry) => {
+          if (entry.isIntersecting) {
+            cardAnimation.current.classList.add("animationTop");
+            return;
+          }
+        });
+      });
+
+      observer.observe(cardAnimation.current);
+    }
+  });
+
   return (
-    <div className="consumerGoods--card">
+    <div ref={cardAnimation} className="consumerGoods--card">
       <ErrorModal error={error} onClear={clearError} />
 
       <img

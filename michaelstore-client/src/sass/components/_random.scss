@@ -26,6 +26,13 @@
   color: rgb(131, 131, 131);
 }
 
-.cloudAnimation {
+.animationRight {
   animation: moveInRight 1s ease-out;
+}
+.animationLeft {
+  animation: moveInLeft 1s ease-out;
+}
+
+.animationTop {
+  animation: moveInTop 1s ease-out;
 }

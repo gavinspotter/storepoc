@@ -57,25 +57,37 @@ const Home = (props) => {
 
   console.log(ref);
 
-  const cloudWrapper = useRef(null);
-
-  console.log(cloudWrapper);
-
   const cloud1 = useRef(null);
 
   useEffect(() => {
-    if (cloudWrapper.current != null) {
-      console.log(cloudWrapper);
+    if (cloud1.current != null) {
       const observer = new IntersectionObserver((entrys) => {
         entrys.forEach((entry) => {
           if (entry.isIntersecting) {
-            cloud1.current.classList.add("cloudAnimation");
+            cloud1.current.classList.add("animationRight");
             return;
           }
         });
       });
 
       observer.observe(cloud1.current);
+    }
+  });
+
+  const cloud2 = useRef(null);
+
+  useEffect(() => {
+    if (cloud2.current != null) {
+      const observer = new IntersectionObserver((entrys) => {
+        entrys.forEach((entry) => {
+          if (entry.isIntersecting) {
+            cloud2.current.classList.add("animationLeft");
+            return;
+          }
+        });
+      });
+
+      observer.observe(cloud2.current);
     }
   });
 
@@ -95,26 +107,28 @@ const Home = (props) => {
           </div>
         )}
       </div>
-      <div ref={cloudWrapper} className="home-goods">
-        <img
-          ref={cloud1}
-          src={cloud}
-          className="home-goods-header-img"
-          alt="come shop with us at importbuyz.com"
-        />
-        <h1 className="home-goods-header-hey">Hey,</h1>
-        <h1 className="home-goods-header">Shop with us!</h1>
-
-        <img
-          src={cloud}
-          className="home-goods-header2-img2"
-          alt="come shop with us at importbuyz.com"
-        />
-        <h1 className="home-goods-header2-hey2">Safe,</h1>
-        <h1 className="home-goods-header2">
-          {" "}
-          <span className="colorGrey">and</span> easy!
-        </h1>
+      <div className="home-goods">
+        <div ref={cloud1} className="home-goods-header-wrapping1">
+          <img
+            src={cloud}
+            className="home-goods-header-img"
+            alt="come shop with us at importbuyz.com"
+          />
+          <h1 className="home-goods-header-hey">Hey,</h1>
+          <h1 className="home-goods-header">Shop with us!</h1>
+        </div>
+        <div ref={cloud2} className="home-goods-header2-wrapping2">
+          <img
+            src={cloud}
+            className="home-goods-header2-img2"
+            alt="come shop with us at importbuyz.com"
+          />
+          <h1 className="home-goods-header2-hey2">Safe,</h1>
+          <h1 className="home-goods-header2">
+            {" "}
+            <span className="colorGrey">and</span> easy!
+          </h1>
+        </div>
       </div>
       <div className="home-inventory">
         <div className="home-inventory-bulkTitle">Bulk</div>
