@@ -106,7 +106,7 @@ const ConsumerGoodsLook = (props) => {
       {backGround && (
         <div>
           <div className="purchaseModal-background"></div>
-          <div className="purchaseModal">
+          <div className="purchaseModal animationTop">
             <ErrorModal error={error} onClear={clearError} />
             <h2 className="purchaseModal-title">
               We need some details from you to pay for this item! Login to for

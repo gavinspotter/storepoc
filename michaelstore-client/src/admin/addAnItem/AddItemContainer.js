@@ -228,11 +228,11 @@ const AddItemContainer = () => {
                 <br />
                 <label>product</label>
                 <br />
-                <input {...register("name")} />
+                <input maxLength="40" {...register("name")} />
                 <br />
                 <label>description</label>
                 <br />
-                <textarea {...register("description")} />
+                <textarea maxLength="250" {...register("description")} />
                 <br />
                 <label>price</label>
                 <br />
