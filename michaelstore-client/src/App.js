@@ -28,6 +28,7 @@ import MessagesCountainer from "./admin/chat/MessagesCountainer";
 import CustomerChatBox from "./consumer/customerChat/CustomerChatBox";
 import DetailsContainer from "./consumer/customerDetails/DetailsContainer";
 import Home from "./shared/home/project/Home";
+import ItemsContainer from "./admin/itemQue/ItemsContainer";
 
 const App = () => {
   const {
@@ -53,7 +54,7 @@ const App = () => {
         <Route path="/messages" element={<MessagesCountainer />} />
         <Route path="/messages/:md" element={<MessagesList />} />
         <Route path="/addItem" element={<AddItemContainer />} />
-
+        <Route path="/itemQue" element={<ItemsContainer />} />
         <Route path="/" element={<Home />} />
         <Route path="/consumerGoods" element={<ConsumerGoodsContainer />} />
         <Route path="/consumerGoods/:goodId" element={<ConsumerGoodsLook />} />

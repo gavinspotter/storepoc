@@ -1,5 +1,14 @@
 import React, { useContext } from "react";
 
+import {
+  IoHomeOutline,
+  IoAddCircleOutline,
+  IoAlbumsOutline,
+  IoBagAddOutline,
+  IoLayersOutline,
+  IoLogInOutline,
+} from "react-icons/io5";
+
 import "../../css/style.css";
 
 import { NavLink } from "react-router-dom";
@@ -11,7 +20,9 @@ const NavBar = () => {
   return (
     <div className="navbar">
       <div className="navbar--left">
-        <NavLink to="/">home</NavLink>
+        <NavLink to="/">
+          <IoHomeOutline />
+        </NavLink>
 
         {/* {auth.isLoggedIn && (
           <div>
@@ -23,10 +34,10 @@ const NavBar = () => {
       </div>
       <div className="navbar--right">
         <NavLink className="navbar--right-bulk" to="/bulkItems">
-          bulk
+          <IoLayersOutline />
         </NavLink>
         <NavLink className="navbar--right-retail" to="/consumerGoods">
-          retail
+          <IoBagAddOutline />
         </NavLink>
         {!auth.isLoggedIn && !auth.customerIsLoggedIn && (
           <NavLink className="navbar--right-login" to="/welcome">
@@ -40,18 +51,23 @@ const NavBar = () => {
         )}
         {auth.customerIsLoggedIn && (
           <NavLink className="navbar--right-login" to="/yourMessages">
-            inbox
+            <IoAlbumsOutline />
+          </NavLink>
+        )}
+        {auth.isLoggedIn && (
+          <NavLink className="navbar--right-login" to="/itemQue">
+            <IoLogInOutline />
           </NavLink>
         )}
 
         {auth.isLoggedIn && (
           <NavLink className="navbar--right-login" to="/addItem">
-            add
+            <IoAddCircleOutline />
           </NavLink>
         )}
         {auth.isLoggedIn && (
           <NavLink className="navbar--right-login" to="/messages">
-            inbox
+            <IoAlbumsOutline />
           </NavLink>
         )}
         {/* {

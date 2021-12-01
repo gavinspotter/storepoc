@@ -423,7 +423,7 @@ const getConsumerItems = async (req, res, next) => {
 };
 
 const updateConsumerItem = async (req, res, next) => {
-  const { itemId, name, description, price } = req.body;
+  const { itemId } = req.body;
 
   let findAdmin;
 
@@ -458,11 +458,8 @@ const updateConsumerItem = async (req, res, next) => {
     return next(error);
   }
 
-  findItem.name = name;
-
-  findItem.price = price;
-
-  findItem.description = description;
+  findItem.delivered.isDelivered = true;
+  findItem.delivered.deliveryDate = new Date();
 
   try {
     await findItem.save();
