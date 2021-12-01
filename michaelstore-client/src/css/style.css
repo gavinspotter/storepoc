@@ -686,6 +686,7 @@ body {
   background-color: #ffb62f;
   overflow: auto; }
   .aConsumerItem-itemContainer {
+    position: initial;
     overflow: auto;
     margin-top: 4rem;
     margin-right: auto;
@@ -724,6 +725,7 @@ body {
         display: block; }
 
 .purchaseModal {
+  z-index: 2;
   top: 1.5rem;
   right: 0;
   left: 0;
@@ -752,6 +754,39 @@ body {
     width: 100%;
     background-color: black;
     opacity: 0.5; }
+  .purchaseModal-purchasedModal {
+    position: fixed;
+    top: 10rem;
+    width: 40rem;
+    background-color: white;
+    height: 40rem;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem #7c7c7c;
+    border-radius: 2rem; }
+    .purchaseModal-purchasedModal-text {
+      margin-top: 4rem;
+      margin-left: auto;
+      margin-right: auto;
+      width: 30rem;
+      text-align: center; }
+    .purchaseModal-purchasedModal-img {
+      display: block;
+      width: 20rem;
+      margin-top: 1rem;
+      margin-left: auto;
+      margin-right: auto; }
+    .purchaseModal-purchasedModal-button {
+      color: white;
+      background: linear-gradient(to right bottom, rgba(255, 0, 0, 0.8), rgba(63, 41, 190, 0.8));
+      border-radius: 2rem;
+      width: 4rem;
+      border: none;
+      padding: 1rem;
+      margin-top: 2rem;
+      font-size: 2rem; }
 
 .loading-spinner__overlay {
   height: 100%;

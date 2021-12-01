@@ -266,8 +266,11 @@ const purchaseConsumerGood = async (req, res, next) => {
     info = await transporter.sendMail({
       from: "importbuyz@gmail.com", // sender address
       to: email, // list of receivers
-      subject: "Hello ✔", // Subject line
-      text: "Hello world?", // plain text body
+      subject: findItem.name, // Subject line
+      text: `Hey, thanks for shopping with us and purchasing ${findItem.name} from our online store. We're going to send you another email as soon as your package is delivered.
+      
+      importbuyz
+      `, // plain text body
     });
   } catch (err) {
     console.log(err);

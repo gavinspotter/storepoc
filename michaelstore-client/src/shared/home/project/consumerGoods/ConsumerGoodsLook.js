@@ -3,10 +3,13 @@ import { useNavigate } from "react-router";
 import { useHttpClient } from "../../../hooks/http-hook";
 
 import { AuthContext } from "../../../context/auth-context";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 
 import { useParams } from "react-router-dom";
 import ErrorModal from "../../../UIElements/ErrorModal";
+import LoadingSpinner from "../../../UIElements/LoadingSpinner";
+
+import celebration from "../../../../img/celebration.gif";
 
 const ConsumerGoodsLook = (props) => {
   const {
@@ -32,6 +35,10 @@ const ConsumerGoodsLook = (props) => {
   const [aGood, setAGood] = useState();
 
   const [aPrice, setAPrice] = useState();
+
+  const thankYou = () => {
+    navigate("/home");
+  };
 
   useEffect(() => {
     const fetchAnItem = async () => {
@@ -59,6 +66,8 @@ const ConsumerGoodsLook = (props) => {
   }, [goodId, sendRequest, auth.token]);
 
   const [backGround, setBackGround] = useState(false);
+
+  const [purchased, setPurchased] = useState(false);
 
   const purchaseToggle = () => {
     if (backGround === false) {
@@ -92,8 +101,7 @@ const ConsumerGoodsLook = (props) => {
           "Content-Type": "application/json",
         }
       );
-
-      navigate("/consumerGoods");
+      setPurchased(true);
     } catch (err) {}
 
     setBackGround(false);
@@ -108,6 +116,7 @@ const ConsumerGoodsLook = (props) => {
           <div className="purchaseModal-background"></div>
           <div className="purchaseModal animationTop">
             <ErrorModal error={error} onClear={clearError} />
+            {isLoading && <LoadingSpinner asOverlay />}
             <h2 className="purchaseModal-title">
               We need some details from you to pay for this item! Login to for
               free messaging, update's on package delivery, and to save your
@@ -198,6 +207,29 @@ const ConsumerGoodsLook = (props) => {
             {aPrice && <div>{aPrice}</div>}
           </div>
           <div onClick={purchaseToggle}>buy</div>
+          {purchased && (
+            <div className="purchaseModal-purchasedModal">
+              {" "}
+              <div className="purchaseModal-purchasedModal-text">
+                <h2>
+                  Thanks for shopping with us. Check your email for a
+                  confirmation of your order.
+                </h2>{" "}
+                <img
+                  className="purchaseModal-purchasedModal-img"
+                  src={celebration}
+                  alt="purchased"
+                />
+                <button
+                  className="purchaseModal-purchasedModal-button"
+                  onClick={thankYou}
+                >
+                  {" "}
+                  okay{" "}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
