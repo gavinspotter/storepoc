@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const Customer = require("../models/Customers");
 
 const Admin = require("../models/Admin");
+const nodemailer = require("nodemailer");
 
 const Messages = require("../models/Messages");
 const ConsumerGoods = require("../models/ConsumerGoods");
@@ -249,6 +250,31 @@ const purchaseConsumerGood = async (req, res, next) => {
     const error = new HttpError("had trouble processing your card");
     return next(error);
   }
+  console.log(process.env.EMAIL_NAME);
+
+  let transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.EMAIL_NAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  let info;
+
+  try {
+    info = await transporter.sendMail({
+      from: "importbuyz@gmail.com", // sender address
+      to: email, // list of receivers
+      subject: "Hello ✔", // Subject line
+      text: "Hello world?", // plain text body
+    });
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError("something went wrong with your email");
+    return next(error);
+  }
+
   findItem.sold = true;
   findItem.deliveryDetails.firstName = firstName;
   findItem.deliveryDetails.lastName = lastName;
@@ -275,7 +301,7 @@ const purchaseConsumerGood = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ findItem, charge });
+  res.json({ findItem, charge, info });
 };
 
 const purchaseConsumerGoodOnAccount = async (req, res, next) => {
