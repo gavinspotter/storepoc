@@ -44,6 +44,8 @@ const App = () => {
     setMessageRef,
     messageBoardId,
     setMessageBoardId,
+    deliveredRef,
+    setDeliveredRef,
   } = useAuth();
 
   let route;
@@ -112,6 +114,8 @@ const App = () => {
         setMessageRef: setMessageRef,
         messageBoardId: messageBoardId,
         setMessageBoardId: setMessageBoardId,
+        deliveredRef: deliveredRef,
+        setDeliveredRef: setDeliveredRef,
       }}
     >
       <Router>

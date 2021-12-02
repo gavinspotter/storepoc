@@ -2,7 +2,7 @@ import React from "react";
 import ItemsItem from "./ItemsItem";
 
 const ItemsList = (props) => {
-  const isSold = props.items.filter((x) => x.sold);
+  const isSold = props.items.filter((x) => x.sold && !x.delivered);
 
   console.log(isSold);
 
@@ -12,7 +12,7 @@ const ItemsList = (props) => {
         isSold.map((x) => (
           <ItemsItem
             key={x._id}
-            _id={x._id}
+            id={x._id}
             name={x.name}
             description={x.description}
             price={x.price}
