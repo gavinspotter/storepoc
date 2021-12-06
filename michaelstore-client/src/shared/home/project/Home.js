@@ -11,6 +11,7 @@ import { useHttpClient } from "../../hooks/http-hook";
 import ErrorModal from "../../UIElements/ErrorModal";
 import HomeConsumerGoodsList from "./HomeConsumerGoodsList";
 import ConsumerGoodsList from "./consumerGoods/ConsumerGoodsList";
+import { Link } from "react-router-dom";
 
 const Home = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -131,11 +132,23 @@ const Home = (props) => {
         </div>
       </div>
       <div className="home-inventory">
-        <div className="home-inventory-bulkTitle">Bulk</div>
+        <div className="home-inventory-bulkTitle">
+          <Link className="home-link" to="/bulkItems">
+            {/* <div className="home-inventory-bulkTitle">Bulk</div> */}
+            Bulk
+          </Link>
+        </div>
+
         <div className="home-inventory-bulkSlide">
           {bulk && <HomeBulkList items={bulk} />}
         </div>
-        <div className="home-inventory-goodsTitle">Retail</div>
+
+        <div className="home-inventory-goodsTitle">
+          <Link className="home-link" to="/consumerGoods">
+            <div>Retail</div>
+          </Link>
+        </div>
+
         <div className="home-of">
           <div className="home-inventory-goodsSlide">
             {consumerGoodsList && (
