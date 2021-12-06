@@ -1,33 +1,26 @@
-import React from 'react'
+import React from "react";
 
-import '../../../../css/style.css'
-import ConsumerGoodsItem from './ConsumerGoodsItem'
+import "../../../../css/style.css";
+import ConsumerGoodsItem from "./ConsumerGoodsItem";
 
 const ConsumerGoodsList = (props) => {
+  const isSold = props.items.filter((x) => !x.sold);
 
-    const isSold = props.items.filter(x => !x.sold )
+  return (
+    <div className="consumerGoods">
+      {props.items &&
+        isSold.map((x) => (
+          <ConsumerGoodsItem
+            key={x._id}
+            id={x._id}
+            name={x.name}
+            description={x.description}
+            price={x.price}
+            bucketPhotoId={x.bucketPhotoId}
+          />
+        ))}
+    </div>
+  );
+};
 
-    
-
-
-
-    return (
-        <div className="consumerGoods">
-            { props.items &&
-            isSold.map(x => 
-                <ConsumerGoodsItem
-                key={x._id}
-                _id={x._id}
-                name={x.name}
-                description={x.description}
-                price={x.price}
-                bucketPhotoId={x.bucketPhotoId}
-
-                />
-                )
-            }
-        </div>
-    )
-}
-
-export default ConsumerGoodsList
+export default ConsumerGoodsList;

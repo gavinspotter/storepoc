@@ -655,11 +655,28 @@ const getAConsumerItem = async (req, res, next) => {
   res.json({ findItem });
 };
 
+const getABulkItem = async (req, res, next) => {
+  const itemId = req.params.itemId;
+
+  let findItem;
+
+  try {
+    findItem = await Bulk.findById(itemId);
+  } catch (err) {
+    const error = new HttpError("something went wrong with that request");
+    return next(error);
+  }
+
+  res.json({ findItem });
+};
+
 exports.signup = signup;
 
 exports.login = login;
 
 exports.getAConsumerItem = getAConsumerItem;
+
+exports.getABulkItem = getABulkItem;
 
 exports.createBulkItem = createBulkItem;
 

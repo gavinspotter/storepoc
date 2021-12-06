@@ -5,6 +5,14 @@
   right: 10%;
 }
 
+.marginTop {
+  margin-top: 0.2rem;
+}
+
+.marginTopAdminMail {
+  margin-top: 0.8rem;
+}
+
 .ilblock {
   display: inline-block;
 }
@@ -38,4 +46,13 @@
 
 .animationTop {
   animation: moveInTop 1s ease-out;
+}
+
+.borderRight {
+  border-right: rgb(163, 163, 163) solid 0.1rem;
+}
+
+.line {
+  font-size: 8rem;
+  color: rgb(185, 185, 185);
 }

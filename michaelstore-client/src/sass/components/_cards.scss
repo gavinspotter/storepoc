@@ -116,6 +116,7 @@
     &-text {
       text-align: left;
       position: absolute;
+      color: rgb(78, 78, 78);
 
       bottom: 2rem;
       left: 4rem;
@@ -128,21 +129,34 @@
           rgba(rgb(255, 0, 0), 0.8),
           rgba(#3f29be, 0.8)
         );
-        border-radius: 2rem;
-        width: 4rem;
+        border-radius: 10rem;
+        width: 3rem;
+        height: 3rem;
+
         display: inline-block;
         position: absolute;
         right: 4rem;
         bottom: 2rem;
+        font-size: 2rem;
       }
     }
 
     &-img {
-      margin-top: 2rem;
-      min-height: 16rem;
+      //min-height: 16rem;
+
+      margin: auto;
       max-height: 20rem;
       max-width: 20rem;
       border-radius: 1rem;
+      &-imgwrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2rem;
+        //min-height: 16rem;
+        height: 20rem;
+        width: 100%;
+      }
     }
   }
 }
@@ -876,8 +890,8 @@
     &-button {
       display: inline-block;
       margin-right: 1%;
-      width: 15%;
-      height: 60%;
+      width: 6rem;
+      height: 6rem;
       vertical-align: top;
       color: rgb(255, 255, 255);
       background: linear-gradient(
@@ -885,10 +899,10 @@
         rgba(#55c57a, 0.8),
         rgba(rgb(0, 217, 255), 0.8)
       );
-      font-size: 2rem;
+      font-size: 4rem;
 
       border: none;
-      border-radius: 2rem;
+      border-radius: 10rem;
     }
   }
 }
@@ -907,11 +921,21 @@
     margin-right: auto;
     margin-left: auto;
     max-width: 60rem;
-    height: 60rem;
+    max-height: 60rem;
     background-color: white;
     margin-bottom: 4rem;
     box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem rgb(124, 124, 124);
     border-radius: 2rem;
+
+    &-infoContainer {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      max-width: 40rem;
+      max-height: 55rem;
+      border-radius: 2rem;
+      margin-bottom: 3rem;
+    }
 
     &-img {
       margin-left: auto;
@@ -935,13 +959,63 @@
       margin-left: auto;
       margin-right: auto;
       display: block;
-      max-width: 40rem;
+      width: 40rem;
       margin-top: 3rem;
+      overflow-wrap: break-word;
+
+      &-button {
+        &-wrapper {
+          text-align: right;
+          display: inline-block;
+          width: 10rem;
+          height: 3rem;
+        }
+        text-align: center;
+
+        color: white;
+        background: linear-gradient(
+          to right bottom,
+          rgba(rgb(255, 0, 0), 0.8),
+          rgba(#3f29be, 0.8)
+        );
+        border-radius: 10rem;
+        width: 3rem;
+        height: 3rem;
+        display: inline-block;
+
+        position: absolute;
+
+        font-size: 2rem;
+      }
+      &-deleteButtons {
+        text-align: center;
+        display: inline-block;
+        color: white;
+        background: linear-gradient(
+          to right bottom,
+          rgba(rgb(255, 0, 0), 0.8),
+          rgba(#3f29be, 0.8)
+        );
+        border-radius: 2rem;
+        width: 4rem;
+        border: none;
+        padding: 1rem;
+        margin-top: 8rem;
+        font-size: 2rem;
+        margin-left: 3rem;
+        margin-right: 3rem;
+      }
+
+      &-info {
+        display: inline-block;
+      }
+
       &-description {
         overflow-wrap: break-word;
         max-height: 5rem;
-        width: 40rem;
+        width: 30rem;
         display: block;
+        text-align: left;
       }
     }
   }
@@ -996,6 +1070,7 @@
     margin-right: auto;
     box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem rgb(124, 124, 124);
     border-radius: 2rem;
+    text-align: center;
 
     &-text {
       margin-top: 4rem;

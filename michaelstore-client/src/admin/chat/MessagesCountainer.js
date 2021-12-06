@@ -6,6 +6,8 @@ import io from "socket.io-client";
 
 import { AuthContext } from "../../shared/context/auth-context";
 
+import { IoMailOutline } from "react-icons/io5";
+
 import MessageBoardsList from "./MessageBoardsList";
 import MessagesList from "./MessagesList";
 import ErrorModal from "../../shared/UIElements/ErrorModal";
@@ -38,7 +40,9 @@ const MessagesCountainer = () => {
   };
 
   const setTimeScroll = () => {
-    setTimeout(handleBackClick, 1000);
+    if (auth.messageRef) {
+      setTimeout(handleBackClick, 1000);
+    }
   };
 
   useEffect(() => {
@@ -86,23 +90,25 @@ const MessagesCountainer = () => {
   const submitAMessage = async (data) => {
     const socket = io("http://localhost:5000");
 
-    try {
-      await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/admin/postMessage`,
-        "POST",
-        JSON.stringify({
-          message: data.messages,
-          messageBoardId: auth.messageBoardId,
-        }),
-        {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.token,
-        }
-      );
-      socket.emit("adminMessage", Math.random() * 100000);
-    } catch (err) {}
+    if (auth.messageRef) {
+      try {
+        await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/admin/postMessage`,
+          "POST",
+          JSON.stringify({
+            message: data.messages,
+            messageBoardId: auth.messageBoardId,
+          }),
+          {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          }
+        );
+        socket.emit("adminMessage", Math.random() * 100000);
+      } catch (err) {}
 
-    setmTrigger(true);
+      setmTrigger(true);
+    }
   };
 
   return (
@@ -126,7 +132,9 @@ const MessagesCountainer = () => {
               onClick={setTimeScroll}
               className="adminMessages-form-button"
             >
-              submit
+              <div className="marginTopAdminMail">
+                <IoMailOutline />
+              </div>
             </button>
             <div className="adminMessages-form-textArea">
               <textarea

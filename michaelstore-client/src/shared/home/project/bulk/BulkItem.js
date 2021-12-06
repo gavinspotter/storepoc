@@ -3,8 +3,9 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import { useHttpClient } from "../../../hooks/http-hook";
 
 import { AuthContext } from "../../../context/auth-context";
+import { IoBackspaceOutline } from "react-icons/io5";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ErrorModal from "../../../UIElements/ErrorModal";
 
 import "../../../../css/style.css";
@@ -71,41 +72,47 @@ const BulkItem = (props) => {
   });
 
   return (
-    <div ref={cardAnimation} className="consumerGoods--card">
-      <ErrorModal error={error} onClear={clearError} />
+    <Link to={`/bulkItems/${props.id}`}>
+      <div ref={cardAnimation} className="consumerGoods--card">
+        <ErrorModal error={error} onClear={clearError} />
+        <div className="consumerGoods--card-img-imgwrapper">
+          <img
+            className="consumerGoods--card-img"
+            src={`https://s3.us-east-1.amazonaws.com/michaelrossbucket/${props.bucketPhotoId}`}
+            alt={props.description}
+          />
+        </div>
 
-      <img
-        className="consumerGoods--card-img"
-        src={`https://s3.us-east-1.amazonaws.com/michaelrossbucket/${props.bucketPhotoId}`}
-        alt={props.description}
-      />
+        <div className="consumerGoods--card-text">
+          <p>{props.name}</p>
+          {!dString && props.description.substring(0, 45)}
+          {dString && <p>{props.description.substring(0, 45)} ...</p>}
+          <p>${props.price}</p>
+        </div>
 
-      <div className="consumerGoods--card-text">
-        <p>{props.name}</p>
-        {!dString && props.description.substring(0, 45)}
-        {dString && <p>{props.description.substring(0, 45)} ...</p>}
-        <p>${props.price}</p>
+        <div>
+          {auth.token && (
+            <div
+              className="consumerGoods--card-adminText-button"
+              onClick={deleteModalTrig}
+            >
+              {" "}
+              <div className="marginTop">
+                <IoBackspaceOutline />
+              </div>
+            </div>
+          )}
+          {deleteMod && (
+            <div>
+              <div>are you sure you would like to delete this?</div>
+
+              <div onClick={deleteAnItem}>yes</div>
+              <div onClick={deleteModalFalse}>no</div>
+            </div>
+          )}
+        </div>
       </div>
-
-      <div>
-        {auth.token && (
-          <div
-            className="consumerGoods--card-adminText-button"
-            onClick={deleteModalTrig}
-          >
-            delete
-          </div>
-        )}
-        {deleteMod && (
-          <div>
-            <div>are you sure you would like to delete this?</div>
-
-            <div onClick={deleteAnItem}>yes</div>
-            <div onClick={deleteModalFalse}>no</div>
-          </div>
-        )}
-      </div>
-    </div>
+    </Link>
   );
 };
 
