@@ -1128,6 +1128,12 @@
   background-color: rgb(255, 182, 47);
   overflow: auto;
 
+  &-noItems {
+    text-align: center;
+    padding: 4rem;
+    color: rgb(88, 88, 88);
+  }
+
   &-itemsList {
     border-radius: 2rem;
     margin-top: 4rem;

@@ -8,6 +8,11 @@ const ItemsList = (props) => {
 
   return (
     <div className="itemsContainer-itemsList">
+      {isSold.length === 0 && (
+        <h1 className="itemsContainer-noItems">
+          No Items Need To Be Delivered
+        </h1>
+      )}
       {props.items &&
         isSold.map((x) => (
           <ItemsItem

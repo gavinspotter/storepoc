@@ -859,6 +859,10 @@ body {
   min-height: 97vh;
   background-color: #ffb62f;
   overflow: auto; }
+  .itemsContainer-noItems {
+    text-align: center;
+    padding: 4rem;
+    color: #585858; }
   .itemsContainer-itemsList {
     border-radius: 2rem;
     margin-top: 4rem;
