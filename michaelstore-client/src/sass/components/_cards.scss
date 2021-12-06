@@ -89,6 +89,25 @@
   padding-right: 8rem;
   padding-left: 8rem;
 
+  &-noGoods {
+    margin: auto;
+    color: rgb(255, 182, 47);
+    background: white;
+    border-radius: 5rem;
+    padding: 3rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 35.5%;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+
+    width: 15rem;
+    animation: moveInRight 1s ease-out;
+    box-shadow: 0.05rem 0.05rem 0.25rem 0.25rem gray;
+  }
+
   // padding-left: 18rem;
   // padding-right: 18rem;
 

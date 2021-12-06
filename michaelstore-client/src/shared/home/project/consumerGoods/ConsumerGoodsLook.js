@@ -116,8 +116,7 @@ const ConsumerGoodsLook = (props) => {
         }
       );
 
-      window.location.reload();
-      navigate("/consumerGoods");
+      navigate("/");
     } catch (err) {}
   };
 

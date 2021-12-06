@@ -21,6 +21,7 @@ const ConsumerGoodsContainer = () => {
           `${process.env.REACT_APP_BACKEND_URL}/admin/getConsumerItems`
         );
 
+        console.log(responseData);
         setConsumerGoodsList(responseData.findConsumerItems);
       } catch (err) {}
     };
@@ -30,6 +31,10 @@ const ConsumerGoodsContainer = () => {
 
   return (
     <div className="consumerGoods-block">
+      {consumerGoodsList &&
+        consumerGoodsList.filter((x) => !x.sold).length === 0 && (
+          <h1 className="consumerGoods-noGoods">Retail Items Coming Soon!</h1>
+        )}
       {consumerGoodsList && <ConsumerGoodsList items={consumerGoodsList} />}
     </div>
   );
