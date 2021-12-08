@@ -245,7 +245,8 @@
     width: 20rem;
   }
   &-form {
-    width: 80vw;
+    display: inline-block;
+    width: 25rem;
     height: 60vh;
     vertical-align: top;
   }
@@ -289,10 +290,10 @@
   border: 1px solid #ccc;
   display: inline-block;
   position: relative;
-  left: 15%;
-  top: 10%;
+
   vertical-align: top;
   margin-bottom: 1rem;
+  margin-top: 3rem;
 }
 
 .customerMessage {

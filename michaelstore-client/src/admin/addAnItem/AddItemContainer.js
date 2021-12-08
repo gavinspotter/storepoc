@@ -255,14 +255,14 @@ const AddItemContainer = () => {
                 <br />
                 <button className="addItem-submitButton">submit</button>
               </div>
-              {previewUrl && (
-                <img
-                  className="image-upload__preview"
-                  src={previewUrl}
-                  alt="preview"
-                />
-              )}
             </form>
+            {previewUrl && (
+              <img
+                className="image-upload__preview"
+                src={previewUrl}
+                alt="preview"
+              />
+            )}
           </div>
         )}
 
@@ -315,14 +315,14 @@ const AddItemContainer = () => {
                 <br />
                 <button className="addItem-submitButton">submit</button>
               </div>
-              {previewUrl2 && (
-                <img
-                  className="image-upload__preview"
-                  src={previewUrl2}
-                  alt="preview"
-                />
-              )}
             </form>
+            {previewUrl2 && (
+              <img
+                className="image-upload__preview"
+                src={previewUrl2}
+                alt="preview"
+              />
+            )}
           </div>
         )}
       </div>
