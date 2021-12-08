@@ -6,6 +6,8 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import { AuthContext } from "../../shared/context/auth-context";
 import ErrorModal from "../../shared/UIElements/ErrorModal";
+import { useNavigate } from "react-router";
+import LoadingSpinner from "../../shared/UIElements/LoadingSpinner";
 
 const Signup = () => {
   const auth = useContext(AuthContext);
@@ -13,6 +15,8 @@ const Signup = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const { register, handleSubmit } = useForm();
+
+  const navigate = useNavigate();
 
   const signupSubmit = async (data) => {
     try {
@@ -29,12 +33,14 @@ const Signup = () => {
           "Content-Type": "application/json",
         }
       );
+
       auth.customerLogin(responseData.customerId, responseData.customerToken);
     } catch (err) {}
   };
 
   return (
     <div className="loginPadding">
+      {isLoading && <LoadingSpinner asOverlay />}
       <ErrorModal error={error} onClear={clearError} />
 
       <form onSubmit={handleSubmit(signupSubmit)}>

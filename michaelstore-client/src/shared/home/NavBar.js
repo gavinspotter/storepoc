@@ -7,6 +7,8 @@ import {
   IoBagAddOutline,
   IoLayersOutline,
   IoLogInOutline,
+  IoChevronForwardCircleOutline,
+  IoClipboardOutline,
 } from "react-icons/io5";
 
 import "../../css/style.css";
@@ -41,12 +43,12 @@ const NavBar = () => {
         </NavLink>
         {!auth.isLoggedIn && !auth.customerIsLoggedIn && (
           <NavLink className="navbar--right-login" to="/welcome">
-            login
+            <IoChevronForwardCircleOutline />
           </NavLink>
         )}
         {auth.customerIsLoggedIn && (
           <NavLink className="navbar--right-login" to="/details">
-            details
+            <IoClipboardOutline />
           </NavLink>
         )}
         {auth.customerIsLoggedIn && (

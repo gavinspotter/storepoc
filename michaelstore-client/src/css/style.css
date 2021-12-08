@@ -1015,7 +1015,7 @@ body {
 .modal__header {
   width: 100%;
   padding: 1rem 0.5rem;
-  background: #46d0fa;
+  background: #0b4353;
   color: white; }
 
 .modal__header h2 {
@@ -1049,6 +1049,15 @@ body {
   transform: translateY(-10rem);
   opacity: 0;
   transition: all 200ms; }
+
+.modalButton {
+  color: white;
+  text-align: center;
+  background: #0b4353;
+  width: 5rem;
+  height: 2rem;
+  border-radius: 1rem;
+  border: none; }
 
 .textsize {
   font-size: 4rem;

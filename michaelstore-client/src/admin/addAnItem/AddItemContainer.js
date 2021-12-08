@@ -246,7 +246,12 @@ const AddItemContainer = () => {
                 <br />
                 $<input {...register("priceD")} />
                 <br />
-                ¢<input {...register("priceC")} maxLength="2" />
+                ¢
+                <input
+                  defaultValue="00"
+                  {...register("priceC")}
+                  maxLength="2"
+                />
                 <br />
                 <button className="addItem-submitButton">submit</button>
               </div>
@@ -301,7 +306,12 @@ const AddItemContainer = () => {
                 <br />
                 $<input {...register("bulkPrice")} />
                 <br />
-                ¢<input {...register("priceC")} maxLength="2" />
+                ¢
+                <input
+                  defaultValue="00"
+                  {...register("priceC")}
+                  maxLength="2"
+                />
                 <br />
                 <button className="addItem-submitButton">submit</button>
               </div>

@@ -6,6 +6,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import { AuthContext } from "../../shared/context/auth-context";
 import ErrorModal from "../../shared/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/UIElements/LoadingSpinner";
 
 const Login = () => {
   const auth = useContext(AuthContext);
@@ -33,6 +34,7 @@ const Login = () => {
 
   return (
     <div className="loginPadding">
+      {isLoading && <LoadingSpinner asOverlay />}
       <ErrorModal error={error} onClear={clearError} />
 
       <form onSubmit={handleSubmit(loginSubmit)}>

@@ -124,7 +124,7 @@ const signup = async (req, res, next) => {
   res.status(201).json({
     customerId: createdCustomer.id,
     email: createdCustomer.email,
-    token: token,
+    customerToken: token,
   });
 };
 
@@ -343,7 +343,9 @@ const purchaseConsumerGoodOnAccount = async (req, res, next) => {
   const customer = await stripe.customers.retrieve(findUser.stripeCustomerId);
 
   if (!customer.default_source) {
-    const error = new HttpError("you haven't added a card yet");
+    const error = new HttpError(
+      "You haven't added a card yet, go to details to add one."
+    );
     return next(error);
   }
 
