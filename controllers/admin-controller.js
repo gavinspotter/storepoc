@@ -353,6 +353,11 @@ const createConsumerItem = async (req, res, next) => {
     return next(error);
   }
 
+  if (!name || !description || !price || !req.files.bucketPhotoId.path) {
+    const error = new HttpError("sorry, you're missing a field");
+    return next(error);
+  }
+
   const s3 = new aws.S3({
     accessKeyId: process.env.AWS_KEY,
     secretAccessKey: process.env.AWS_SECRET_KEY,
