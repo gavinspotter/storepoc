@@ -1,6 +1,6 @@
 .welcome {
   width: 100%;
-  height: 90vh;
+  min-height: 90vh;
   position: relative;
   background: rgb(247, 243, 243);
   padding-top: 6rem;
@@ -171,7 +171,7 @@
 .addItem {
   background: rgb(247, 243, 243);
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   margin-top: 0;
   overflow: auto;
   // position: absolute;
@@ -253,7 +253,7 @@
 
 .michaelLogin {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background: rgb(247, 243, 243);
   overflow: auto;
 
@@ -410,7 +410,7 @@
 
 .details {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   max-height: 100%;
   background: rgb(247, 243, 243);
   overflow: auto;
@@ -560,13 +560,13 @@
     position: relative;
     width: 100%;
 
-    height: 95vh;
+    min-height: 95vh;
   }
 
   position: absolute;
   width: 100%;
 
-  height: 95vh;
+  min-height: 95vh;
   &-logout {
     background: white;
     border-radius: 5rem;
@@ -844,7 +844,7 @@
 .adminMessages {
   position: relative;
   width: 100%;
-  height: 98vh;
+  min-height: 98vh;
   text-align: center;
 
   &-aMessage {
@@ -884,7 +884,7 @@
     position: absolute;
     width: 20%;
     border-right: rgb(209, 209, 209) solid 0.1rem;
-    height: 98vh;
+    min-height: 98vh;
     overflow: auto;
 
     &-counter {
@@ -1271,24 +1271,35 @@
 @media (max-width: 512px) {
   .welcome {
     width: 200%;
+    height: 200vh;
   }
 
   .consumerGoods {
     &-block {
       width: 200%;
+      height: 200vh;
     }
   }
 
   .addItem {
     width: 200%;
+    height: 200vh;
   }
 
   .michaelLogin {
     width: 200%;
+    height: 200vh;
   }
 
   .customerMessage {
     width: 200%;
+    height: 200vh;
+    &-items {
+      height: 200vh;
+      &-itemsList {
+        height: 200vh;
+      }
+    }
   }
   .customerItemList {
     max-height: 200vh;
@@ -1296,6 +1307,7 @@
 
   .details {
     width: 200%;
+    height: 200vh;
   }
 
   .home {
@@ -1314,6 +1326,10 @@
 
   .adminMessages {
     width: 200%;
+    height: 200vh;
+    &-messageBoards {
+      height: 200vh;
+    }
   }
 
   .aConsumerItem {
@@ -1321,5 +1337,6 @@
   }
   .itemsContainer {
     width: 200%;
+    height: 200vh;
   }
 }
