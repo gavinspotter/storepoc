@@ -25,6 +25,14 @@ const customerRoutes = require("./routes/consumer-routes");
 
 const HttpError = require("./models/HttpError");
 
+app.enable("trust proxy");
+app.use(function (req, res, next) {
+  if (req.secure) {
+    next();
+  } else {
+    res.redirect("https://" + req.headers.host + req.url);
+  }
+});
 // aws.config.update({
 //     secretAccessKey: process.env.AWS_SECRET_KEY,
 //     accessKeyId: process.env.AWS_KEY,
