@@ -154,13 +154,16 @@ const AddItemContainer = () => {
   const submitBulkItem = async (data) => {
     console.log(data);
 
+    const instance = data.bulkPrice.concat(data.priceC);
+
     try {
       //const fileContent = fs.readFileSync(data.image[0])
+
       const formData = new FormData();
       formData.append("bucketPhotoId", file2);
       formData.append("name", data.bulkName);
       formData.append("description", data.bulkDescription);
-      formData.append("price", Number(data.bulkPrice));
+      formData.append("price", Number(instance));
 
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/admin/createBulkItem`,
@@ -216,11 +219,16 @@ const AddItemContainer = () => {
               onSubmit={handleSubmit(submitConsumerItem)}
             >
               <div className="addItem-inputs">
+                <label className="addItem-picInput-label" for="input">
+                  add image
+                </label>
                 <input
+                  id="input"
                   {...register("cImage")}
                   type="file"
                   accept=".jpg,.png,.jpeg"
                   onChange={pickedHandler}
+                  className="addItem-picInput"
                 />
                 {/* <button type="button" onClick={pickImageHandler}> pick image</button> */}
                 <div></div>
@@ -239,7 +247,8 @@ const AddItemContainer = () => {
                 $<input {...register("priceD")} />
                 <br />
                 ¢<input {...register("priceC")} maxLength="2" />
-                <button>submit</button>
+                <br />
+                <button className="addItem-submitButton">submit</button>
               </div>
               {previewUrl && (
                 <img
@@ -265,11 +274,16 @@ const AddItemContainer = () => {
               onSubmit={handleSubmit(submitBulkItem)}
             >
               <div className="addItem-inputs">
+                <label className="addItem-picInput-label" for="input2">
+                  add image
+                </label>
                 <input
+                  id="input2"
                   {...register("bulkImage")}
                   type="file"
                   accept=".jpg,.png,.jpeg"
                   onChange={pickedHandler2}
+                  className="addItem-picInput"
                 />
                 {/* <button type="button" onClick={pickImageHandler}> pick image</button> */}
                 <div></div>
@@ -287,7 +301,9 @@ const AddItemContainer = () => {
                 <br />
                 $<input {...register("bulkPrice")} />
                 <br />
-                <button>submit</button>
+                ¢<input {...register("priceC")} maxLength="2" />
+                <br />
+                <button className="addItem-submitButton">submit</button>
               </div>
               {previewUrl2 && (
                 <img

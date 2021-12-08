@@ -71,6 +71,13 @@ const BulkItem = (props) => {
     }
   });
 
+  const thePrice = props.price.toString();
+
+  const thePriceSplice =
+    thePrice.slice(0, thePrice.length - 2) +
+    "." +
+    thePrice.slice(thePrice.length - 2);
+
   return (
     <Link to={`/bulkItems/${props.id}`}>
       <div ref={cardAnimation} className="consumerGoods--card">
@@ -87,7 +94,7 @@ const BulkItem = (props) => {
           <p>{props.name}</p>
           {!dString && props.description.substring(0, 45)}
           {dString && <p>{props.description.substring(0, 45)} ...</p>}
-          <p>${props.price}</p>
+          <p>${thePriceSplice}</p>
         </div>
 
         <div>

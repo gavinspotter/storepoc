@@ -34,7 +34,7 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="loginPadding">
       <ErrorModal error={error} onClear={clearError} />
 
       <form onSubmit={handleSubmit(signupSubmit)}>
@@ -47,9 +47,10 @@ const Signup = () => {
         <div>email:</div>
         <input {...register("email")} />
         <div>password:</div>
-        <input {...register("password")} />
+        <input type="password" {...register("password")} />
         <br />
-        <button>signup</button>
+        <br />
+        <button className="welcome-button">signup</button>
       </form>
     </div>
   );

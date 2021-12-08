@@ -131,6 +131,32 @@ const ConsumerGoodsLook = (props) => {
     // console.log(globalC)
   };
 
+  const submitAuthPurchase = async () => {
+    try {
+      await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/customer/buyItemOnAccount`,
+        "POST",
+        JSON.stringify({
+          itemId: goodId,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.customerToken,
+        }
+      );
+
+      window.location.reload();
+      navigate("/consumerGoods");
+    } catch (err) {}
+  };
+
+  //   const thePrice = props.price.toString();
+
+  //   const thePriceSplice =
+  //     thePrice.slice(0, thePrice.length - 2) +
+  //     "." +
+  //     thePrice.slice(thePrice.length - 2);
+
   return (
     <div className="aConsumerItem">
       <ErrorModal error={error} onClear={clearError} />
@@ -287,6 +313,18 @@ const ConsumerGoodsLook = (props) => {
                     </div>
                   </div>
                 )}
+              {auth.customerToken && (
+                <div className="aConsumerItem-itemContainer-labels-button-wrapper">
+                  <div
+                    className="aConsumerItem-itemContainer-labels-button"
+                    onClick={submitAuthPurchase}
+                  >
+                    <div className="marginTop">
+                      <IoCardOutline />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

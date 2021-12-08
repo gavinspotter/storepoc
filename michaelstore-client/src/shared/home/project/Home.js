@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 
 import freightImg from "../../../img/homepage-freight.jpg";
 
@@ -13,7 +13,11 @@ import HomeConsumerGoodsList from "./HomeConsumerGoodsList";
 import ConsumerGoodsList from "./consumerGoods/ConsumerGoodsList";
 import { Link } from "react-router-dom";
 
+import { AuthContext } from "../../context/auth-context";
+
 const Home = (props) => {
+  const auth = useContext(AuthContext);
+
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [bulk, setBulk] = useState();
@@ -101,6 +105,11 @@ const Home = (props) => {
           src={freightImg}
           alt="we sell merchandise, welcome"
         />
+        {auth.token && (
+          <div onClick={auth.logout} className="home-logout">
+            <h3>logout</h3>
+          </div>
+        )}
 
         {freightImg && (
           <div className="home-header">

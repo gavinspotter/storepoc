@@ -2,7 +2,11 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 
 import { useHttpClient } from "../../../hooks/http-hook";
 
-import { IoBackspaceOutline } from "react-icons/io5";
+import {
+  IoBackspaceOutline,
+  IoBagOutline,
+  IoCardOutline,
+} from "react-icons/io5";
 
 import "../../../../css/style.css";
 
@@ -149,8 +153,9 @@ const ConsumerGoodsItem = (props) => {
               onClick={submitPurchase}
               className="consumerGoods--card-adminText-button"
             >
-              {" "}
-              buy{" "}
+              <div className="marginTop">
+                <IoBagOutline />
+              </div>
             </div>
           </div>
         )}

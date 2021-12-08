@@ -40,29 +40,54 @@ body {
   width: 100%;
   height: 90vh;
   position: relative;
-  background: #f7f3f3; }
+  background: #f7f3f3;
+  padding-top: 6rem;
+  padding-bottom: 6rem; }
+  .welcome-button {
+    color: white;
+    text-align: center;
+    background: linear-gradient(to right bottom, rgba(85, 197, 122, 0.8), rgba(0, 217, 255, 0.8));
+    width: 5rem;
+    height: 2rem;
+    border-radius: 1rem;
+    bottom: 0;
+    left: 48%;
+    border: none; }
   .welcome--intro {
-    position: relative;
-    left: 17%;
-    top: 35%;
-    width: 40rem;
+    position: static;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0;
+    right: 0;
+    display: block;
+    text-align: center;
     color: #616161; }
   .welcome--welcome {
-    position: absolute;
-    right: 17%;
+    position: relative;
+    right: 0;
     top: 20%;
     width: 38rem;
     height: 30rem;
     background: white;
-    border-radius: 5rem; }
-    .welcome--welcome div {
-      display: inline-block;
-      color: #00a2ff; }
+    border-radius: 5rem;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5rem;
+    top: 0;
+    right: 0;
+    display: block;
+    text-align: center; }
     .welcome--welcome--text {
-      position: relative;
-      top: 93%;
-      left: 40%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
       display: inline-block; }
+      .welcome--welcome--text-toggle {
+        color: #00a2ff; }
 
 @media (max-width: 1190px) {
   .welcome {
@@ -82,7 +107,7 @@ body {
       text-align: center;
       color: #616161; }
     .welcome--welcome {
-      position: static;
+      position: relative;
       margin-left: auto;
       margin-right: auto;
       margin-top: 5rem;
@@ -90,16 +115,16 @@ body {
       right: 0;
       display: block;
       text-align: center; }
-      .welcome--welcome div {
-        display: block; }
       .welcome--welcome--text {
-        position: relative;
-        top: 87%;
+        position: absolute;
+        bottom: 0;
         left: 0;
-        display: block; }
-        .welcome--welcome--text div {
-          color: #00a2ff;
-          display: block; } }
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: inline-block; }
+        .welcome--welcome--text-toggle {
+          color: #00a2ff; } }
 
 .consumerGoods {
   text-align: center;
@@ -177,6 +202,24 @@ body {
   overflow: auto; }
   .addItem-block {
     margin-top: 10rem; }
+  .addItem-picInput {
+    display: none; }
+    .addItem-picInput-label {
+      color: white;
+      background: linear-gradient(to right bottom, rgba(255, 0, 0, 0.8), rgba(63, 41, 190, 0.8));
+      padding: 1rem;
+      border-radius: 2rem; }
+  .addItem-submitButton {
+    color: white;
+    text-align: center;
+    background: linear-gradient(to right bottom, rgba(255, 0, 0, 0.8), rgba(63, 41, 190, 0.8));
+    width: 5rem;
+    height: 2rem;
+    position: absolute;
+    border-radius: 1rem;
+    bottom: 0;
+    left: 48%;
+    border: none; }
   .addItem-box {
     box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem gray;
     margin-left: auto;
@@ -194,7 +237,9 @@ body {
     display: inline-block;
     position: relative;
     top: 20%;
-    left: 5%; }
+    left: 5%;
+    height: 23rem;
+    width: 20rem; }
   .addItem-form {
     width: 80vw;
     height: 60vh;
@@ -434,6 +479,17 @@ body {
     position: relative;
     width: 100%;
     height: 95vh; }
+  .home-logout {
+    background: white;
+    border-radius: 5rem;
+    padding: 0.5rem;
+    position: absolute;
+    font-size: 1rem;
+    right: 3rem;
+    top: 4rem;
+    text-align: center;
+    width: 8rem;
+    animation: moveInRight 1s ease-out; }
   .home-header {
     background: white;
     border-radius: 5rem;
@@ -562,13 +618,13 @@ body {
         padding-right: 2rem;
         padding-left: 2rem;
         display: inline-block;
-        text-align: center; }
+        text-align: center;
+        color: #474747;
+        text-decoration: none; }
         .home-inventory-bulkSlide-item-stuff {
           display: inline-block; }
           .home-inventory-bulkSlide-item-stuff:first-child {
             border-left: #d1d1d1 solid 0.1rem; }
-          .home-inventory-bulkSlide-item-stuff:last-child {
-            border-right: #d1d1d1 solid 0.1rem; }
         .home-inventory-bulkSlide-item-img {
           max-height: 10rem;
           max-width: 15rem; }
@@ -606,13 +662,13 @@ body {
         padding-right: 2rem;
         padding-left: 2rem;
         display: inline-block;
-        text-align: center; }
+        text-align: center;
+        color: #474747;
+        text-decoration: none; }
         .home-inventory-goodsSlide-item-stuff {
           display: inline-block; }
           .home-inventory-goodsSlide-item-stuff:first-child {
             border-left: #d1d1d1 solid 0.1rem; }
-          .home-inventory-goodsSlide-item-stuff:last-child {
-            border-right: #d1d1d1 solid 0.1rem; }
         .home-inventory-goodsSlide-item-img {
           max-height: 10rem;
           max-width: 15rem; }
@@ -999,6 +1055,10 @@ body {
   position: absolute;
   top: 40%;
   right: 10%; }
+
+.loginPadding {
+  overflow: auto;
+  padding-top: 2rem; }
 
 .marginTop {
   margin-top: 0.2rem; }
