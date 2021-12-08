@@ -70,3 +70,9 @@
   padding-left: 1rem;
   font-weight: 50;
 }
+
+@media (max-width: 512px) {
+  .navbar {
+    width: 200%;
+  }
+}

@@ -89,43 +89,6 @@ body {
       .welcome--welcome--text-toggle {
         color: #00a2ff; }
 
-@media (max-width: 1190px) {
-  .welcome {
-    width: 100%;
-    height: 90vh;
-    position: relative;
-    background: #f7f3f3;
-    padding-top: 10rem;
-    padding-bottom: 10rem; }
-    .welcome--intro {
-      position: static;
-      margin-left: auto;
-      margin-right: auto;
-      top: 0;
-      right: 0;
-      display: block;
-      text-align: center;
-      color: #616161; }
-    .welcome--welcome {
-      position: relative;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 5rem;
-      top: 0;
-      right: 0;
-      display: block;
-      text-align: center; }
-      .welcome--welcome--text {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        display: inline-block; }
-        .welcome--welcome--text-toggle {
-          color: #00a2ff; } }
-
 .consumerGoods {
   text-align: center;
   padding-top: 5rem;
@@ -227,7 +190,7 @@ body {
     background: white;
     position: relative;
     border-radius: 5rem;
-    width: 80vw;
+    width: 75rem;
     height: 60vh; }
   .addItem-title {
     position: absolute;
@@ -507,7 +470,7 @@ body {
     overflow: auto;
     position: relative;
     width: 100%;
-    height: 95vh;
+    min-height: 95vh;
     background: #f7f3f3; }
     .home-goods-header {
       color: #838383;
@@ -995,6 +958,48 @@ body {
             width: 10rem;
             overflow-wrap: break-word; }
 
+@media (max-width: 512px) {
+  .welcome {
+    width: 200%;
+    height: 200vh; }
+  .consumerGoods-block {
+    width: 200%;
+    height: 200vh; }
+  .addItem {
+    width: 200%;
+    height: 200vh; }
+  .michaelLogin {
+    width: 200%;
+    height: 200vh; }
+  .customerMessage {
+    width: 200%;
+    height: 200vh; }
+    .customerMessage-items {
+      height: 200vh; }
+      .customerMessage-items-itemsList {
+        height: 200vh; }
+  .customerItemList {
+    max-height: 200vh; }
+  .details {
+    width: 200%;
+    height: 200vh; }
+  .home-bench {
+    width: 200%; }
+  .home-goods {
+    width: 200%; }
+  .home-inventory {
+    width: 200%; }
+  .adminMessages {
+    width: 200%;
+    height: 200vh; }
+    .adminMessages-messageBoards {
+      height: 200vh; }
+  .aConsumerItem {
+    width: 200%; }
+  .itemsContainer {
+    width: 200%;
+    height: 200vh; } }
+
 .loading-spinner__overlay {
   height: 100%;
   width: 100%;
@@ -1156,3 +1161,7 @@ body {
   padding-right: 1rem;
   padding-left: 1rem;
   font-weight: 50; }
+
+@media (max-width: 512px) {
+  .navbar {
+    width: 200%; } }
