@@ -960,29 +960,19 @@ body {
 
 @media (max-width: 512px) {
   .welcome {
-    width: 200%;
-    height: 200vh; }
+    width: 200%; }
   .consumerGoods-block {
-    width: 200%;
-    height: 200vh; }
+    width: 200%; }
   .addItem {
-    width: 200%;
-    height: 200vh; }
+    width: 200%; }
   .michaelLogin {
-    width: 200%;
-    height: 200vh; }
+    width: 200%; }
   .customerMessage {
-    width: 200%;
-    height: 200vh; }
-    .customerMessage-items {
-      height: 200vh; }
-      .customerMessage-items-itemsList {
-        height: 200vh; }
+    width: 200%; }
   .customerItemList {
     max-height: 200vh; }
   .details {
-    width: 200%;
-    height: 200vh; }
+    width: 200%; }
   .home-bench {
     width: 200%; }
   .home-goods {
@@ -990,15 +980,11 @@ body {
   .home-inventory {
     width: 200%; }
   .adminMessages {
-    width: 200%;
-    height: 200vh; }
-    .adminMessages-messageBoards {
-      height: 200vh; }
+    width: 200%; }
   .aConsumerItem {
     width: 200%; }
   .itemsContainer {
-    width: 200%;
-    height: 200vh; } }
+    width: 200%; } }
 
 .loading-spinner__overlay {
   height: 100%;

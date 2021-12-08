@@ -1271,35 +1271,24 @@
 @media (max-width: 512px) {
   .welcome {
     width: 200%;
-    height: 200vh;
   }
 
   .consumerGoods {
     &-block {
       width: 200%;
-      height: 200vh;
     }
   }
 
   .addItem {
     width: 200%;
-    height: 200vh;
   }
 
   .michaelLogin {
     width: 200%;
-    height: 200vh;
   }
 
   .customerMessage {
     width: 200%;
-    height: 200vh;
-    &-items {
-      height: 200vh;
-      &-itemsList {
-        height: 200vh;
-      }
-    }
   }
   .customerItemList {
     max-height: 200vh;
@@ -1307,7 +1296,6 @@
 
   .details {
     width: 200%;
-    height: 200vh;
   }
 
   .home {
@@ -1326,10 +1314,6 @@
 
   .adminMessages {
     width: 200%;
-    height: 200vh;
-    &-messageBoards {
-      height: 200vh;
-    }
   }
 
   .aConsumerItem {
@@ -1337,6 +1321,5 @@
   }
   .itemsContainer {
     width: 200%;
-    height: 200vh;
   }
 }
