@@ -108,9 +108,7 @@ io.on("connection", (socket) => {
 });
 
 mongoose
-  .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.d3tnt.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-  )
+  .connect(process.env.DB_STRING)
   .then(() => {
     httpServer.listen(process.env.PORT || 5000);
     console.log("connected");

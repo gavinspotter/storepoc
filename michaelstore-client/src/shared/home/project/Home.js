@@ -45,6 +45,7 @@ const Home = (props) => {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/admin/getConsumerItems`
         );
+        console.log(responseData.findConsumerItems);
 
         setConsumerGoodsList(responseData.findConsumerItems);
       } catch (err) {}
@@ -80,6 +81,40 @@ const Home = (props) => {
   });
 
   const cloud2 = useRef(null);
+
+  const bulkWatch = useRef(null);
+
+  useEffect(() => {
+    if (bulkWatch.current != null) {
+      const observer = new IntersectionObserver((entrys) => {
+        entrys.forEach((entry) => {
+          if (entry.isIntersecting) {
+            bulkWatch.current.classList.add("animationRight");
+            return;
+          }
+        });
+      });
+
+      observer.observe(bulkWatch.current);
+    }
+  });
+
+  const retailWatch = useRef(null);
+
+  useEffect(() => {
+    if (retailWatch.current != null) {
+      const observer = new IntersectionObserver((entrys) => {
+        entrys.forEach((entry) => {
+          if (entry.isIntersecting) {
+            retailWatch.current.classList.add("animationRight");
+            return;
+          }
+        });
+      });
+
+      observer.observe(retailWatch.current);
+    }
+  });
 
   useEffect(() => {
     if (cloud2.current != null) {
@@ -149,6 +184,11 @@ const Home = (props) => {
         </div>
 
         <div className="home-inventory-bulkSlide">
+          {bulk && bulk.length === 0 && (
+            <div ref={bulkWatch} className="home-noItems">
+              <h1>Bulk Items Coming Soon!</h1>
+            </div>
+          )}
           {bulk && <HomeBulkList items={bulk} />}
         </div>
 
@@ -160,6 +200,12 @@ const Home = (props) => {
 
         <div className="home-of">
           <div className="home-inventory-goodsSlide">
+            {consumerGoodsList &&
+              consumerGoodsList.filter((x) => !x.sold).length === 0 && (
+                <div ref={retailWatch} className="home-noItems">
+                  <h1>Retail Items Coming Soon!</h1>
+                </div>
+              )}
             {consumerGoodsList && (
               <HomeConsumerGoodsList items={consumerGoodsList} />
             )}

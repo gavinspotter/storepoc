@@ -564,6 +564,16 @@
     min-height: 95vh;
   }
 
+  &-noItems {
+    margin-top: 4rem;
+    font-size: 1.9rem;
+    color: gray;
+    &-bulk {
+    }
+    &-retail {
+    }
+  }
+
   position: absolute;
   width: 100%;
 

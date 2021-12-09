@@ -442,6 +442,10 @@ body {
     position: relative;
     width: 100%;
     min-height: 95vh; }
+  .home-noItems {
+    margin-top: 4rem;
+    font-size: 1.9rem;
+    color: gray; }
   .home-logout {
     background: white;
     border-radius: 5rem;
