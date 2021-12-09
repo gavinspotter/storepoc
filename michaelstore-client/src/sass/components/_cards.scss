@@ -78,12 +78,11 @@
   padding-left: 8rem;
 
   &-noGoods {
-    margin: auto;
     color: rgb(255, 182, 47);
     background: white;
     border-radius: 5rem;
     padding: 3rem;
-    position: absolute;
+    position: relative;
     left: 0;
     right: 0;
     top: 35.5%;
@@ -269,6 +268,21 @@
     height: 20rem;
     border-radius: 5rem;
     box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem gray;
+  }
+
+  &-button {
+    color: white;
+    background: linear-gradient(
+      to right bottom,
+      rgba(rgb(255, 0, 0), 0.8),
+      rgba(#3f29be, 0.8)
+    );
+    border-radius: 2rem;
+    padding: 1rem;
+    margin-top: 2rem;
+    border: none;
+
+    //font-size: 2rem;
   }
 
   &-input {

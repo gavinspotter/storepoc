@@ -96,12 +96,11 @@ body {
   padding-right: 8rem;
   padding-left: 8rem; }
   .consumerGoods-noGoods {
-    margin: auto;
     color: #ffb62f;
     background: white;
     border-radius: 5rem;
     padding: 3rem;
-    position: absolute;
+    position: relative;
     left: 0;
     right: 0;
     top: 35.5%;
@@ -224,6 +223,13 @@ body {
     height: 20rem;
     border-radius: 5rem;
     box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem gray; }
+  .michaelLogin-button {
+    color: white;
+    background: linear-gradient(to right bottom, rgba(255, 0, 0, 0.8), rgba(63, 41, 190, 0.8));
+    border-radius: 2rem;
+    padding: 1rem;
+    margin-top: 2rem;
+    border: none; }
   .michaelLogin-input {
     display: block;
     margin-right: auto;
