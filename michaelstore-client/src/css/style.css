@@ -100,7 +100,7 @@ body {
     background: white;
     border-radius: 5rem;
     padding: 3rem;
-    position: relative;
+    position: absolute;
     left: 0;
     right: 0;
     top: 35.5%;
@@ -972,6 +972,8 @@ body {
   .welcome {
     width: 200%;
     height: 200vh; }
+  .consumerGoods-noGoods {
+    position: relative; }
   .consumerGoods-block {
     width: 200%;
     height: 200vh; }
