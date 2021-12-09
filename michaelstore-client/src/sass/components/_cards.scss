@@ -1300,12 +1300,101 @@
   }
 
   .consumerGoods {
+    text-align: center;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    padding-right: 8rem;
+    padding-left: 8rem;
+
     &-noGoods {
+      color: rgb(255, 182, 47);
+      background: white;
+      border-radius: 5rem;
+      padding: 3rem;
       position: relative;
+      width: 40rem;
+      left: 0;
+      right: 0;
+      top: 0;
+      margin-top: 6rem;
+      text-align: center;
+      margin-right: auto;
+      margin-left: auto;
+      font-size: 10rem;
+
+      //width: 15rem;
+      animation: moveInTop 1s ease-out;
+      box-shadow: 0.05rem 0.05rem 0.25rem 0.25rem gray;
     }
+
+    // padding-left: 18rem;
+    // padding-right: 18rem;
+
+    &--card {
+      cursor: pointer;
+      width: 55.5rem;
+      height: 72rem;
+      margin: 4rem;
+      vertical-align: top;
+      position: relative;
+
+      display: inline-block;
+      background: white;
+      border-radius: 2rem;
+      box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem gray;
+
+      &-text {
+        text-align: left;
+        position: absolute;
+        color: rgb(78, 78, 78);
+
+        bottom: 2rem;
+        left: 4rem;
+        font-size: 4rem;
+      }
+      &-adminText {
+        &-button {
+          color: white;
+          background: linear-gradient(
+            to right bottom,
+            rgba(rgb(255, 0, 0), 0.8),
+            rgba(#3f29be, 0.8)
+          );
+          border-radius: 10rem;
+          width: 10rem;
+          height: 10rem;
+
+          display: inline-block;
+          position: absolute;
+          right: 4rem;
+          bottom: 2rem;
+          font-size: 7rem;
+        }
+      }
+
+      &-img {
+        //min-height: 16rem;
+
+        margin: auto;
+        max-height: 45rem;
+        max-width: 45rem;
+        border-radius: 1rem;
+        &-imgwrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 2rem;
+          //min-height: 16rem;
+          height: 45rem;
+          width: 100%;
+        }
+      }
+    }
+
     &-block {
       width: 200%;
       height: 200vh;
+      overflow: auto;
     }
   }
 

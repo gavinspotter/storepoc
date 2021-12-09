@@ -972,11 +972,74 @@ body {
   .welcome {
     width: 200%;
     height: 200vh; }
-  .consumerGoods-noGoods {
-    position: relative; }
-  .consumerGoods-block {
-    width: 200%;
-    height: 200vh; }
+  .consumerGoods {
+    text-align: center;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    padding-right: 8rem;
+    padding-left: 8rem; }
+    .consumerGoods-noGoods {
+      color: #ffb62f;
+      background: white;
+      border-radius: 5rem;
+      padding: 3rem;
+      position: relative;
+      width: 40rem;
+      left: 0;
+      right: 0;
+      top: 0;
+      margin-top: 6rem;
+      text-align: center;
+      margin-right: auto;
+      margin-left: auto;
+      font-size: 10rem;
+      animation: moveInTop 1s ease-out;
+      box-shadow: 0.05rem 0.05rem 0.25rem 0.25rem gray; }
+    .consumerGoods--card {
+      cursor: pointer;
+      width: 55.5rem;
+      height: 72rem;
+      margin: 4rem;
+      vertical-align: top;
+      position: relative;
+      display: inline-block;
+      background: white;
+      border-radius: 2rem;
+      box-shadow: 0.1rem 0.1rem 0.5rem 0.5rem gray; }
+      .consumerGoods--card-text {
+        text-align: left;
+        position: absolute;
+        color: #4e4e4e;
+        bottom: 2rem;
+        left: 4rem;
+        font-size: 4rem; }
+      .consumerGoods--card-adminText-button {
+        color: white;
+        background: linear-gradient(to right bottom, rgba(255, 0, 0, 0.8), rgba(63, 41, 190, 0.8));
+        border-radius: 10rem;
+        width: 10rem;
+        height: 10rem;
+        display: inline-block;
+        position: absolute;
+        right: 4rem;
+        bottom: 2rem;
+        font-size: 7rem; }
+      .consumerGoods--card-img {
+        margin: auto;
+        max-height: 45rem;
+        max-width: 45rem;
+        border-radius: 1rem; }
+        .consumerGoods--card-img-imgwrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 2rem;
+          height: 45rem;
+          width: 100%; }
+    .consumerGoods-block {
+      width: 200%;
+      height: 200vh;
+      overflow: auto; }
   .addItem {
     width: 200%;
     height: 200vh; }
@@ -1176,4 +1239,38 @@ body {
 
 @media (max-width: 512px) {
   .navbar {
-    width: 200%; } }
+    width: 200%;
+    height: 15rem;
+    background-color: #032da1;
+    font-size: 9rem;
+    position: relative;
+    box-shadow: 0 0.3rem 0.3rem grey; }
+    .navbar--left-aboutUs {
+      display: inline-block; }
+    .navbar--left a {
+      color: white;
+      text-decoration: none;
+      position: absolute;
+      left: 3%; }
+    .navbar--right {
+      position: absolute;
+      right: 6%; }
+      .navbar--right a {
+        color: white;
+        text-decoration: none;
+        padding-right: 3rem;
+        padding-left: 3rem;
+        font-weight: 50; }
+      .navbar--right-bulk {
+        height: 15rem;
+        display: inline-block;
+        border-right: solid white 0.1rem;
+        border-left: solid white 0.1rem; }
+      .navbar--right-retail {
+        height: 15rem;
+        border-right: solid white 0.1rem;
+        display: inline-block; }
+      .navbar--right-login {
+        height: 15rem;
+        border-right: solid white 0.1rem;
+        display: inline-block; } }

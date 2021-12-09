@@ -74,5 +74,62 @@
 @media (max-width: 512px) {
   .navbar {
     width: 200%;
+
+    height: 15rem;
+
+    background-color: rgb(3, 45, 161);
+    font-size: 9rem;
+    position: relative;
+    box-shadow: 0 0.3rem 0.3rem grey;
+
+    &--left {
+      &-aboutUs {
+        display: inline-block;
+      }
+      & a {
+        color: white;
+        text-decoration: none;
+        position: absolute;
+        left: 3%;
+      }
+    }
+
+    &--right {
+      position: absolute;
+      right: 6%;
+      & a {
+        color: white;
+        text-decoration: none;
+        padding-right: 3rem;
+        padding-left: 3rem;
+        font-weight: 50;
+      }
+      &-bulk {
+        height: 15rem;
+        display: inline-block;
+        border-right: solid white 0.1rem;
+        border-left: solid white 0.1rem;
+
+        //   position: absolute;
+        //   right: 20%;
+        //   top: 0;
+      }
+      &-retail {
+        height: 15rem;
+        border-right: solid white 0.1rem;
+        display: inline-block;
+        //   position: absolute;
+        //   right: 11.5%;
+        //   top: 0;
+      }
+      &-login {
+        height: 15rem;
+        border-right: solid white 0.1rem;
+        display: inline-block;
+        //   position: absolute;
+        //   right: 3%;
+        //   top: 0;
+      }
+    }
   }
 }
