@@ -170,7 +170,7 @@ const createBulkItem = async (req, res, next) => {
   const fileContent = fs.readFileSync(req.files.bucketPhotoId.path);
 
   const params = {
-    Bucket: "michaelrossbucket",
+    Bucket: process.env.BUCKET_NAME,
     Key: `${uniqueId}-${req.files.bucketPhotoId.name}`, // File name you want to save as in S3
     Body: fileContent,
   };
@@ -369,7 +369,7 @@ const createConsumerItem = async (req, res, next) => {
   const fileContent = fs.readFileSync(req.files.bucketPhotoId.path);
 
   const params = {
-    Bucket: "michaelrossbucket",
+    Bucket: process.env.BUCKET_NAME,
     Key: `${uniqueId}-${req.files.bucketPhotoId.name}`, // File name you want to save as in S3
     Body: fileContent,
   };
@@ -541,7 +541,7 @@ const getMessages = async (req, res, next) => {
   }
 
   if (!findAdmin) {
-    const error = new HttpError("you're not logged in, michael");
+    const error = new HttpError("you're not logged in.");
     return next(error);
   }
 
